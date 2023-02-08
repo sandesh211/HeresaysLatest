@@ -1,0 +1,134 @@
+.tickParent {
+  width: 60px;
+  height: 60px;
+  margin-left: 0;
+  background: linear-gradient(
+    180deg,
+    #ffe773,
+    #fffa93 12.81%,
+    #c09b37 31.25%,
+    #e7c75f 56.25%,
+    #512704 82.72%,
+    #efd160
+  );
+  box-shadow: 0 4px 4px rgb(0, 0, 0, 68%);
+  border-radius: 50%;
+  padding: 4px;
+  position: absolute;
+  left: 39%;
+  top: 44%;
+}
+.tickChild {
+  height: 50px;
+  width: 48px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(50% 50% at 50% 50%, #082174 0, #031038 100%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.WhitescreenSocial {
+  width: 94%;
+  height: 70%;
+  margin: 15px auto;
+  border-radius: 5px 5px 30px 30px;
+  display: flex;
+  justify-content: space-evenly;
+}
+#popupForeParentSocial {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    90deg,
+    #d39339 0,
+    #ecca70 15%,
+    #faf8bd 25%,
+    #daa74c 51%,
+    #cf8c31 65%,
+    #da8b2c 75%,
+    #d48b2c 90%,
+    #ce842b
+  );
+  border-radius: 10px;
+  padding: 8px;
+  width: 98%;
+  height: 90%;
+  left: 1%;
+  top: 5%;
+}
+#popupForeSocial {
+  position: fixed;
+  display: flex;
+  left: 25%;
+  width: 47%;
+  height: 25%;
+  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+    180deg,
+    #ffe570,
+    #fffb95 13.74%,
+    #be9a38 26.34%,
+    #ebce65 47.87%,
+    #b38a29 67.57%,
+    #421800 78.56%,
+    #b48a28 92.99%,
+    #fce06b 101.93%
+  );
+  top: 32%;
+  border-radius: 8px;
+
+  transform: scale(1); /*scale it to a smaller size*/
+  transition: all 0.5s ease-in-out;
+  animation: pop-swirl 1s ease forwards; /*trigger the keyframe*/
+  visibility: visible;
+  z-index: 200;
+  opacity: 1;
+}
+.btnSocialTick {
+  color: rgb(168, 157, 157);
+  height: 55px;
+  width: 55px;
+  position: absolute;
+  background: radial-gradient(50% 50% at 50% 50%, #f31f1f 0, #270505 100%);
+  border: 5px solid #ecca70;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.925);
+  border-radius: 50%;
+  transition: 0.5s;
+}
+.btnSocialCrossParent {
+  position: absolute;
+  height: 67px;
+  width: 67px;
+  border: 2px solid gray;
+  background: linear-gradient(
+    180deg,
+    #ffe570,
+    #fffb95 13.74%,
+    #be9a38 26.34%,
+    #ebce65 47.87%,
+    #b38a29 67.57%,
+    #421800 78.56%,
+    #b48a28 92.99%,
+    #fce06b 101.93%
+  );
+  border-radius: 50%;
+  top: 42%;
+  left: 56%;
+}
+
+.btnSocialCross {
+  color: rgb(168, 157, 157);
+  height: 55px;
+  width: 55px;
+  position: absolute;
+  background: radial-gradient(50% 50% at 50% 50%, #f31f1f 0, #270505 100%);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.925);
+  border-radius: 50%;
+  transition: 0.5s;
+  top: 5%;
+  left: 5%;
+}

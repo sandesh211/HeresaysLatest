@@ -1,0 +1,146 @@
+/* .rtepreview{
+    height: 350px;
+    width: 600px;
+    border: 5px solid #041241;
+    margin: 10px;
+    overflow-y: scroll;
+} */
+.classifiedstyle img{
+    max-height: 310px;
+    max-width: 330px;
+}
+.bookpagestyle img{
+    max-height: 600px;
+    max-width: 600px;
+}
+.bannerstyle img{
+    max-height: 80px;
+    max-width: 840px;
+}
+.classifiedstyle p{
+    max-height: 310px;
+    max-width: 330px;
+}
+.bookpagestyle p{
+    max-height: 600px;
+    max-width: 600px;
+}
+.bannerstyle p{
+    max-height: 80px;
+    max-width: 840px;
+}
+.classifiedstyle{
+    height: 320px;
+    width: 340px;
+    border: 5px solid #041241;
+    margin: 10px;
+    overflow-y: hidden;
+}
+.bookpagestyle{
+    height: 610px;
+    width: 610px;
+    border: 5px solid #041241;
+    margin: 10px;
+    overflow-y: hidden;
+}
+.bannerstyle{
+    height: 90px;
+    width: 850px;
+    border: 5px solid #041241;
+    margin: 10px;
+    overflow-y: hidden;
+}
+.adscontainer{
+    display: flex;
+    flex-direction: column;
+}
+.leftcontainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.rightcontainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.dayscontainer .clickscontainer{
+    display: flex;
+    flex-direction: column;
+}
+.daysdropdown{
+    background: linear-gradient(90deg, #d39339 0, #ecca70 15%, #faf8bd 25%, #daa74c 51%, #cf8c31 65%, #da8b2c 75%, #d48b2c 90%, #ce842b);
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+}
+.clickcontainer{
+    background: linear-gradient(90deg, #d39339 0, #ecca70 15%, #faf8bd 25%, #daa74c 51%, #cf8c31 65%, #da8b2c 75%, #d48b2c 90%, #ce842b);
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+}
+.dropdownback{
+    background-color: #041241;
+    width: 144px;
+    height: 44px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 3px;
+    margin-left: 3px;
+}
+.daystextbox{
+    background: linear-gradient(90deg, #d39339 0, #ecca70 15%, #faf8bd 25%, #daa74c 51%, #cf8c31 65%, #da8b2c 75%, #d48b2c 90%, #ce842b);
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+}
+.clicktextbox{
+    background: linear-gradient(90deg, #d39339 0, #ecca70 15%, #faf8bd 25%, #daa74c 51%, #cf8c31 65%, #da8b2c 75%, #d48b2c 90%, #ce842b);
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+}
+.totaltextbox{
+    background: linear-gradient(90deg, #d39339 0, #ecca70 15%, #faf8bd 25%, #daa74c 51%, #cf8c31 65%, #da8b2c 75%, #d48b2c 90%, #ce842b);
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+}
+.textbg{
+    background-color: #041241;
+    width: 144px;
+    height: 44px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 3px;
+    margin-left: 3px;
+}
+.adspage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 70vh;
+}
+.adspagepreview{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.add-advertisement-content-preview{
+    background: linear-gradient(90.05deg, #a8a8a8 -32.01%, #747272 -10.03%, #999898 3.46%, #e1d7d7 19.04%, #fffbfb 42.85%, #d1cfcf 63.76%, #646363 86.82%, #adacac 111.41%);
+    padding   : 17px 28px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#previewmodal{
+    /* max-width: 1221px; */
+    max-width: 925px;
+}
+#previewbutton{
+     background: linear-gradient(90.05deg, #a8a8a8 -32.01%, #747272 -10.03%, #999898 3.46%, #e1d7d7 19.04%, #fffbfb 42.85%, #d1cfcf 63.76%, #646363 86.82%, #adacac 111.41%);
+}

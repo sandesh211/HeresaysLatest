@@ -1,0 +1,47 @@
+.parentnew{
+    display: flex;
+    flex-direction: column;
+}
+.headnew{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: auto;
+    background-color: aqua;
+}
+.logo{
+    width: 33.33vw;
+}
+.iconnew{
+    width: 66.66vw;
+    display: flex;
+    justify-content: space-between;
+}
+@media screen and (max-width: 468px) {
+    .headnew{
+        flex-direction: column;
+    }  
+}
+.bodynew{
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    background-color: tomato;
+}
+.footernew{
+    height: 10vh;
+    background-color: blue;
+}
+.iconnew{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.bannerimage{
+    height: 5vh;
+    width: 80vw;
+}
+.logonew{
+    height: 100%;
+}

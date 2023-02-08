@@ -1,0 +1,43 @@
+.term_modal_content{
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    background: transparent;
+}
+.term_modal_body{
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+
+.terms-head-top-box{
+    display: block;
+    margin: 10px auto 25px;
+    text-align: center;
+}
+.terms-head-box-inr{
+    background: #2c2b2b;
+    min-height: 120px;
+    max-width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 8px;
+    border: 10px solid #000;
+    box-shadow: 0 0 0 4px #4f4f4f;
+    position: relative;
+}
+
+.terms-head-box-inr::before {
+    background-image: url('../../../assets/images/hand-left.png');
+    background-position: 100% 100%;
+    left: -76px;
+}
+.terms-head-box-inr::after {
+    background-image: url('../../../assets/images/hand-right.png');
+    background-position: 0 100%;
+    right: -76px;
+}

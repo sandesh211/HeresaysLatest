@@ -1,0 +1,394 @@
+.like-icon-bar {
+  position: absolute;
+  margin-left: 10%;
+}
+
+.likeCount1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.likeCount1 span {
+  font-family: sanitarium_bbregular;
+  text-transform: uppercase;
+  font-size: 26px;
+}
+.socials-icon-parent{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.like-icon-border {
+  height: 65px;
+  width: 64px;
+  padding: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(
+    180deg,
+    #ffe773,
+    #fffa93 12.81%,
+    #c09b37 31.25%,
+    #e7c75f 56.25%,
+    #512704 82.72%,
+    #efd160
+  );
+}
+.sigma{
+  padding-left: 10px;
+}
+.like-icon-border {
+  transition-duration: .6s;
+}
+.like-icon-border:hover {
+  transform: scale(1.2);
+  z-index: 0;
+}
+
+
+
+
+.like-icon-back,.like-icon-back-sum {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+.like-icon-back{
+  background: radial-gradient(50% 50% at 50% 50%, #082174 0, #031038 100%);
+  display: flex;
+    justify-content: center;
+    margin: auto;
+}
+.like-icon {
+  height: 44px;
+  width: 44px;
+}
+
+@media (max-width: 767px) {
+  
+  .like-icon-border {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    background: linear-gradient(
+      180deg,
+      #ffe773,
+      #fffa93 12.81%,
+      #c09b37 31.25%,
+      #e7c75f 56.25%,
+      #512704 82.72%,
+      #efd160
+    );
+  }
+  
+  .like-icon-back,.like-icon-back-sum {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    margin: auto;
+    
+  }
+  .like-icon-back{background: radial-gradient(50% 50% at 50% 50%, #082174 0, #031038 100%);}
+  .like-icon {
+    height: 36px;
+    width: 36px;
+  }
+
+}
+
+
+.count {
+  font-size: 12px;
+  color: white;
+  padding-top: 2px;
+  font-weight: 600;
+  text-shadow: 1px 0 rgb(7, 7, 7), -2px 0 rgb(3, 3, 3), 0 2px rgb(14, 13, 13), 0 -2px rgb(1, 1, 1),
+               1px 1px rgb(14, 13, 13), -1px -1px rgb(7, 6, 6), 1px -1px rgb(3, 3, 3), -1px 1px rgb(21, 21, 21)
+
+} 
+.postcount {
+  font-size: 24px;
+  color: #e20b09;
+  padding-top: 2px;
+  font-weight: 600;
+  font-family: sanitarium_bbregular;
+  letter-spacing: 4px;
+}
+.sigma {
+  max-width: 1.5vw;
+  padding-top: 2vh;
+
+}
+.sigmaCount{
+  font-size: 14px;
+  color: black;
+  margin-left: 10px;
+}
+
+.sigma_second {
+  max-width: 60%;
+  margin-right: -5px;
+}
+
+.postdetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.storydetails {
+  display: flex;
+
+}
+
+.storynamecontainer {
+  height: 40px;
+  width: 40vw;
+  padding: 3px;
+  border-radius: 5px;
+  background: linear-gradient(
+    180deg,
+    #ffe773,
+    #fffa93 12.81%,
+    #c09b37 31.25%,
+    #e7c75f 56.25%,
+    #512704 82.72%,
+    #efd160
+  );
+}
+
+.storyviews {
+  display: flex;
+  width: 14vw;
+}
+
+.storybacground {
+  padding-top: 7px;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  background: radial-gradient(50% 50% at 50% 50%, #082174 0, #031038 100%);
+}
+
+.imageClass {
+  height: 25px;
+  width: 25px;
+}
+
+#storytext {
+  color: white;
+  margin-top: 3.5%;
+  width: 12vw;
+  font-size: 11px;
+  font-family: sans-serif;
+}
+
+#storytext_second {
+  color: white;
+  margin-top: 7.5%;
+  font-size: 13px;
+  font-family: sans-serif;
+
+}
+
+.authordetails {
+  height: 30px;
+  margin-bottom: 0%;
+  display: flex;
+  margin-left: -3.5%;
+}
+
+.authorname {
+  text-align: center;
+  line-height: 5px;
+  width: 100%;
+}
+
+#authornametext {
+  color: #f5ee84;
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0rem;
+  font-weight: 400;
+  width: 15vw;
+}
+
+#bypara {
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+  margin-top: 0px;
+  /* width: 20vw; */
+}
+
+.authorviews {
+  display: flex;
+  width: 20vw;
+}
+
+.storyname {
+  text-align: center;
+  color: white;
+}
+
+.icon {
+  width: 80%;
+}
+
+.storyname h6 {
+  font-size: 14px;
+  line-height: 15px;
+  padding-top: 11px;
+}
+
+
+.iconSum {
+  width: 60%;
+  margin-top: 10%;
+}
+
+
+.socials-icon-barr span {
+  font-family: "sanitarium_bbregular";
+  text-transform: uppercase;
+  font-size: 26px;
+  color: #fec700;
+}
+
+.socials-icon-barr {
+  position: absolute;
+  bottom: 14%;
+  left: 7%;
+}
+
+.welcome_container .socials-icon-barr {
+  top: 45%;
+  transform: translateY(-55%);
+}
+
+.socials-icon-barr a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.socials-icon-barr a i {
+  width: 52px;
+  height: 52px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  display: block;
+  transition: transform 0.5s ease-in-out;
+}
+.socials-icon-barr a:hover i {
+  transform: rotate(1turn);
+}
+
+.socials-icon-barr span {
+  font-size: 15px;
+}
+.socials-icon-barr a i {
+  width: 44px;
+  height: 44px;
+}
+.iconbook {
+  margin-right: 4px;
+  margin-top: 4px;
+}
+
+
+.E1S{width: 100px;}
+
+
+
+
+@media (max-width: 768px) {
+  .likeCount1{
+    flex-direction: column;
+  }
+  #bypara {
+    width: 100%;
+  }
+  
+  .authorviews {
+    width: 32vw;
+  }
+  .storydetails {
+    width: 100%;
+}
+#storytext_second{
+  margin-top: 0px;
+  width: 14vw;
+}
+.noofpost {
+  margin-top: 20%;
+}
+.storynamecontainer {
+  width: 70vw;
+}
+.storyviews {
+  width: 19vw;
+}
+.storybacground {
+  padding-top: 0px;
+}
+.sigma{
+  padding-left: 2px;
+  padding-top: 2px;
+}
+}
+
+
+
+
+.postdetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-post-view {
+  display: flex;
+  align-items: baseline;
+}
+
+
+.img-post-view h6 {
+  font-size: 16px !important;
+  font-weight: 500;
+  color: #000 !important; 
+}
+.img-post-view h6 .sigmaCount {font-size: 16px;}
+.img-post-view span {
+  font-size: auto;
+  font-weight: 500;
+  color: #000 !important;
+}
+
+
+.postdetails.pus-titles .postcount {
+  color: #e0080a;
+  font-weight: 700 !important;
+  font-size: 25px;
+  margin: 5px 0 17px;
+  text-transform: uppercase;
+  font-family: sanitarium_bbregular;
+  letter-spacing: 3px;
+}
+.by-title {
+  font-size: 16px !important;
+  font-weight: bolder !important;
+  width: 100%;
+  color: black !important;
+}
+.postdetails.pus-titles {
+  padding: 20px 0 0;
+  text-align: center;
+  width: 100%;
+}
