@@ -216,6 +216,14 @@ caption {
     justify-content: space-between;
   }
 
+  
+.bottom-wrapper-initial-mobile {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+}
+
   .A2 {
     justify-content: center;
   }
@@ -417,7 +425,7 @@ caption {
 .home-img-div span {
   font-size: 30px;
   position: absolute;
-  bottom: 23px;
+  bottom: 25px;
   left: 0;
   text-align: center;
   right: 0;
@@ -429,12 +437,12 @@ caption {
 
 span.read {
   transform: rotate(354deg);
-  bottom: 47px !important;
+  bottom: 50px !important;
 }
 
 span.chat {
   transform: rotate(-354deg);
-  bottom: 47px !important;
+  bottom: 50px !important;
 }
 
 
@@ -448,7 +456,7 @@ a.close-button-style.closebtns_popup {
 
 
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 575px) {
+@media only screen and (min-width : 320px) and (max-width : 575px) {
   .custome_b2 {
     gap: 0px;
   }
@@ -522,12 +530,13 @@ h2.title_books {
 }
 
 .mobile_height {
+  /* height: calc(100vh - 55px) !important; */
   height: 100vh !important;
 }
 
 }
 
-@media only screen and (min-device-width : 576px) and (max-device-width : 767px) {
+@media only screen and (min-width : 576px) and (max-width : 767px) {
   .custome_b2 {
     gap: 0px;
   }
@@ -620,7 +629,7 @@ span.chat {
 }
 
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
   .tabs_view {
     height: auto !important;
   }
@@ -667,7 +676,7 @@ span.chat {
 }
 
 
-@media only screen and (min-device-width : 1025px) and (max-device-width : 1100px) {
+@media only screen and (min-width : 1025px) and (max-width : 1100px) {
   .middle.mobile_middle .B2 {
     height: auto;
     width: calc(100vw - 200px)!important;
@@ -678,7 +687,7 @@ span.chat {
 
 } 
 
-@media only screen and (min-device-width : 1101px) and (max-device-width : 1200px) {
+@media only screen and (min-width : 1101px) and (max-width : 1200px) {
   .middle.mobile_middle .B2 {
     height: auto;
     width: calc(100vw - 200px)!important;
@@ -701,3 +710,55 @@ span.chat {
 .middle.mobile_middle {
   justify-content: center;
 }
+
+
+
+
+
+/* 
+.B2.cards.custome_b2.b2cardnew {
+  width: calc(100vw - 600px);
+} */
+
+/* .bottom_outer_block {
+  margin-top: -30px; margin-bottom: 10px;
+  text-align: center;
+  width: 330px;
+  background-color: #512704;
+  border-radius: 5px;
+  padding: 5px 5px 5px !important;
+  background: linear-gradient(180deg, #ffe570, #fffb95 13.74%, #be9a38 26.34%, #ebce65 47.87%, #b38a29 67.57%, #421800 78.56%, #b48a28 92.99%, #fce06b 101.93%);
+  margin: 0 auto;
+}
+
+h2.title_books {
+  font-size: 17px;
+  color: #f2e608;
+  -webkit-text-stroke: 1px #000000f5;
+  text-transform: uppercase;
+} */
+/* .book_infored {
+  background: #fff;
+  padding: 10px;
+} */
+
+/* .bottom_inner_block p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: #0c5581;
+  text-transform: uppercase;
+  margin: 0px;
+  font-size: 13px;
+} */
+
+
+
+/* .B3.tabs_view_books {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+} */

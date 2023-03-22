@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Loader } from "../src/pages/components/loader";
+import './i18n';
 
 ReactDOM.render(
     <App />,

@@ -28,9 +28,13 @@ import EventEmitter from "reactjs-eventemitter";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SubmitButton from "../assets/images/submit-button-s-icon.svg";
 import { Navigate } from "react-router-dom";
+import { AllLanguageFromJson } from "./json/languages";
+import { withNamespaces, NamespacesConsumer, Trans, useTranslation } from 'react-i18next';
+
 
 
 const AllModal = (props) => {
+  const { t, i18n } = useTranslation();
   const [NewsModal, setNewsModal] = useState(false);
   const [showSociaModal, setShowSocialModal] = useState(false);
   const [ShowAttentionModal, setShowAttentionModal] = useState(false);
@@ -71,7 +75,7 @@ const AllModal = (props) => {
   const [checkedValue, setCheckedValue] = useState(0);
   let currentLanguageSetting = localStorage.getItem("prefered_language")
     ? localStorage.getItem("prefered_language")
-    : navigator.language;
+    : "en";
   const [currentLanguage, setCurrentLanguage] = useState(
     currentLanguageSetting
   );
@@ -92,9 +96,9 @@ const AllModal = (props) => {
   useEffect(() => {
     let currentLanguageSetting = localStorage.getItem("prefered_language")
       ? localStorage.getItem("prefered_language")
-      : navigator.language;
-    if (currentLanguageSetting == navigator.language) {
-      localStorage.setItem("prefered_language", navigator.language);
+      : "en";
+    if (currentLanguageSetting == "en") {
+      localStorage.setItem("prefered_language", "en");
     }
     getAllData(currentLanguageSetting);
     getClassifiedData();
@@ -134,7 +138,7 @@ const AllModal = (props) => {
     return result;
   };
   const onSubmit = (data) => {
-   
+
     let bodyData = {
       data: {
         feedback_type: feedBackStatus(),
@@ -144,8 +148,8 @@ const AllModal = (props) => {
       },
     };
     setThanksTypeModalContact(true)
-   setFeedbackData(bodyData);
-   onFeedbackSubmit(bodyData.data)
+    setFeedbackData(bodyData);
+    onFeedbackSubmit(bodyData.data)
   };
   const onFeedbackSubmit = (data) => {
     axios
@@ -153,13 +157,11 @@ const AllModal = (props) => {
       .then((res) => {
         axios
           .put(
-            `${ApiUrl}updateFeedback/${
-              res.data.list && res.data.list.insertId
+            `${ApiUrl}updateFeedback/${res.data.list && res.data.list.insertId
             }`,
             {
-              feedback_reference: `HERESAYSFEEDBACK00${
-                res.data.list && res.data.list.insertId
-              }`,
+              feedback_reference: `HERESAYSFEEDBACK00${res.data.list && res.data.list.insertId
+                }`,
             }
           )
           .then((result) => {
@@ -175,7 +177,7 @@ const AllModal = (props) => {
       .catch((error) => {
         console.log(error);
         reset()
-       
+
       });
   };
   const selectOnlyThis = (id) => {
@@ -185,8 +187,8 @@ const AllModal = (props) => {
   const getTermsData = () => {
     axios.get(`${ApiUrl}getTermsAndCondition`).then((result) => {
       setTermsData(
-        result.data.data[1].attributes.published_at
-          ? result.data.data[1].attributes
+        result?.data?.data[1]?.attributes?.published_at
+          ? result?.data?.data[1]?.attributes
           : ""
       );
     });
@@ -194,7 +196,7 @@ const AllModal = (props) => {
   const getManualData = (languageSetting) => {
     axios.get(`${ApiUrl}getManual`).then((result) => {
       // setManualDetails(
-      //   JSON.parse(unescape(result.data.data[0].attributes.description))[
+      //   JSON.parse(decodeURIComponent(result.data.data[0].attributes.description))[
       //     languageSetting
       //   ].value
       // );
@@ -204,7 +206,7 @@ const AllModal = (props) => {
   const getClassifiedData = () => {
     axios.get(`${ApiUrl}getClassified`).then((result) => {
       setAdClassifiedData(
-        result.data.data.filter((x) => x.attributes.published_at != null)
+        result?.data?.data?.filter((x) => x?.attributes?.published_at != null)
       );
     });
   };
@@ -247,7 +249,7 @@ const AllModal = (props) => {
           }
           return (
             <li
-            key={index}
+              key={index}
               className={className}
               // key={suggestion}
               onClick={(e) => onFormDataInput(e, name)}
@@ -265,7 +267,7 @@ const AllModal = (props) => {
   };
 
   const onLanguageChange = async (data) => {
-
+    i18n.changeLanguage(data);
     EventEmitter.dispatch("languagechanged", data);
     localStorage.setItem("prefered_language", data);
     setCurrentLanguage(data);
@@ -276,8 +278,8 @@ const AllModal = (props) => {
   const getAttentionData = () => {
     axios.get(`${ApiUrl}getAttention`).then((result) => {
       setAttentionData(
-        result.data.data[0].attributes.published_at
-          ? result.data.data[0].attributes
+        result?.data?.data[0]?.attributes?.published_at
+          ? result?.data?.data[0]?.attributes
           : ""
       );
     });
@@ -298,14 +300,14 @@ const AllModal = (props) => {
             let requiredAttentionData = Object.fromEntries(
               Object.entries(
                 JSON.parse(
-                  unescape(attentionResponse.data.data[0].attributes.attention)
+                  decodeURIComponent(attentionResponse?.data?.data[0]?.attributes?.attention)
                 )
               ).filter(([key]) => key.includes(currentLanguage))
             )[currentLanguage];
             let requiredTermsData = Object.fromEntries(
               Object.entries(
                 JSON.parse(
-                  unescape(secondResponse.data.data[1].attributes.description)
+                  decodeURIComponent(secondResponse?.data?.data[0]?.attributes?.description)
                 )
               ).filter(([key]) => key.includes(currentLanguage))
             )[currentLanguage];
@@ -385,42 +387,35 @@ const AllModal = (props) => {
     setShowSuggestions("");
   };
 
-const clearLocal =()=>{
-  localStorage.clear();
-  setTimeout(() => {
-    // navigate("https://www.google.com/")
-    
-  }, 1000);
-}
+  const clearLocal = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      // navigate("https://www.google.com/")
+
+    }, 1000);
+  }
 
   return (
     <>
-      <Translator
-        from="en"
-        to={
-          localStorage.getItem("prefered_language")
-            ? localStorage.getItem("prefered_language")
-            : "en"
-        }
-        googleApiKey="AIzaSyDJyDB2bnmeDG4KHOZkHnrDqhrqnUI375M"
-      >
-        <div className="home-middle-top-icon" style={{ zIndex: "999" }}> 
-          <a
-            role="button"
-            data-toggle="modal"
-            onClick={() => {
-              setShowSettingsModal(true);
-            }}
-            data-target="#SettingsModal"
-            className="top_left_icons"
-          >
-            <span onClick={() => {
-              setShowSettingsModal(true);
-            }}>
-              <i className="settings-icon fa-spin"></i>
-            </span>
-          </a>
-          {/* <a
+
+
+      <div className="home-middle-top-icon" style={{ zIndex: "999" }}>
+        <a
+          role="button"
+          data-toggle="modal"
+          onClick={() => {
+            setShowSettingsModal(true);
+          }}
+          data-target="#SettingsModal"
+          className="top_left_icons"
+        >
+          <span onClick={() => {
+            setShowSettingsModal(true);
+          }}>
+            <i className="settings-icon fa-spin"></i>
+          </span>
+        </a>
+        {/* <a
             onClick={() => {
               setShowAdsModal(true);
             }}
@@ -432,248 +427,202 @@ const clearLocal =()=>{
               <i className="pay-per-click-icon"></i>
             </span>
           </a> */}
-          <a
-            onClick={() => {
-              setShowGuideModal(true);
-            }}
-            role="button"
-            data-toggle="modal"
-            data-target="#GuideModal"
-            className="top_left_icons_2"
-          >
-            <span className="questions-span"></span>
-          </a>
-          
-          <a
-            href="https://www.google.com/"
-            className="mobile-exit-button header-exit-button top_right_icons"
-            onClick={()=>{clearLocal()}}
-            
-          >
-            <span>
-              <i className="header-exit-icon"></i>
-            </span>
-          </a>
-        </div>
-
-
-        <div className="home-exit-bx flex-1" onClick={()=>{clearLocal()}}>
-          <a href="https://www.google.com/" className="header-exit-button top_right_icons">
-            <span>
-              <i className="header-exit-icon"></i>
-            </span>
-          </a>
-        </div>
-
-        {/* New_Start */}
-
-        {/* AllModals_Start */}
-
-        {/* SettingsModal start */}
-        <div
-          id="SettingsModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="SettingsModal"
-          aria-hidden="true"
-          data-backdrop="static"
-          className={
-            showSettingsModal
-              ? "modal fade zoom-in-center header-menu-top show"
-              : "modal fade zoom-in-center header-menu-top "
-          }
+        <a
+          onClick={() => {
+            setShowGuideModal(true);
+          }}
+          role="button"
+          data-toggle="modal"
+          data-target="#GuideModal"
+          className="top_left_icons_2"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered menutop-modal-dialog"
-          >
-            <div className="modal-content">
+          <span className="questions-span"></span>
+        </a>
+
+        <a
+          href="https://www.google.com/"
+          className="mobile-exit-button header-exit-button top_right_icons"
+          onClick={() => { clearLocal() }}
+
+        >
+          <span>
+            <i className="header-exit-icon"></i>
+          </span>
+        </a>
+      </div>
+
+
+      <div className="home-exit-bx flex-1" onClick={() => { clearLocal() }}>
+        <a href="https://www.google.com/" className="header-exit-button top_right_icons">
+          <span>
+            <i className="header-exit-icon"></i>
+          </span>
+        </a>
+      </div>
+
+      {/* New_Start */}
+
+      {/* AllModals_Start */}
+
+      {/* SettingsModal start */}
+      <div
+        id="SettingsModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="SettingsModal"
+        aria-hidden="true"
+        data-backdrop="static"
+        className={
+          showSettingsModal
+            ? "modal fade zoom-in-center header-menu-top show"
+            : "modal fade zoom-in-center header-menu-top "
+        }
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered menutop-modal-dialog"
+        >
+          <div className="modal-content">
+            <a
+              data-dismiss="modal"
+              className="close-button-style"
+              onClick={() => setShowSettingsModal(false)}
+            >
+              <span></span>
+            </a>
+            <div className="welcome-item-row">
               <a
-                data-dismiss="modal"
-                className="close-button-style"
-                onClick={() => setShowSettingsModal(false)}
+                data-toggle="modal"
+                onClick={() => setDownloadappModal(true)}
+                data-target="#DownloadappModal"
+                className="welcome-item"
               >
-                <span></span>
+                <img src={SettingSubmenuIcon1} />
               </a>
-              <div className="welcome-item-row">
-                <a
-                  data-toggle="modal"
-                  onClick={() => setDownloadappModal(true)}
-                  data-target="#DownloadappModal"
-                  className="welcome-item"
-                >
-                  <img src={SettingSubmenuIcon1} />
-                </a>
-                <a
-                  data-toggle="modal"
-                  onClick={() => {
-                    setShowLanguageModal(true);
-                  }}
-                  data-target="#LanguageModal"
-                  className="welcome-item"
-                >
-                  <img src={SettingSubmenuIcon2} />
-                </a>
-                <a
-                  data-toggle="modal"
-                  data-target="#Termsofuse2Modal"
-                  onClick={() => {
-                    setTermsofuse2Modal(true);
-                  }}
-                  className="welcome-item"
-                >
-                  <img src={SettingSubmenuIcon3} />
-                </a>
-              </div>
+              <a
+                data-toggle="modal"
+                onClick={() => {
+                  setShowLanguageModal(true);
+                }}
+                data-target="#LanguageModal"
+                className="welcome-item"
+              >
+                <img src={SettingSubmenuIcon2} />
+              </a>
+              <a
+                data-toggle="modal"
+                data-target="#Termsofuse2Modal"
+                onClick={() => {
+                  setTermsofuse2Modal(true);
+                  setShowSettingsModal(false);
+                }}
+                className="welcome-item"
+              >
+                <img src={SettingSubmenuIcon3} />
+              </a>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* SettingsModal End */}
+      {/* SettingsModal End */}
 
-        {/* AdsModal start */}
+      {/* AdsModal start */}
+      <div
+        id="AdsModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="AdsModal"
+        aria-hidden="true"
+        data-backdrop="static"
+        className={
+          ShowAdsModal
+            ? "modal fade zoom-in-center header-menu-top show"
+            : "modal fade zoom-in-center header-menu-top"
+        }
+      >
         <div
-          id="AdsModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="AdsModal"
-          aria-hidden="true"
-          data-backdrop="static"
-          className={
-            ShowAdsModal
-              ? "modal fade zoom-in-center header-menu-top show"
-              : "modal fade zoom-in-center header-menu-top"
-          }
+          role="document"
+          className="modal-dialog modal-dialog-centered menutop-modal-dialog"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered menutop-modal-dialog"
-          >
-            <div className="modal-content">
+          <div className="modal-content">
+            <a
+              data-dismiss="modal"
+              className="close-button-style"
+              onClick={() => {
+                setShowAdsModal(false);
+              }}
+            >
+              <span></span>
+            </a>
+            <div className="welcome-item-row">
               <a
+                href="/advertisement"
+                routerlink="/advertisement"
                 data-dismiss="modal"
-                className="close-button-style"
+                className="welcome-item"
+              >
+                <img src={image1} />
+              </a>
+              <a
+                className="welcome-item"
                 onClick={() => {
+                  setFinanceModal(true);
                   setShowAdsModal(false);
                 }}
               >
-                <span></span>
+                <img src={image2} />
               </a>
-              <div className="welcome-item-row">
-                <a
-                  href="/advertisement"
-                  routerlink="/advertisement"
-                  data-dismiss="modal"
-                  className="welcome-item"
-                >
-                  <img src={image1} />
-                </a>
-                <a
-                  className="welcome-item"
-                  onClick={() => {
-                    setFinanceModal(true);
-                    setShowAdsModal(false);
-                  }}
-                >
-                  <img src={image2} />
-                </a>
-                <a
-                  className="welcome-item"
-                  onClick={() => setOpportunityModal(true)}
-                >
-                  <img src={image3} />
-                </a>
-              </div>
+              <a
+                className="welcome-item"
+                onClick={() => setOpportunityModal(true)}
+              >
+                <img src={image3} />
+              </a>
             </div>
           </div>
         </div>
-        {/* AdsModal End */}
+      </div>
+      {/* AdsModal End */}
 
-        {/* GuideModal start */}
+      {/* GuideModal start */}
+      <div
+        id="GuideModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="GuideModal"
+        aria-hidden="true"
+        data-backdrop="static"
+        className={
+          ShowGuideModal
+            ? "modal fade zoom-in-center header-menu-top show"
+            : "modal fade zoom-in-center header-menu-top"
+        }
+      >
         <div
-          id="GuideModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="GuideModal"
-          aria-hidden="true"
-          data-backdrop="static"
-          className={
-            ShowGuideModal
-              ? "modal fade zoom-in-center header-menu-top show"
-              : "modal fade zoom-in-center header-menu-top"
-          }
+          role="document"
+          className="modal-dialog modal-dialog-centered menutop-modal-dialog modal-dialog-zoom"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered menutop-modal-dialog modal-dialog-zoom"
-          >
-            <div className="modal-content">
-              <a
-                data-dismiss="modal"
-                className="close-button-style"
-                onClick={() => {
-                  setShowGuideModal(false);
-                }}
-              >
-                <span></span>
-              </a>
-
-              <div className="welcome-item-row">
-                <Fade>
-                  <a
-                    data-toggle="modal"
-                    onClick={() => {
-                      setContactModal(true);
-                    }}
-                    data-target="#ContactModal"
-                    className="welcome-item"
-                  >
-                    <img src={GuideSubmenuIcon1} />
-                  </a>
-                  <a
-                    className="welcome-item"
-                    onClick={() => {
-                      setInstructionModal(true);
-                    }}
-                  >
-                    <img src={GuideSubmenuIcon2} />
-                  </a>
-                  <a
-                    data-toggle="modal"
-                    onClick={() => {
-                      setNewsModal(true);
-                    }}
-                    data-target="#NewsModal"
-                    className="welcome-item"
-                  >
-                    <img src={GuideSubmenuIcon3} />
-                  </a>
-                </Fade>
-              </div>
-            </div>
-          </div>
-          {/* GuideModal End */}
-
-          {/* OpportunityModal_start */}
-
-          {/* image-gallery-1 Start */}
-          <div
-            id="image-gallery-1"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="GallaryModal"
-            aria-hidden="true"
-            className="modal fade "
-          >
-            <div
-              role="document"
-              className="modal-dialog modal-dialog-centered gallary-modal-dialog modal-dialog-zoom"
+          <div className="modal-content">
+            <a
+              data-dismiss="modal"
+              className="close-button-style"
+              onClick={() => {
+                setShowGuideModal(false);
+              }}
             >
-              <div className="modal-content border-style-8">
+              <span></span>
+            </a>
+
+            <div className="welcome-item-row">
+              <Fade>
                 <a
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  className="close-button-style"
+                  data-toggle="modal"
+                  onClick={() => {
+                    setContactModal(true);
+                  }}
+                  data-target="#ContactModal"
+                  className="welcome-item"
                 >
                   <img src={GuideSubmenuIcon1} />
                 </a>
@@ -695,187 +644,13 @@ const clearLocal =()=>{
                 >
                   <img src={GuideSubmenuIcon3} />
                 </a>
-              </div>
+              </Fade>
             </div>
           </div>
         </div>
         {/* GuideModal End */}
 
         {/* OpportunityModal_start */}
-        <Zoom when={OpportunityModal}>
-          <div
-            id="OpportunityModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="OpportunityModal"
-            aria-hidden="true"
-            data-backdrop="static"
-            className={OpportunityModal ? "modal fade show" : "modal fade"}
-            style={
-              OpportunityModal ? { display: "block" } : { display: "none" }
-            }
-          >
-            <div
-              role="document"
-              className="modal-dialog modal-dialog-centered opportunity-modal-dialog modal-dialog-zoom"
-            >
-              <div className="modal-content border-style-8">
-                <a
-                  data-dismiss="modal"
-                  onClick={() => {
-                    setOpportunityModal(false);
-                  }}
-                  aria-label="Close"
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-                <div className="modal-body">
-                  <div className="opportunity-scroll-box">
-                    <ul className="opportunity-ul-row">
-                      {adClassifiedData &&
-                        adClassifiedData.map((x , index) => {
-                          return (
-                            <li key={index}>{ReactHtmlParser(x.attributes.textfield)}</li>
-                          );
-                        })}
-                    </ul>
-                    <button
-                      type="hidden"
-                      data-toggle="modal"
-                      data-target="#image-gallery-1"
-                      hidden="hidden"
-                    ></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Zoom>
-
-        {/* OpportunityModal End */}
-
-        {/* FinanceModal start */}
-        <Zoom when={FinanceModal} botton>
-          <div
-            id="FinanceModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="FinanceModal"
-            aria-hidden="true"
-            data-backdrop="static"
-            className={FinanceModal ? "modal fade show" : "modal fade"}
-            style={
-              FinanceModal
-                ? { display: "block", paddingRight: "16px" }
-                : { display: "none" }
-            }
-          >
-            <div
-              role="document"
-              className="modal-dialog modal-dialog-centered finance-modal-dialog modal-dialog-zoom"
-            >
-              <div className="modal-content">
-                <a
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => {
-                    setFinanceModal(false);
-                  }}
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-                <div className="modal-body">
-                  <div className="finance-left-col">
-                    <div className="finance-left-info-border">
-                      <div className="finance-left-info">
-                        <p> : </p>
-                        <p> : </p>
-                        <p>: </p>
-                        <p> : </p>
-                      </div>
-                    </div>
-                    <div className="input-custom-field finance-input-id-left f-mrt-15 date-field">
-                      <input
-                        id="gfromDate"
-                        type="text"
-                        bsdatepicker=""
-                        className="form-control ng-untouched ng-pristine ng-valid"
-                        placeholder=""
-                      />
-                      <label htmlFor="gfromDate" className="input-group-addon">
-                        <span>Start</span>
-                      </label>
-                    </div>
-                    <div className="input-custom-field finance-input-id-left f-mrt-15 date-field">
-                      <input
-                        id="gtoDate"
-                        type="text"
-                        bsdatepicker=""
-                        className="form-control ng-untouched ng-pristine ng-valid"
-                        placeholder=""
-                      />
-                      <label htmlFor="gtoDate" className="input-group-addon">
-                        <span>End</span>
-                      </label>
-                    </div>
-                    <div className="input-custom-field finance-input-id-left f-mrt-15">
-                      <input
-                        type="text"
-                        className="form-control ng-untouched ng-pristine ng-valid"
-                        placeholder=""
-                      />
-                    </div>
-                    <div className="type-btngroup view-classified-btngroup">
-                      <button
-                        type="submit"
-                        className="btn-apply read-btn-bg cmn-submit-button"
-                      >
-                        <span></span>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="finance-right-col border-style-8">
-                    <div className="finance-bar-content">
-                      <button
-                        data-toggle="modal"
-                        onClick={() => {
-                          setCheckBudgetModal(true);
-                        }}
-                        data-target="#checkBudgetModal"
-                        className="btn-check-budget"
-                      >
-                        <span></span>
-                      </button>
-                      <div className="chart-wrapper">
-                        <canvas
-                          basechart=""
-                          className="chartjs-render-monitor"
-                          style={{
-                            display: "block",
-                            width: "0px",
-                            height: "0px",
-                          }}
-                          width="0"
-                          height="0"
-                        ></canvas>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="hidden"
-                  data-toggle="modal"
-                  data-target="#ThanksTypeModalForGraph"
-                  hidden="hidden"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </Zoom>
-
-        {/* FinanceModal End */}
 
         {/* image-gallery-1 Start */}
         <div
@@ -884,7 +659,7 @@ const clearLocal =()=>{
           role="dialog"
           aria-labelledby="GallaryModal"
           aria-hidden="true"
-          className="modal fade"
+          className="modal fade "
         >
           <div
             role="document"
@@ -896,112 +671,333 @@ const clearLocal =()=>{
                 aria-label="Close"
                 className="close-button-style"
               >
-                <span></span>
+                <img src={GuideSubmenuIcon1} />
               </a>
-              <div className="modal-body"></div>
+              <a
+                className="welcome-item"
+                onClick={() => {
+                  setInstructionModal(true);
+                }}
+              >
+                <img src={GuideSubmenuIcon2} />
+              </a>
+              <a
+                data-toggle="modal"
+                onClick={() => {
+                  setNewsModal(true);
+                }}
+                data-target="#NewsModal"
+                className="welcome-item"
+              >
+                <img src={GuideSubmenuIcon3} />
+              </a>
             </div>
           </div>
         </div>
-        {/* image-gallery-1 End */}
+      </div>
+      {/* GuideModal End */}
 
-        {/* DisclaimerModal Start */}
+      {/* OpportunityModal_start */}
+      <Zoom when={OpportunityModal}>
         <div
-          id="DisclaimerModal"
+          id="OpportunityModal"
           tabIndex="-1"
           role="dialog"
-          aria-labelledby="DisclaimerModal"
+          aria-labelledby="OpportunityModal"
           aria-hidden="true"
-          data-backdrop="false"
-          className="modal fade zoom-in zoom-in-right"
+          data-backdrop="static"
+          className={OpportunityModal ? "modal fade show" : "modal fade"}
+          style={
+            OpportunityModal ? { display: "block" } : { display: "none" }
+          }
         >
-          <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
-            <div className="modal-content border-style-8-gray">
-              <a data-dismiss="modal" className="close-button-style">
+          <div
+            role="document"
+            className="modal-dialog modal-dialog-centered opportunity-modal-dialog modal-dialog-zoom"
+          >
+            <div className="modal-content border-style-8">
+              <a
+                data-dismiss="modal"
+                onClick={() => {
+                  setOpportunityModal(false);
+                }}
+                aria-label="Close"
+                className="close-button-style"
+              >
                 <span></span>
               </a>
-              <div className="disclaimer-content-in">
-                <div className="modal-body">
-                  <div className="disclaimer-title-head cmn-title-head text-center">
-                    <h2>
-                      <Translate>DISCLAIMER</Translate>
-                    </h2>
-                  </div>
-                  <div className="disclaimer-info-scroll">
-                    {ReactHtmlParser(`${disclaimer}`)}
-                  </div>
+              <div className="modal-body">
+                <div className="opportunity-scroll-box">
+                  <ul className="opportunity-ul-row">
+                    {adClassifiedData &&
+                      adClassifiedData?.map((x, index) => {
+                        return (
+                          <li key={index}>{ReactHtmlParser(x.attributes.textfield)}</li>
+                        );
+                      })}
+                  </ul>
+                  <button
+                    type="hidden"
+                    data-toggle="modal"
+                    data-target="#image-gallery-1"
+                    hidden="hidden"
+                  ></button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* DisclaimerModal End */}
+      </Zoom>
 
-        {/* LanguageModal Start */}
+      {/* OpportunityModal End */}
 
-        <Zoom when={ShowLanguageModal} botton>
+      {/* FinanceModal start */}
+      <Zoom when={FinanceModal} botton>
+        <div
+          id="FinanceModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="FinanceModal"
+          aria-hidden="true"
+          data-backdrop="static"
+          className={FinanceModal ? "modal fade show" : "modal fade"}
+          style={
+            FinanceModal
+              ? { display: "block", paddingRight: "16px" }
+              : { display: "none" }
+          }
+        >
           <div
-            id="LanguageModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="LanguageModal"
-            aria-hidden="true"
-            data-backdrop="false"
-            className={
-              ShowLanguageModal
-                ? "modal fade zoom-in-center show"
-                : "modal fade zoom-in-center"
-            }
+            role="document"
+            className="modal-dialog modal-dialog-centered finance-modal-dialog modal-dialog-zoom"
           >
-            <div className="modal-dialog modal-dialog-centered language-modal-dialog">
-              <div className="language-title-head cmn-title-head text-center">
-                <h2>
-                  <Translate>LANGUAGE SELECTION</Translate>
-                </h2>
-              </div>
-              <div className="modal-content border-style-8">
-                <a
-                  // href="javascript:void(0);"
-                  data-dismiss="modal"
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-
-                <a
-                  data-dismiss="modal"
-                  className="close-button-style"
-                  onClick={() => setShowLanguageModal(false)}
-                >
-                  <span></span>
-                </a>
-                <div className="modal-body">
-                  <div className="language-item-row">
-                    {AllLaguages &&
-                      AllLaguages.map((x,index) => {
-                        return (
-                          <button
-                          key={index}
-                            className="mx-4 my-2 button-75"
-                            onClick={() => {
-                              onLanguageChange(x.attributes.code);
-                              getAllData()
-                            }}
-                          >
-                            <span>{x.attributes.name}</span>
-                          </button>
-                        );
-                      })}
+            <div className="modal-content">
+              <a
+                data-dismiss="modal"
+                aria-label="Close"
+                onClick={() => {
+                  setFinanceModal(false);
+                }}
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
+              <div className="modal-body">
+                <div className="finance-left-col">
+                  <div className="finance-left-info-border">
+                    <div className="finance-left-info">
+                      <p> : </p>
+                      <p> : </p>
+                      <p>: </p>
+                      <p> : </p>
+                    </div>
                   </div>
+                  <div className="input-custom-field finance-input-id-left f-mrt-15 date-field">
+                    <input
+                      id="gfromDate"
+                      type="text"
+                      bsdatepicker=""
+                      className="form-control ng-untouched ng-pristine ng-valid"
+                      placeholder=""
+                    />
+                    <label htmlFor="gfromDate" className="input-group-addon">
+                      <span>Start</span>
+                    </label>
+                  </div>
+                  <div className="input-custom-field finance-input-id-left f-mrt-15 date-field">
+                    <input
+                      id="gtoDate"
+                      type="text"
+                      bsdatepicker=""
+                      className="form-control ng-untouched ng-pristine ng-valid"
+                      placeholder=""
+                    />
+                    <label htmlFor="gtoDate" className="input-group-addon">
+                      <span>End</span>
+                    </label>
+                  </div>
+                  <div className="input-custom-field finance-input-id-left f-mrt-15">
+                    <input
+                      type="text"
+                      className="form-control ng-untouched ng-pristine ng-valid"
+                      placeholder=""
+                    />
+                  </div>
+                  <div className="type-btngroup view-classified-btngroup">
+                    <button
+                      type="submit"
+                      className="btn-apply read-btn-bg cmn-submit-button"
+                    >
+                      <span></span>
+                    </button>
+                  </div>
+                </div>
+                <div className="finance-right-col border-style-8">
+                  <div className="finance-bar-content">
+                    <button
+                      data-toggle="modal"
+                      onClick={() => {
+                        setCheckBudgetModal(true);
+                      }}
+                      data-target="#checkBudgetModal"
+                      className="btn-check-budget"
+                    >
+                      <span></span>
+                    </button>
+                    <div className="chart-wrapper">
+                      <canvas
+                        basechart=""
+                        className="chartjs-render-monitor"
+                        style={{
+                          display: "block",
+                          width: "0px",
+                          height: "0px",
+                        }}
+                        width="0"
+                        height="0"
+                      ></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="hidden"
+                data-toggle="modal"
+                data-target="#ThanksTypeModalForGraph"
+                hidden="hidden"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </Zoom>
+
+      {/* FinanceModal End */}
+
+      {/* image-gallery-1 Start */}
+      <div
+        id="image-gallery-1"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="GallaryModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered gallary-modal-dialog modal-dialog-zoom"
+        >
+          <div className="modal-content border-style-8">
+            <a
+              data-dismiss="modal"
+              aria-label="Close"
+              className="close-button-style"
+            >
+              <span></span>
+            </a>
+            <div className="modal-body"></div>
+          </div>
+        </div>
+      </div>
+      {/* image-gallery-1 End */}
+
+      {/* DisclaimerModal Start */}
+      <div
+        id="DisclaimerModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="DisclaimerModal"
+        aria-hidden="true"
+        data-backdrop="false"
+        className="modal fade zoom-in zoom-in-right"
+      >
+        <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
+          <div className="modal-content border-style-8-gray">
+            <a data-dismiss="modal" className="close-button-style">
+              <span></span>
+            </a>
+            <div className="disclaimer-content-in">
+              <div className="modal-body">
+                <div className="disclaimer-title-head cmn-title-head text-center">
+                  <h2>
+                    {t('DISCLAIMER')}
+                  </h2>
+                </div>
+                <div className="disclaimer-info-scroll">
+                  {ReactHtmlParser(`${disclaimer}`)}
                 </div>
               </div>
             </div>
           </div>
-        </Zoom>
+        </div>
+      </div>
+      {/* DisclaimerModal End */}
 
-        {/* LanguageModal End */}
+      {/* LanguageModal Start */}
 
-        {/* Termsofuse2Modal start */}
-        <Zoom when={Termsofuse2Modal} center>
+      <Zoom when={ShowLanguageModal} botton>
+        <div
+          id="LanguageModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="LanguageModal"
+          aria-hidden="true"
+          data-backdrop="false"
+          className={
+            ShowLanguageModal
+              ? "modal fade zoom-in-center show"
+              : "modal fade zoom-in-center"
+          }
+        >
+          <div className="modal-dialog modal-dialog-centered language-modal-dialog">
+            <div className="language-title-head cmn-title-head text-center">
+              <h2>
+                {t('LANGUAGE SELECTION')}
+              </h2>
+            </div>
+            <div className="modal-content border-style-8">
+              <a
+                // href="javascript:void(0);"
+                data-dismiss="modal"
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
+
+              <a
+                data-dismiss="modal"
+                className="close-button-style"
+                onClick={() => setShowLanguageModal(false)}
+              >
+                <span></span>
+              </a>
+              <div className="modal-body">
+                <div className="language-item-row">
+                  {AllLanguageFromJson &&
+                    AllLanguageFromJson.map((x, index) => {
+                      return (
+                        <button
+                          key={index}
+                          className="mx-4 my-2 button-75"
+                          onClick={() => {
+                            onLanguageChange(x.BCP47);
+                            getAllData()
+                          }}
+                        >
+                          <span>{x.Native}</span>
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Zoom>
+
+      {/* LanguageModal End */}
+
+      {/* Termsofuse2Modal start */}
+      {/* <Zoom when={Termsofuse2Modal} center>
           <div
             id="Termsofuse2Modal"
             tabIndex="-1"
@@ -1033,7 +1029,7 @@ const clearLocal =()=>{
                       <div className="disclaimer-title-head cmn-title-head text-center">
                         <h2>
                           <span>
-                            <Translate>Terms of use</Translate>{" "}
+                            {t('Content')}Terms of use{" "}
                           </span>
                         </h2>
                       </div>
@@ -1062,172 +1058,240 @@ const clearLocal =()=>{
               </div>
             </div>
           </div>
-        </Zoom>
+        </Zoom> */}
 
-        {/* Termsofuse2Modal End */}
 
-        {/* InstructionModal start */}
 
-        <Zoom when={InstructionModal} botton>
-          <div
-            id="InstructionModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="InstructionModal"
-            data-backdrop="false"
-            className={
-              InstructionModal
-                ? "modal fade zoom-in-center show"
-                : "modal fade zoom-in-center"
-            }
-          >
-            <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
-              <div className="modal-content border-style-8-gray">
-                <a
-                  data-dismiss="modal"
-                  className="close-button-style"
-                  onClick={onInstructionModalClose}
-                >
-                  <span></span>
-                </a>
-                <div className="disclaimer-content-in">
-                  <div className="modal-body">
+
+
+
+      {Termsofuse2Modal && (
+        <div
+          id="TermsModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="LanguageModal"
+          aria-hidden="true"
+          data-backdrop="static"
+          // className="modal fade zoom-in-center show"
+          className={
+            Termsofuse2Modal
+              ? "modal fade zoom-in zoom-in-right show"
+              : "modal fade zoom-in zoom-in-right"
+          }
+        >
+          <div className="modal-dialog modal-dialog-centered terms-modal-dialog">
+            <div className="modal-content modal-content-term">
+              <div className="modal-body">
+                <div className="terms-wrapper">
+                  <div className="terms-wrap terms-wrap-term">
                     <div className="disclaimer-title-head cmn-title-head text-center">
                       <h2>
-                        <Translate>Manual</Translate>{" "}
+                        <span >{t('Terms of use')}</span>
                       </h2>
                     </div>
-                    <div className="disclaimer-info-scroll">
-                      {ReactHtmlParser(manualDetails)}
+                    <div className="terms-info terms-info-term">
+                      {" "}
+                      {ReactHtmlParser(
+                        termsData && termsData ? userAgreementData : ""
+                      )}
                     </div>
+                  </div>
+                  <div className="terms-footer">
+                    <Link
+                      to="/"
+                      data-dismiss="modal"
+                      onClick={() => {
+                        setTermsofuse2Modal(false);
+                        setShowSettingsModal(false);
+                      }}
+                      className="btn-dontagree"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span className="btn-d-text">{t('REFUSE')}</span>
+                    </Link>
+                    <Link
+                      to="/home"
+                      data-dismiss="modal"
+                      className="btn-agree"
+                      style={{ textDecoration: "none" }}
+                      onClick={() => { setTermsofuse2Modal(false); }}
+                    >
+                      <span>{t('ACCEPT')}</span>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {/* Termsofuse2Modal End */}
 
-         
-        </Zoom>
+      {/* InstructionModal start */}
 
-        {/* InstructionModal End */}
-
-        {/* ContactModal start */}
-        <Zoom when={ContactModal} center>
-          <div
-            id="ContactModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="ContactModal"
-            aria-hidden="true"
-            data-backdrop="false"
-            className={
-              ContactModal
-                ? "modal fade zoom-in zoom-in-left show"
-                : "modal fade zoom-in zoom-in-left"
-            }
-            style={ContactModal ? { display: "block" } : { display: "none" }}
-          >
-            <div className="modal-dialog modal-dialog-centered contact-modal-dialog">
-              <form  className="modal-content" onSubmit={handleSubmit(onSubmit)}>
-                <div className="modal-body border-style-8">
-                  <div className="contact-body-in">
-                    <div className="contact-checkbox-group">
-                      <div className="contact-checkbox-item ng-star-inserted">
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={checkedValue === 1}
-                            value="Complaint"
-                            name="check"
-                            onChange={() => selectOnlyThis(1)}
-                          />
-                          <span className="check">
-                            <Translate>Complaint</Translate>{" "}
-                          </span>
-                        </label>
-                      </div>
-                      <div className="contact-checkbox-item ng-star-inserted">
-                        <label>
-                          <input
-                            type="checkbox"
-                            value="Request"
-                            checked={checkedValue === 2}
-                            name="check"
-                            onChange={() => selectOnlyThis(2)}
-                          />
-                          <span className="check">
-                            <Translate>Suggestion</Translate>{" "}
-                          </span>
-                        </label>
-                      </div>
-                      <div className="contact-checkbox-item ng-star-inserted">
-                        <label>
-                          <input
-                            type="checkbox"
-                            value="Suggestion"
-                            checked={checkedValue === 3}
-                            name="check"
-                            onChange={() => selectOnlyThis(3)}
-                          />
-                          <span className="check">
-                            <Translate>Remark</Translate>{" "}
-                          </span>
-                        </label>
-                      </div>
-                      <div className="contact-checkbox-item ng-star-inserted">
-                        <label>
-                          <input
-                            type="checkbox"
-                            value="Question"
-                            checked={checkedValue === 4}
-                            name="check"
-                            onChange={() => selectOnlyThis(4)}
-                          />
-                          <span className="check">
-                            <Translate>Other</Translate>{" "}
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                    <div className="input-custom-field contact-topic-field">
-                      <input
-                        type="text"
-                        className="form-control ng-untouched ng-pristine ng-valid"
-                        placeholder=""
-                        formcontrolname="feedbackSub"
-                        {...register("feedbackSub")}
-                      />
-                    </div>
-                    <div className="contact-textarea-bx">
-                      <textarea
-                        value={topicData}
-                        placeholder=""
-                        formcontrolname="feedbackMessage"
-                        {...register("feedbackMessage",{onChange:(e)=>{
-                          setTopicData(e.target.value)
-                        }})}
-                        className="ng-untouched ng-pristine ng-valid"
-                      ></textarea>
-                    </div>
-                    <div className="err-msg1">
-                      <span> </span>
-                    </div>
+      <Zoom when={InstructionModal} botton>
+        <div
+          id="InstructionModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="InstructionModal"
+          data-backdrop="false"
+          className={
+            InstructionModal
+              ? "modal fade zoom-in-center show"
+              : "modal fade zoom-in-center"
+          }
+        >
+          <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
+            <div className="modal-content border-style-8-gray">
+              <a
+                data-dismiss="modal"
+                className="close-button-style"
+                onClick={onInstructionModalClose}
+              >
+                <span></span>
+              </a>
+              <div className="disclaimer-content-in">
+                <div className="modal-body">
+                  <div className="disclaimer-title-head cmn-title-head text-center">
+                    <h2>
+                      {t('Manual')}{" "}
+                    </h2>
+                  </div>
+                  <div className="disclaimer-info-scroll">
+                    {ReactHtmlParser(manualDetails)}
                   </div>
                 </div>
-                <div className="type-btngroup add-adv-btngroup">
-                  <button
-                    type="submit"
-                    className="ads-submit-btn cmn-submit-button"
-                    onClick={() => {
-                      setContactModal(false);
-                    
-                    }}
-                   
-                  >
-                    <span></span>
-                  </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                  {/* <button
+
+      </Zoom>
+
+      {/* InstructionModal End */}
+
+      {/* ContactModal start */}
+      <Zoom when={ContactModal} center>
+        <div
+          id="ContactModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="ContactModal"
+          aria-hidden="true"
+          data-backdrop="false"
+          className={
+            ContactModal
+              ? "modal fade zoom-in zoom-in-left show"
+              : "modal fade zoom-in zoom-in-left"
+          }
+          style={ContactModal ? { display: "block" } : { display: "none" }}
+        >
+          <div className="modal-dialog modal-dialog-centered contact-modal-dialog">
+            <form className="modal-content" onSubmit={handleSubmit(onSubmit)}>
+              <div className="modal-body border-style-8">
+                <div className="contact-body-in">
+                  <div className="contact-checkbox-group">
+                    <div className="contact-checkbox-item ng-star-inserted">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={checkedValue === 1}
+                          value="Complaint"
+                          name="check"
+                          onChange={() => selectOnlyThis(1)}
+                        />
+                        <span className="check">
+                          {t('Complaint')}{" "}
+                        </span>
+                      </label>
+                    </div>
+                    <div className="contact-checkbox-item ng-star-inserted">
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Request"
+                          checked={checkedValue === 2}
+                          name="check"
+                          onChange={() => selectOnlyThis(2)}
+                        />
+                        <span className="check">
+                          {t('Suggestion')}{" "}
+                        </span>
+                      </label>
+                    </div>
+                    <div className="contact-checkbox-item ng-star-inserted">
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Suggestion"
+                          checked={checkedValue === 3}
+                          name="check"
+                          onChange={() => selectOnlyThis(3)}
+                        />
+                        <span className="check">
+                          {t('Remark')}{" "}
+                        </span>
+                      </label>
+                    </div>
+                    <div className="contact-checkbox-item ng-star-inserted">
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="Question"
+                          checked={checkedValue === 4}
+                          name="check"
+                          onChange={() => selectOnlyThis(4)}
+                        />
+                        <span className="check">
+                          {t('Other')}{" "}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="input-custom-field contact-topic-field">
+                    <input
+                      type="text"
+                      className="form-control ng-untouched ng-pristine ng-valid"
+                      placeholder=""
+                      formcontrolname="feedbackSub"
+                      {...register("feedbackSub")}
+                    />
+                  </div>
+                  <div className="contact-textarea-bx">
+                    <textarea
+                      value={topicData}
+                      placeholder=""
+                      formcontrolname="feedbackMessage"
+                      {...register("feedbackMessage", {
+                        onChange: (e) => {
+                          setTopicData(e.target.value)
+                        }
+                      })}
+                      className="ng-untouched ng-pristine ng-valid"
+                    ></textarea>
+                  </div>
+                  <div className="err-msg1">
+                    <span> </span>
+                  </div>
+                </div>
+              </div>
+              <div className="type-btngroup add-adv-btngroup">
+                <button
+                  type="submit"
+                  className="ads-submit-btn cmn-submit-button"
+                  onClick={() => {
+                    setContactModal(false);
+
+                  }}
+
+                >
+                  <span></span>
+                </button>
+
+                {/* <button
                   type="button"
                     className="mt-btn camera-icon-ads ng-star-inserted"
                     onClick={() => handleAudioChange(listening)}
@@ -1238,25 +1302,25 @@ const clearLocal =()=>{
                     </i>
                   </button> */}
 
-                  <a
-                    data-dismiss="modal"
-                    onClick={() => {
-                      setContactModal(false);
-                    }}
-                    className="ads-close-btn close-button-style"
-                  >
-                    <span></span>
-                  </a>
-                </div>
-              </form>
-            </div>
+                <a
+                  data-dismiss="modal"
+                  onClick={() => {
+                    setContactModal(false);
+                  }}
+                  className="ads-close-btn close-button-style"
+                >
+                  <span></span>
+                </a>
+              </div>
+            </form>
           </div>
-        </Zoom>
+        </div>
+      </Zoom>
 
 
-        {/* Thanks Type Modal Start */}
+      {/* Thanks Type Modal Start */}
 
-        <div
+      <div
         id="ThanksTypeModalContact"
         tabIndex="-1"
         role="dialog"
@@ -1292,585 +1356,388 @@ const clearLocal =()=>{
         </div>
       </div>
 
-        {/* Thanks Type Modal End */}
+      {/* Thanks Type Modal End */}
 
-        {/* ContactModal End/}
+      {/* ContactModal End/}
 
                   {/* DownloadappModal Start*/}
-        <Zoom when={DownloadappModal} center>
-          <div
-            id="DownloadappModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="DownloadappModal"
-            aria-hidden="true"
-            data-backdrop="false"
-            className={
-              DownloadappModal
-                ? "modal fade zoom-in zoom-in-left show"
-                : "modal fade zoom-in zoom-in-left "
-            }
-          >
-            <div
-              role="document"
-              className="modal-dialog modal-dialog-centered sociallogin-modal-dialog downloadapp-modal-dialog"
-            >
-              <div className="modal-content">
-                <a
-                  data-dismiss="modal"
-                  onClick={() => {
-                    setDownloadappModal(false);
-                  }}
-                  aria-label="Close"
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-                <div className="modal-body text-center">
-                  <p>
-                    <Translate>Coming soon.... </Translate>{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Zoom>
-
-        {/* DownloadappModal End*/}
-
-        {/* NewsModal first */}
-        <Zoom when={NewsModal} center>
-          <div
-            id="NewsModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="NewsModal"
-            aria-hidden="true"
-            data-backdrop="false"
-            className={
-              NewsModal
-                ? "modal fade zoom-in zoom-in-right show"
-                : "modal fade zoom-in zoom-in-right"
-            }
-          >
-            <div
-              role="document"
-              className="modal-dialog modal-dialog-centered sociallogin-modal-dialog downloadapp-modal-dialog"
-            >
-              <div className="modal-content">
-                <a
-                  onClick={() => {
-                    setNewsModal(false);
-                  }}
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-                <div className="modal-body text-center">
-                  <p>
-                    <Translate>Coming soon...</Translate>{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Zoom>
-
-        {/* NewsModal End*/}
-
-        {/* ThanksTypeModalForGraph Start */}
+      <Zoom when={DownloadappModal} center>
         <div
-          id="ThanksTypeModalForGraph"
+          id="DownloadappModal"
           tabIndex="-1"
           role="dialog"
-          aria-labelledby="ThanksTypeModal"
+          aria-labelledby="DownloadappModal"
           aria-hidden="true"
-          className={ThanksTypeModalForGraph ? "modal fade show" : "modal fade"}
-          style={
-            ThanksTypeModalForGraph ? { display: "block" } : { display: "none" }
+          data-backdrop="false"
+          className={
+            DownloadappModal
+              ? "modal fade zoom-in zoom-in-left show"
+              : "modal fade zoom-in zoom-in-left "
           }
         >
           <div
             role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="text-uppercase"><Translate>{ThanksTypeModalForGraph}</Translate></p>
-                <div className="modal-footer sociallink-footer">
-                  <a
-                    onClick={() => {
-                      setThanksTypeModalForGraph(null);
-                      // window.location.reload(false);
-                    }}
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    className="close-button-style"
-                  >
-                    <span></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* ThanksTypeModalForGraph End */}
-
-        {/* checkBudgetModal start */}
-
-        <div
-          id="checkBudgetModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="checkBudgetModal"
-          aria-hidden="true"
-          data-backdrop="false"
-          className={checkBudgetModal ? "modal fade show" : "modal fade"}
-          style={checkBudgetModal ? { display: "block" } : { display: "none" }}
-        >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered checkBudgetFields-modal sociallogin-modal-dialog thankstype-modal-dialog"
+            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog downloadapp-modal-dialog"
           >
             <div className="modal-content">
               <a
                 data-dismiss="modal"
+                onClick={() => {
+                  setDownloadappModal(false);
+                }}
                 aria-label="Close"
                 className="close-button-style"
-                onClick={() => {
-                  setCheckBudgetModal(false);
-                }}
               >
                 <span></span>
               </a>
               <div className="modal-body text-center">
-                <div className="checkBudgetFields-width">
-                  <h3 className="renew-head"></h3>
-                  <div className="input-custom-field finance-input-id-left">
-                    <input
-                      type="text"
-                      className="form-control ng-untouched ng-pristine ng-valid"
-                      placeholder=""
-                    />
-                  </div>
-                  <div className="modal-footer sociallink-footer">
-                    <button
-                      type="submit"
-                      className="btn-apply read-btn-bg cmn-submit-button"
-                    >
-                      <span></span>
-                    </button>
-                  </div>
+                <p>
+                  {t('comming soon')}{" "}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Zoom>
+
+      {/* DownloadappModal End*/}
+
+      {/* NewsModal first */}
+      <Zoom when={NewsModal} center>
+        <div
+          id="NewsModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="NewsModal"
+          aria-hidden="true"
+          data-backdrop="false"
+          className={
+            NewsModal
+              ? "modal fade zoom-in zoom-in-right show"
+              : "modal fade zoom-in zoom-in-right"
+          }
+        >
+          <div
+            role="document"
+            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog downloadapp-modal-dialog"
+          >
+            <div className="modal-content">
+              <a
+                onClick={() => {
+                  setNewsModal(false);
+                }}
+                data-dismiss="modal"
+                aria-label="Close"
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
+              <div className="modal-body text-center">
+                <p>
+                  {t('comming soon')}{" "}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Zoom>
+
+      {/* NewsModal End*/}
+
+      {/* ThanksTypeModalForGraph Start */}
+      <div
+        id="ThanksTypeModalForGraph"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="ThanksTypeModal"
+        aria-hidden="true"
+        className={ThanksTypeModalForGraph ? "modal fade show" : "modal fade"}
+        style={
+          ThanksTypeModalForGraph ? { display: "block" } : { display: "none" }
+        }
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
+        >
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="text-uppercase">{t('')}{ThanksTypeModalForGraph}</p>
+              <div className="modal-footer sociallink-footer">
+                <a
+                  onClick={() => {
+                    setThanksTypeModalForGraph(null);
+                    // window.location.reload(false);
+                  }}
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  className="close-button-style"
+                >
+                  <span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* ThanksTypeModalForGraph End */}
+
+      {/* checkBudgetModal start */}
+
+      <div
+        id="checkBudgetModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="checkBudgetModal"
+        aria-hidden="true"
+        data-backdrop="false"
+        className={checkBudgetModal ? "modal fade show" : "modal fade"}
+        style={checkBudgetModal ? { display: "block" } : { display: "none" }}
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered checkBudgetFields-modal sociallogin-modal-dialog thankstype-modal-dialog"
+        >
+          <div className="modal-content">
+            <a
+              data-dismiss="modal"
+              aria-label="Close"
+              className="close-button-style"
+              onClick={() => {
+                setCheckBudgetModal(false);
+              }}
+            >
+              <span></span>
+            </a>
+            <div className="modal-body text-center">
+              <div className="checkBudgetFields-width">
+                <h3 className="renew-head"></h3>
+                <div className="input-custom-field finance-input-id-left">
+                  <input
+                    type="text"
+                    className="form-control ng-untouched ng-pristine ng-valid"
+                    placeholder=""
+                  />
+                </div>
+                <div className="modal-footer sociallink-footer">
+                  <button
+                    type="submit"
+                    className="btn-apply read-btn-bg cmn-submit-button"
+                  >
+                    <span></span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* checkBudgetModal End */}
+      </div>
+      {/* checkBudgetModal End */}
 
-        {/* AllModal_End */}
+      {/* AllModal_End */}
 
-        {/* New_End */}
+      {/* New_End */}
 
-        {/* AdsModal Start */}
+      {/* AdsModal Start */}
+      <div
+        id="AdsModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="AdsModal"
+        aria-hidden="true"
+        data-backdrop="static"
+        className={
+          props.data.ShowAdsModal
+            ? "modal fade zoom-in-center header-menu-top show"
+            : "modal fade zoom-in-center header-menu-top"
+        }
+      >
         <div
-          id="AdsModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="AdsModal"
-          aria-hidden="true"
-          data-backdrop="static"
-          className={
-            props.data.ShowAdsModal
-              ? "modal fade zoom-in-center header-menu-top show"
-              : "modal fade zoom-in-center header-menu-top"
-          }
+          role="document"
+          className="modal-dialog modal-dialog-centered menutop-modal-dialog"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered menutop-modal-dialog"
-          >
-            <div className="modal-content">
-              <a data-dismiss="modal" className="close-button-style">
+          <div className="modal-content">
+            <a data-dismiss="modal" className="close-button-style">
+              onClick=
+              {() => {
+                props.action.setShowAdsModal(false);
+              }}
+              <span></span>
+            </a>
+            <div className="welcome-item-row">
+              <a
+                href="/advertisement"
+                routerlink="/advertisement"
+                data-dismiss="modal"
+                className="welcome-item"
+              >
+                <img src={AdsSubmenuIcon1} />
+              </a>
+              <a className="welcome-item">
                 onClick=
                 {() => {
-                  props.action.setShowAdsModal(false);
+                  setFinanceModal(true);
+                  setShowAdsModal(false);
                 }}
-                <span></span>
+                <img src={AdsSubmenuIcon2} />
               </a>
-              <div className="welcome-item-row">
-                <a
-                  href="/advertisement"
-                  routerlink="/advertisement"
-                  data-dismiss="modal"
-                  className="welcome-item"
-                >
-                  <img src={AdsSubmenuIcon1} />
-                </a>
-                <a className="welcome-item">
-                  onClick=
-                  {() => {
-                    setFinanceModal(true);
-                    setShowAdsModal(false);
-                  }}
-                  <img src={AdsSubmenuIcon2} />
-                </a>
-                <a className="welcome-item">
-                  nClick={() => setOpportunityModal(true)}
-                  <img src={AdsSubmenuIcon3} />
-                </a>
-              </div>
+              <a className="welcome-item">
+                nClick={() => setOpportunityModal(true)}
+                <img src={AdsSubmenuIcon3} />
+              </a>
             </div>
           </div>
         </div>
-        {/* AdsModal End */}
+      </div>
+      {/* AdsModal End */}
 
-        {/* GuideModal Start */}
+      {/* GuideModal Start */}
+      <div
+        id="GuideModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="GuideModal"
+        aria-hidden="true"
+        data-backdrop="static"
+        className={
+          props.data.ShowGuideModal
+            ? "modal fade zoom-in-center header-menu-top show"
+            : "modal fade zoom-in-center header-menu-top"
+        }
+      >
         <div
-          id="GuideModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="GuideModal"
-          aria-hidden="true"
-          data-backdrop="static"
-          className={
-            props.data.ShowGuideModal
-              ? "modal fade zoom-in-center header-menu-top show"
-              : "modal fade zoom-in-center header-menu-top"
-          }
+          role="document"
+          className="modal-dialog modal-dialog-centered menutop-modal-dialog modal-dialog-zoom"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered menutop-modal-dialog modal-dialog-zoom"
-          >
-            <div className="modal-content">
+          <div className="modal-content">
+            <a
+              data-dismiss="modal"
+              className="close-button-style"
+              onClick={() => {
+                props.action.setShowGuideModal(false);
+              }}
+            >
+              <span></span>
+            </a>
+            <div className="welcome-item-row">
               <a
-                data-dismiss="modal"
-                className="close-button-style"
+                data-toggle="modal"
                 onClick={() => {
-                  props.action.setShowGuideModal(false);
+                  setContactModal(true);
                 }}
+                data-target="#ContactModal"
+                className="welcome-item"
               >
-                <span></span>
+                <img src={GuideSubmenuIcon1} />
               </a>
-              <div className="welcome-item-row">
-                <a
-                  data-toggle="modal"
-                  onClick={() => {
-                    setContactModal(true);
-                  }}
-                  data-target="#ContactModal"
-                  className="welcome-item"
-                >
-                  <img src={GuideSubmenuIcon1} />
-                </a>
-                <a
-                  className="welcome-item"
-                  onClick={() => {
-                    setInstructionModal(true);
-                  }}
-                >
-                  <img src={GuideSubmenuIcon2} />
-                </a>
-                <a
-                  data-toggle="modal"
-                  onClick={() => {
-                    setNewsModal(true);
-                  }}
-                  data-target="#NewsModal"
-                  className="welcome-item"
-                >
-                  <img src={GuideSubmenuIcon3} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* GuideModal_End */}
-
-       
-
-        {/* image-gallery-1 Start */}
-        <div
-          id="image-gallery-1"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="GallaryModal"
-          aria-hidden="true"
-          className="modal fade"
-        >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered gallary-modal-dialog modal-dialog-zoom"
-          >
-            <div className="modal-content border-style-8">
               <a
-                // href="javascript:void(0);"
-                data-dismiss="modal"
-                aria-label="Close"
-                className="close-button-style"
-              >
-                <span></span>
-              </a>
-              <div className="modal-body"></div>
-            </div>
-          </div>
-        </div>
-        {/* image-gallery-1 End */}
-
-        {/* DisclaimerModal Start */}
-        <div
-          id="DisclaimerModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="DisclaimerModal"
-          aria-hidden="true"
-          data-backdrop="false"
-          className="modal fade zoom-in zoom-in-right"
-        >
-          <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
-            <div className="modal-content border-style-8-gray">
-              <a
-                // href="javascript:void(0);"
-                data-dismiss="modal"
-                className="close-button-style"
-              >
-                <span></span>
-              </a>
-              <div className="disclaimer-content-in">
-                <div className="modal-body">
-                  <div className="disclaimer-title-head cmn-title-head text-center">
-                    <h2>
-                      <Translate>DISCLAIMER</Translate>
-                    </h2>
-                  </div>
-                  <div className="disclaimer-info-scroll">
-                    <Translate>Coming Soon ...</Translate>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* DisclaimerModal End */}
-
-        {/* ThanksTypeModalForGraph Start */}
-        <div
-          id="ThanksTypeModalForGraph"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="ThanksTypeModal"
-          aria-hidden="true"
-          className="modal fade"
-        >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog 
-                    thankstype-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="text-uppercase"></p>
-                <div className="modal-footer sociallink-footer">
-                  <a
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    className="close-button-style"
-                  >
-                    <span></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* ThanksTypeModalForGraph End */}
-
-        {/* checkBudgetModal start */}
-
-        <div
-          id="checkBudgetModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="checkBudgetModal"
-          aria-hidden="true"
-          data-backdrop="false"
-          className={checkBudgetModal ? "modal fade show" : "modal fade"}
-          style={checkBudgetModal ? { display: "block" } : { display: "none" }}
-        >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered checkBudgetFields-modal sociallogin-modal-dialog thankstype-modal-dialog"
-          >
-            <div className="modal-content">
-              <a
-                data-dismiss="modal"
-                aria-label="Close"
-                className="close-button-style"
+                className="welcome-item"
                 onClick={() => {
-                  setCheckBudgetModal(false);
+                  setInstructionModal(true);
                 }}
               >
-                <span></span>
+                <img src={GuideSubmenuIcon2} />
               </a>
-              <div className="modal-body text-center">
-                <div className="checkBudgetFields-width">
-                  <h3 className="renew-head"></h3>
-                  <div className="input-custom-field finance-input-id-left">
-                    <input
-                      type="text"
-                      className="form-control ng-untouched ng-pristine ng-valid"
-                      placeholder=""
-                    />
-                  </div>
-                  <div className="modal-footer sociallink-footer">
-                    <button
-                      type="submit"
-                      className="btn-apply read-btn-bg cmn-submit-button"
-                    >
-                      <span></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* checkBudgetModal End */}
-
-        {/* SocialLoginModal Start */}
-        <div
-          id="SocialLoginModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="SocialLoginModal"
-          className={showSociaModal ? "modal fade show" : "modal fade "}
-          style={showSociaModal ? { display: "block" } : { display: "none" }}
-        >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="sociallink-info"></p>
-              </div>
-              <div className="modal-footer sociallink-footer">
-                <a className="read-btn-bg cmn-submit-button mrl-10p">
-                  <span></span>
-                </a>
-                <a
-                  onClick={() => setShowSocialModal(false)}
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* SocialLoginModal End */}
-
-        {/* AttentionModal Start */}
-        <div
-          id="AttentionModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="AttentionModal"
-          data-backdrop="static"
-          className="modal fade zoom-in zoom-in-right "
-          style={
-            ShowAttentionModal ? { display: "block" } : { display: "none" }
-          }
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered attention-modal-dialog">
-            <div className="text-center hand-top-box animate__animated animate__fadeInUp">
-              <img src={HandPattern} />
-            </div>
-            <div className="modal-content">
               <a
+                data-toggle="modal"
                 onClick={() => {
-                  setShowAttentionModal(false);
+                  setNewsModal(true);
                 }}
-                data-dismiss="modal"
-                className="close-button-style"
+                data-target="#NewsModal"
+                className="welcome-item"
               >
-                <span></span>
+                <img src={GuideSubmenuIcon3} />
               </a>
-              <div className="attention-head-top-bx">
-                <div className="disclaimer-title-head cmn-title-head text-center animation-time-title animate__animated animate__flipInX">
-              
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* GuideModal_End */}
+
+
+
+      {/* image-gallery-1 Start */}
+      <div
+        id="image-gallery-1"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="GallaryModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered gallary-modal-dialog modal-dialog-zoom"
+        >
+          <div className="modal-content border-style-8">
+            <a
+              // href="javascript:void(0);"
+              data-dismiss="modal"
+              aria-label="Close"
+              className="close-button-style"
+            >
+              <span></span>
+            </a>
+            <div className="modal-body"></div>
+          </div>
+        </div>
+      </div>
+      {/* image-gallery-1 End */}
+
+      {/* DisclaimerModal Start */}
+      <div
+        id="DisclaimerModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="DisclaimerModal"
+        aria-hidden="true"
+        data-backdrop="false"
+        className="modal fade zoom-in zoom-in-right"
+      >
+        <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
+          <div className="modal-content border-style-8-gray">
+            <a
+              // href="javascript:void(0);"
+              data-dismiss="modal"
+              className="close-button-style"
+            >
+              <span></span>
+            </a>
+            <div className="disclaimer-content-in">
+              <div className="modal-body">
+                <div className="disclaimer-title-head cmn-title-head text-center">
                   <h2>
-                    <Translate>Attention</Translate>
+                    {t('DISCLAIMER')}
                   </h2>
                 </div>
-              </div>
-              <div className="modal-body">
-                <Translate>Coming Soon ...</Translate>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* AttentionModal End*/}
-
-        {/* ThanksTypeModal_Start */}
-        <div
-          id="ThanksTypeModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="ThanksTypeModal"
-          aria-hidden="true"
-          className="modal fade"
-        >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="text-uppercase"></p>
-                <p className="sociallink-info"></p>
-                <div className="modal-footer sociallink-footer">
-                  <a
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    className="close-button-style"
-                  >
-                    <span></span>
-                  </a>
+                <div className="disclaimer-info-scroll">
+                  {t('comming soon')}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* ThanksTypeModal_End */}
+      </div>
+      {/* DisclaimerModal End */}
 
-        {/* WarningModalForLink2 */}
+      {/* ThanksTypeModalForGraph Start */}
+      <div
+        id="ThanksTypeModalForGraph"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="ThanksTypeModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
         <div
-          id="WarningModalForLink2"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="WarningModal"
-          aria-hidden="true"
-          className="modal fade"
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog 
+                    thankstype-modal-dialog"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="sociallink-info"></p>
-              </div>
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="text-uppercase"></p>
               <div className="modal-footer sociallink-footer">
-                <a className="read-btn-bg cmn-submit-button mrl-10p">
-                  <span></span>
-                </a>
                 <a
                   data-dismiss="modal"
                   aria-label="Close"
@@ -1882,29 +1749,157 @@ const clearLocal =()=>{
             </div>
           </div>
         </div>
-        {/* WarningModalForLink2_End */}
+      </div>
+      {/* ThanksTypeModalForGraph End */}
 
-        {/* WarningModalForLink_Start */}
+      {/* checkBudgetModal start */}
+
+      <div
+        id="checkBudgetModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="checkBudgetModal"
+        aria-hidden="true"
+        data-backdrop="false"
+        className={checkBudgetModal ? "modal fade show" : "modal fade"}
+        style={checkBudgetModal ? { display: "block" } : { display: "none" }}
+      >
         <div
-          id="WarningModalForLink"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="WarningModal"
-          aria-hidden="true"
-          className="modal fade"
+          role="document"
+          className="modal-dialog modal-dialog-centered checkBudgetFields-modal sociallogin-modal-dialog thankstype-modal-dialog"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="sociallink-info"></p>
+          <div className="modal-content">
+            <a
+              data-dismiss="modal"
+              aria-label="Close"
+              className="close-button-style"
+              onClick={() => {
+                setCheckBudgetModal(false);
+              }}
+            >
+              <span></span>
+            </a>
+            <div className="modal-body text-center">
+              <div className="checkBudgetFields-width">
+                <h3 className="renew-head"></h3>
+                <div className="input-custom-field finance-input-id-left">
+                  <input
+                    type="text"
+                    className="form-control ng-untouched ng-pristine ng-valid"
+                    placeholder=""
+                  />
+                </div>
+                <div className="modal-footer sociallink-footer">
+                  <button
+                    type="submit"
+                    className="btn-apply read-btn-bg cmn-submit-button"
+                  >
+                    <span></span>
+                  </button>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* checkBudgetModal End */}
+
+      {/* SocialLoginModal Start */}
+      <div
+        id="SocialLoginModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="SocialLoginModal"
+        className={showSociaModal ? "modal fade show" : "modal fade "}
+        style={showSociaModal ? { display: "block" } : { display: "none" }}
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog"
+        >
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="sociallink-info"></p>
+            </div>
+            <div className="modal-footer sociallink-footer">
+              <a className="read-btn-bg cmn-submit-button mrl-10p">
+                <span></span>
+              </a>
+              <a
+                onClick={() => setShowSocialModal(false)}
+                data-dismiss="modal"
+                aria-label="Close"
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* SocialLoginModal End */}
+
+      {/* AttentionModal Start */}
+      <div
+        id="AttentionModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="AttentionModal"
+        data-backdrop="static"
+        className="modal fade zoom-in zoom-in-right "
+        style={
+          ShowAttentionModal ? { display: "block" } : { display: "none" }
+        }
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered attention-modal-dialog">
+          <div className="text-center hand-top-box animate__animated animate__fadeInUp">
+            <img src={HandPattern} />
+          </div>
+          <div className="modal-content">
+            <a
+              onClick={() => {
+                setShowAttentionModal(false);
+              }}
+              data-dismiss="modal"
+              className="close-button-style"
+            >
+              <span></span>
+            </a>
+            <div className="attention-head-top-bx">
+              <div className="disclaimer-title-head cmn-title-head text-center animation-time-title animate__animated animate__flipInX">
+
+                <h2>
+                  {t('Attention')}
+                </h2>
+              </div>
+            </div>
+            <div className="modal-body">
+              {t('comming soon')}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* AttentionModal End*/}
+
+      {/* ThanksTypeModal_Start */}
+      <div
+        id="ThanksTypeModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="ThanksTypeModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
+        >
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="text-uppercase"></p>
+              <p className="sociallink-info"></p>
               <div className="modal-footer sociallink-footer">
-                <a className="read-btn-bg cmn-submit-button mrl-10p">
-                  <span></span>
-                </a>
                 <a
                   data-dismiss="modal"
                   aria-label="Close"
@@ -1916,101 +1911,169 @@ const clearLocal =()=>{
             </div>
           </div>
         </div>
-        {/* WarningModalForLink_End */}
+      </div>
+      {/* ThanksTypeModal_End */}
 
-        {/* WarningModal_Start */}
+      {/* WarningModalForLink2 */}
+      <div
+        id="WarningModalForLink2"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="WarningModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
         <div
-          id="WarningModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="WarningModal"
-          aria-hidden="true"
-          className="modal fade"
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog"
         >
-          <div
-            role="document"
-            className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
-          >
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <p className="sociallink-info"></p>
-                <p className="sociallink-info"></p>
-              </div>
-              <div className="modal-footer sociallink-footer">
-                <a>
-                  <span></span>
-                </a>
-                <a
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  className="close-button-style"
-                >
-                  <span></span>
-                </a>
-              </div>
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="sociallink-info"></p>
+            </div>
+            <div className="modal-footer sociallink-footer">
+              <a className="read-btn-bg cmn-submit-button mrl-10p">
+                <span></span>
+              </a>
+              <a
+                data-dismiss="modal"
+                aria-label="Close"
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
             </div>
           </div>
         </div>
-        {/* WarningModal_End */}
+      </div>
+      {/* WarningModalForLink2_End */}
 
-        {/* TermsModal Start */}
+      {/* WarningModalForLink_Start */}
+      <div
+        id="WarningModalForLink"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="WarningModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog"
+        >
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="sociallink-info"></p>
+            </div>
+            <div className="modal-footer sociallink-footer">
+              <a className="read-btn-bg cmn-submit-button mrl-10p">
+                <span></span>
+              </a>
+              <a
+                data-dismiss="modal"
+                aria-label="Close"
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* WarningModalForLink_End */}
 
-        {modalShowTerm && (
-          <div
-            id="TermsModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="LanguageModal"
-            aria-hidden="true"
-            data-backdrop="static"
-            className="modal fade zoom-in-center show"
-          >
-            <div className="modal-dialog modal-dialog-centered terms-modal-dialog">
-              <div className="modal-content">
-                <div className="modal-body">
-                  <div className="terms-wrapper">
-                    <div className="terms-wrap">
-                      <div className="disclaimer-title-head cmn-title-head text-center">
-                        <h2>
-                          <span>
-                            <Translate>Terms of use</Translate>{" "}
-                          </span>
-                        </h2>
-                      </div>
-                      <div className="terms-info paragraphNew">
-                        {" "}
-                        {ReactHtmlParser(userAgreementData)}
-                      </div>
+      {/* WarningModal_Start */}
+      <div
+        id="WarningModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="WarningModal"
+        aria-hidden="true"
+        className="modal fade"
+      >
+        <div
+          role="document"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
+        >
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <p className="sociallink-info"></p>
+              <p className="sociallink-info"></p>
+            </div>
+            <div className="modal-footer sociallink-footer">
+              <a>
+                <span></span>
+              </a>
+              <a
+                data-dismiss="modal"
+                aria-label="Close"
+                className="close-button-style"
+              >
+                <span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* WarningModal_End */}
+
+      {/* TermsModal Start */}
+
+      {modalShowTerm && (
+        <div
+          id="TermsModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="LanguageModal"
+          aria-hidden="true"
+          data-backdrop="static"
+          className="modal fade zoom-in-center show"
+        >
+          <div className="modal-dialog modal-dialog-centered terms-modal-dialog">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="terms-wrapper">
+                  <div className="terms-wrap">
+                    <div className="disclaimer-title-head cmn-title-head text-center">
+                      <h2>
+                        <span>
+                          {t('Terms of use')}{" "}
+                        </span>
+                      </h2>
                     </div>
-                    <div className="terms-footer">
-                      <a
-                        data-dismiss="modal"
-                        onClick={() => {
-                          setModalShowTerm(false);
-                        }}
-                        className="btn-dontagree"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <span className="btn-d-text">REFUSE</span>
-                      </a>
-                      <a
-                        href="/home"
-                        data-dismiss="modal"
-                        className="btn-agree"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <span>ACCEPT</span>
-                      </a>
+                    <div className="terms-info paragraphNew">
+                      {" "}
+                      {ReactHtmlParser(userAgreementData)}
                     </div>
+                  </div>
+                  <div className="terms-footer">
+                    <a
+                      data-dismiss="modal"
+                      onClick={() => {
+                        setModalShowTerm(false);
+                      }}
+                      className="btn-dontagree"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span className="btn-d-text">REFUSE</span>
+                    </a>
+                    <a
+                      href="/home"
+                      data-dismiss="modal"
+                      className="btn-agree"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <span>ACCEPT</span>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-       
-      </Translator>
+
     </>
   );
 };

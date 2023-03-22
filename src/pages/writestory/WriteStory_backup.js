@@ -126,8 +126,7 @@ const WriteStory_backupppppp = (props) => {
     );
   };
 
-  useEffect(async () => {
-
+  useEffect( () => {
     getAllData();
     axios
       .get("https://ipapi.co/json/")

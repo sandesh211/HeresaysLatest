@@ -21,28 +21,47 @@ function App() {
   ]);
   useEffect(() => {
     // setTimeout(() => {
-      setRunning(false);
+    setRunning(false);
     // }, 4000);
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(`${ApiUrl}i18n_locale`)
-      .then((responnse) => {
-        let localCode = responnse.data.data.filter(
-          (x) => x.attributes.code == navigator.language
-        );
-        if (localCode.length > 0) {
-          navigator.language === "en" ? localStorage.setItem("prefered_language", "en-US") : localStorage.setItem("prefered_language", navigator.language) 
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+useEffect(()=>{
+  document.addEventListener("DOMContentLoaded", function(){
+    setTimeout(function(){
+      window.scrollTo(0, 1);
+    }, 0);
+  });
+},[])
 
+document.addEventListener("DOMContentLoaded", function(){
+  setTimeout(function(){
+    window.scrollTo(0, 1);
+  }, 0);
+});
 
   
+  if(true&&false){
+    console.log("hello")
+  }
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${ApiUrl}i18n_locale`)
+  //     .then((responnse) => {
+  //       let localCode = responnse.data.data.filter(
+  //         (x) => x.attributes.code == navigator.language
+  //       );
+  //       if (localCode.length > 0) {
+  //         navigator.language === "en" ? localStorage.setItem("prefered_language", "en-US") : localStorage.setItem("prefered_language", navigator.language)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+
+
   // let myComponent;
   // if (!imagesPreloaded) {
   //   myComponent = (
@@ -59,9 +78,9 @@ function App() {
 
   return (
     <Router>
-    <Layout imagesPreloaded={imagesPreloaded} />
-  </Router>
-    );
+      <Layout imagesPreloaded={imagesPreloaded} />
+    </Router>
+  );
 }
 
 export default App;

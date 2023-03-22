@@ -24,6 +24,10 @@ import leftArrow from "../../assets/images/icons/left-arrow.png";
 import rightArrow from "../../assets/images/icons/right-arrow.png";
 import "./NewType.css"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Translator, Translate } from 'react-auto-translate';
+import { withNamespaces, NamespacesConsumer, Trans, useTranslation } from 'react-i18next';
+import { PageFlip } from 'page-flip';
+
 
 
 const PageCover = React.forwardRef((props, ref) => {
@@ -56,6 +60,7 @@ const PageCover = React.forwardRef((props, ref) => {
 const TypeStory = (props) => {
   let flipBook = useRef();
   const myRef = useRef(null);
+  const { t, i18n } = useTranslation();
   let subtitle;
   // Modal.setAppElement('#root');
   // const { listen } = useSpeechSynthesis();
@@ -105,6 +110,29 @@ const TypeStory = (props) => {
   } = useForm();
   const storyBook = JSON.parse(localStorage.getItem("writestory"));
 
+  const MickSupportedLanguage = ["en", "en-US", "zh-CN", "es-ES", "ar-SA", "ru-RU", "bn-BD", "pt-PT", "id-ID", "fr-FR", "af", "eu", "ca", "ar-SA", "cs", "nl-NL", "fi", "gl", "de-DE", "el-GR", "he", "hu", "is", "it-IT", "ja", "ko", "la", "no-NO", "pl", "ro-RO", "sr-SP", "sk", "sv-SE", "tr", "zu"
+  ]
+  
+  const cacheProvider = {
+    get: (language, key) =>
+      ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
+      language
+      ],
+    set: (language, key, value) => {
+      const existing = JSON.parse(localStorage.getItem('translations')) || {
+        [key]: {},
+      };
+      existing[key] = { ...existing[key], [language]: value };
+      localStorage.setItem('translations', JSON.stringify(existing));
+    },
+  };
+
+  let currentLanguageSetting = localStorage.getItem("prefered_language")
+    ? localStorage.getItem("prefered_language")
+    : "en";
+  const [currentLanguage, setCurrentLanguage] = useState(
+    currentLanguageSetting
+  );
 
 
   useEffect(() => {
@@ -117,6 +145,34 @@ const TypeStory = (props) => {
   const wordVal = useRef(70)
   const NumDevided = useRef(7)
   const [lastPage, setLastPage] = useState(100);
+  // var htmlParentElement = document.getElementsByClassName("modalBookmodal")
+  // var settings = { 
+  //           width:550,
+  //           height:280,
+  //           size:"stretch",
+  //           minWidth:315,
+  //           maxWidth:1000,
+  //           minHeight:400,
+  //           maxHeight:1533,
+  //           // maxShadowOpacity:0.5,
+  //           // showCover:false,
+  //           // mobileScrollSupport:false,
+  //           // drawShadow:false,
+  //           // useMouseEvents:false,
+  //           // autoSize:true,
+  // }
+  // const pageFlipLoad = new PageFlip(htmlParentElement, settings);
+  // const Loadingimages = [
+  //   {
+  //   source: rightArrow,
+  //   },
+  //   {
+  //   source: leftArrow,
+  //   },
+  //   {
+  //   source: rightArrow,
+  //   },
+  //   ];
 
   const updateDimensions = () => {
     // setWidth(window.innerWidth);
@@ -125,10 +181,11 @@ const TypeStory = (props) => {
   };
 
   useEffect(() => {
-    if(modalIsOpen){
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
-  }
+    if (modalIsOpen) {
+      window.addEventListener("resize", updateDimensions);
+      return () => window.removeEventListener("resize", updateDimensions);
+    }
+   
   }, [modalIsOpen]);
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -173,9 +230,13 @@ const TypeStory = (props) => {
     setTextarea(e.target.value)
   }
 
-  // useEffect(() => {
-  //   Modal.setAppElement('body');
-  // }, [])
+  useEffect(() => {
+    console.log("browserSupportsSpeechRecognition" , SpeechRecognition.browserSupportsSpeechRecognition());
+  }, [])
+  
+  useEffect(() => {
+    Modal.setAppElement('body');
+  }, [])
 
   const onRemoveCameraImg = (i) => {
     setPicture();
@@ -194,7 +255,7 @@ const TypeStory = (props) => {
 
   useEffect(() => {
     let isMounted = true;
-    if (isMounted) setUploadImages(images[0]?.data_url)
+    if (isMounted) setUploadImages(images[0]?.data_url?.data)
     return () => { isMounted = false };
   }, [images])
 
@@ -289,6 +350,9 @@ const TypeStory = (props) => {
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
+
+
+
   const onStorySubmit = () => {
     axios
       .post(`${ApiUrl}addListStory`, storySubmitData)
@@ -317,7 +381,6 @@ const TypeStory = (props) => {
         console.log(error);
       });
   };
-
 
 
 
@@ -358,7 +421,7 @@ const TypeStory = (props) => {
     console.log("handlePageIndex", e);
   }
 
- 
+
 
 
   useEffect(() => {
@@ -387,20 +450,29 @@ const TypeStory = (props) => {
 
   const defineWordsLength = () => {
     let bookFold = flipBook.current.pageFlip().getOrientation()
-    console.log("bookFold" ,bookFold);
-    bookFold == "landscape" ? NumDevided.current = 14 : NumDevided.current = 7 
+    console.log("bookFold", bookFold);
+    bookFold == "landscape" ? NumDevided.current = 14 : NumDevided.current = 8
     const { offsetWidth, offsetHeight } = myRef.current;
     console.log(`Width: ${offsetWidth}, Height: ${offsetHeight}`);
     let averageCharPerLine = Math.floor(offsetWidth / 10);
     let averageLinesPerPage = Math.floor(offsetHeight / 20);
-     console.log("typeofnum" , typeof(bookFold))
-    let resultWords =  (averageCharPerLine * averageLinesPerPage) / NumDevided.current
-    wordVal.current = resultWords.toFixed() ;
-    console.log("resultWords" ,  wordVal.current)
+    console.log("typeofnum", typeof (bookFold))
+    let resultWords = (averageCharPerLine * averageLinesPerPage) / NumDevided.current
+    wordVal.current = resultWords.toFixed();
+    console.log("resultWords", wordVal.current)
+
   }
 
+  const handleLoadBook = () => {
+    defineWordsLength()
+    if (textArea) {
+      const StringToArray = textArea.split(' ');
+      setFinalText(StringToArray)
+    }
+    console.log("loaded call")
+  }
 
-
+  
 
   useEffect(() => {
     const StringToArray = textArea.split(' ');
@@ -489,24 +561,9 @@ const TypeStory = (props) => {
                       </span>
                     </button>
                   </div>
-                  {prefered_lang === "hi" ?
-                    <div className="help-icon" style={{ visibility: "hidden" }}>
-                      <button
-                        type="button"
-                        className="type-camera-btn st-cmn-btn"
-                      >
-                        <span>
-                          <i>
-                            {" "}
-                            {listening ? (
-                              <img src={StopIcon} style={{ height: "32px" }} alt="img" onContextMenu="return false;" className="mick_image" />
-                            ) : (
-                              <img src={Microphone} style={{ height: "32px" }} alt="img" onContextMenu="return false;" className="mick_image" />
-                            )}
-                          </i>
-                        </span>
-                      </button>
-                    </div>
+
+                  {!MickSupportedLanguage.includes(prefered_lang) && SpeechRecognition.browserSupportsSpeechRecognition() == false ?
+                    null
                     :
                     <div className="help-icon">
                       <button
@@ -534,7 +591,7 @@ const TypeStory = (props) => {
               </div>
               {showCamera ? (
                 <div className="B2 cards camera_back">
-                  <div className=" classified-align-home">
+                  <div className=" classified-align-home ">
                     <div className="add-advertisement-wrapper border-style-8 classified-align-wrapper">
                       <div
                         className="add-advertisement-ss"
@@ -567,7 +624,7 @@ const TypeStory = (props) => {
                     width="500px"
                     height="500px"
                     type="textarea"
-                    placeholder="Enter Your Story Content"
+                    placeholder={t('Enter Your Story Content')}
                     value={textArea + transcript}
                     onChange={handleTextArea}
                     style={{ fontSize: "14px" }}
@@ -612,14 +669,10 @@ const TypeStory = (props) => {
                     <span></span>
                   </button>
                 </div>
-
               </div>
             </div>
 
-
-
             <div className="C3 footer-bottom next_btns_arrow">
-
               <div className="help-icon">
                 <Link
                   to="/writestory"
@@ -628,7 +681,6 @@ const TypeStory = (props) => {
                   <img className="backButton" src={ArrowLeft} alt="img" />
                 </Link>
               </div>
-
             </div>
           </div>
 
@@ -645,8 +697,6 @@ const TypeStory = (props) => {
         showSociaModal={showSociaModal}
         setShowSocialModal={setShowSocialModal}
       />
-
-
 
       {/* html flipbook  modsal  */}
 
@@ -684,7 +734,7 @@ const TypeStory = (props) => {
             autoSize={true}
             ref={flipBook}
             getCurrentPageIndex={handlePageIndex}
-
+            onInit={handleLoadBook}
           >
 
 
@@ -692,14 +742,16 @@ const TypeStory = (props) => {
               <div className="postdetailss pus-titless">
                 <h5 className="postcount">{storyBook?.data?.TopicName}</h5>
                 <div id="bypara" className="by-title">
-                  <span>By <br></br>
+                  <span>{t('By')} <br></br>
                     {storyBook?.data?.PublisherName}
                   </span>
                 </div>
+                
 
                 {
                   images?.length ?
                     <div className="help-icon book_preview_icon">
+                      {console.log("images[0]?.data_url",images[0]?.data_url)}
                       <div className="custom-file-upload-preview_book">
                         <img src={images[0]?.data_url} alt="img" />
                       </div>
@@ -711,6 +763,7 @@ const TypeStory = (props) => {
                 {
                   picture?.length ?
                     <div className="help-icon book_preview_icon">
+                      {console.log("picture[0]",picture[0])}
                       <div className="custom-file-upload-preview_book">
                         <img src={picture[0]} alt="img" />
                       </div>
@@ -718,17 +771,17 @@ const TypeStory = (props) => {
                     : null
                 }
 
-
                 {/* {images?.length ? <img style={{ height: "80px", marginTop: "14px" }} src={images[0]?.data_url} alt="img" /> : null}
               {picture?.length ? <img style={{ height: "80px", marginTop: "14px" }} src={picture[0]} alt="img" /> : null} */}
               </div>
             </PageCover>
 
             {
-              [...Array(Math.ceil(lastPage)).keys()].map((item, index) => {
+              [...Array(lastPage).keys()].map((item, index) => {
                 return (
                   <div className="page page-cover pagecover_book" data-density="hard" key={index}
                     style={{ display: finalText.slice(0 + (index * wordVal.current), wordVal.current * (index + 1)).join(' ').length === 0 || index === lastPage ? 'none' : 'block' }}
+                    id={`page-count` + index}
                   >
                     <div className="page-content">
                       <h2> <div className="page page-cover page-borders" data-density="hard" >
@@ -746,12 +799,12 @@ const TypeStory = (props) => {
 
             <PageCover >
               <div className="end_parent">
-                <h3 className="the_end_cover">The End</h3>
+                <h3 className="the_end_cover">{t('The End')}</h3>
               </div>
             </PageCover>
           </HTMLFlipBook>
 
-          {
+          {/* {
             Math.ceil(finalText?.length / wordVal.current) < PageCount ? null : (
               <img
                 src={rightArrow}
@@ -759,6 +812,14 @@ const TypeStory = (props) => {
                 onClick={() => flipBook.current.pageFlip().flipNext()}
               />
             )
+          } */}
+
+          {
+            lastPage + rightArrowVisible > PageCount ? <img
+              src={rightArrow}
+              height="40px" className="r_arrow_types" alt="img"
+              onClick={() => flipBook.current.pageFlip().flipNext()}
+            /> : null
           }
 
         </div>
@@ -789,39 +850,41 @@ const TypeStory = (props) => {
 
       {/* thank model  */}
 
-      <Modal className="modal-popup-01"
+      <Modal className="modal-popup-01 typestory_test_thank_modal"
         isOpen={IsThankOpen}
         onRequestClose={closeThankModal}
         contentLabel="Example Modal"
       >
         <div
           role="document"
-          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog typestory_test_thank_inner_modal"
         >
-          <div className="modal-content">
-            <div className="modal-body text-center">
-              <p className="text-uppercase">
-                Your post has been properly submitted
-              </p>
-              <p>and is published under</p>
-              <h3>ID:HERESAYS000{ReferrenceId} </h3>
-              <p>Please copy this for your reference</p>
-              <a
-                onClick={() => {
-                  setIsThankOpen(false);
-                  reset();
-                  navigate("/home");
-                }}
-              >
-                <img src={SubmitButton} />
-              </a>
+          
+            <div className="modal-content">
+              <div className="modal-body text-center">
+                <p className="text-uppercase">
+                  {t('Your post has been properly submitted')}
+                </p>
+                <p>{t('and is published under')}</p>
+                <h3>ID:HERESAYS000{ReferrenceId} </h3>
+                <p>{t('Please copy this for your reference')}</p>
+                <a
+                  onClick={() => {
+                    setIsThankOpen(false);
+                    reset();
+                    navigate("/home");
+                  }}
+                >
+                  <img src={SubmitButton} />
+                </a>
+              </div>
             </div>
-          </div>
+          
         </div>
 
       </Modal>
 
-      <Modal className="modal-popup-01"
+      <Modal className="modal-popup-01 image_popup_top_div"
         isOpen={imagePopUp}
         onRequestClose={closeImagePopUp}
         contentLabel="Example Modal"
@@ -829,92 +892,95 @@ const TypeStory = (props) => {
       >
         <div
           role="document"
-          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
+          className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog image_popup_inner_div"
         >
-          <div className="modal-content">
-            <div className="modal-body text-center">
-              <p className="text-uppercase">
-                Upload Images
-              </p>
-              <div className="App">
-                <ImageUploading
-                  // multiple
-                  value={images}
-                  onChange={onChange}
-                  maxNumber={maxNumber}
-                  dataURLKey="data_url"
-                >
-                  {({
-                    imageList,
-                    onImageUpload,
-                    onImageRemoveAll,
-                    onImageUpdate,
-                    onImageRemove,
-                    isDragging,
-                    dragProps,
-                  }) => (
-                    // write your building UI
-                    <div className="upload__image-wrapper">
-                      <button
-                        style={isDragging ? { color: 'red' } : undefined}
-                        onClick={onImageUpload}
-                        {...dragProps}
-                      >
-                        Click or Drop here
-                      </button>
-                      &nbsp;
-                      <button onClick={onImageRemoveAll}>Remove all images</button>
+         
+            <div className="modal-content">
+              <div className="modal-body text-center">
+                <p className="text-uppercase">
+                  {t('UPLOAD IMAGES')}
+                </p>
+                <div className="App">
+                  <ImageUploading
+                    // multiple
+                    value={images}
+                    onChange={onChange}
+                    maxNumber={maxNumber}
+                    dataURLKey="data_url"
+                  >
+                    {({
+                      imageList,
+                      onImageUpload,
+                      onImageRemoveAll,
+                      onImageUpdate,
+                      onImageRemove,
+                      isDragging,
+                      dragProps,
+                    }) => (
+                      // write your building UI
+                      <div className="upload__image-wrapper">
+                        <button
+                          style={isDragging ? { color: 'red' } : undefined}
+                          onClick={onImageUpload}
+                          {...dragProps}
+                        >
+                          {t('Click or Drop here')}
 
-                      <div className="upload-images">
-                        {imageList.map((image, index) => (
-                          <div key={index} className="image-item">
-                            <img src={image['data_url']} alt="" width="100" />
-                            <div className="image-item__btn-wrapper">
-                              {/* <button onClick={() => onImageUpdate(index)} className="update">Update</button> */}
-                              <img className="cancle_img_popUp" onClick={() => onImageRemove(index)} src={cancleImg} alt="img" />
-                            </div>
-                          </div>
-                        ))}
+                        </button>
+                        &nbsp;
+                        <button onClick={onImageRemoveAll}>{t('Remove all images')}
+                        </button>
 
-                        {
-                          picture ?
-                            (picture?.map((item, index) => {
-                              return <div className="image-item" key={index}><img src={item} alt="" width="100" />
-                                <div className="image-item__btn-wrapper">
-                                  <img className="cancle_img_popUp" onClick={() => onRemoveCameraImgUpload(index)} src={cancleImg} alt="img" />
-                                </div>
+                        <div className="upload-images">
+                          {imageList.map((image, index) => (
+                            <div key={index} className="image-item">
+                              <img src={image['data_url']} alt="" width="100" />
+                              <div className="image-item__btn-wrapper">
+                                {/* <button onClick={() => onImageUpdate(index)} className="update">Update</button> */}
+                                <img className="cancle_img_popUp" onClick={() => onImageRemove(index)} src={cancleImg} alt="img" />
                               </div>
-                            })) : null
-                        }
+                            </div>
+                          ))}
 
+                          {
+                            picture ?
+                              (picture?.map((item, index) => {
+                                return <div className="image-item" key={index}><img src={item} alt="" width="100" />
+                                  <div className="image-item__btn-wrapper">
+                                    <img className="cancle_img_popUp" onClick={() => onRemoveCameraImgUpload(index)} src={cancleImg} alt="img" />
+                                  </div>
+                                </div>
+                              })) : null
+                          }
+
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </ImageUploading>
+                    )}
+                  </ImageUploading>
+                </div>
+
+
+                <a
+                  onClick={() => {
+                    SaveImages(); setHead(false);
+                  }}
+                >
+                  <img src={SubmitButton} />
+                </a>
               </div>
-
-
-              <a
-                onClick={() => {
-                  SaveImages(); setHead(false);
-                }}
-              >
-                <img src={SubmitButton} />
-              </a>
             </div>
-          </div>
         </div>
 
       </Modal>
 
-      <Modal className="modal-popup-01 modalcamerpopup"
+      <Modal className="modal-popup-01 modalcamerpopup image_popup_top_div"
         isOpen={cameraImgPreview}
         // onRequestClose={closeCameraPreview}
         contentLabel="Example Modal"
       >
         <div
           role="document"
-          className="modal-dialog cmmodals modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog camera-upload-img"
+          className="modal-dialog cmmodals modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog camera-upload-img image_popup_inner_div"
         >
           <div className="modal-content">
             <div className="modal-body text-center">
@@ -943,7 +1009,7 @@ const TypeStory = (props) => {
         </div>
 
       </Modal>
-
+{/* 
       <div
         id="ThanksTypeModal1"
         tabIndex="-1"
@@ -957,28 +1023,35 @@ const TypeStory = (props) => {
           role="document"
           className="modal-dialog modal-dialog-centered sociallogin-modal-dialog thankstype-modal-dialog"
         >
-          <div className="modal-content">
-            <div className="modal-body text-center">
-              <p className="text-uppercase">
-                Your post has been properly submitted
-              </p>
-              <p>and is published under</p>
-              <h3>ID:HERESAYS000{ReferrenceId} </h3>
-              <p>Please copy this for your reference</p>
-              <a
-                onClick={() => {
-                  setThanksTypeModal1(false);
-                  // setTopicData("");
-                  reset();
-                  navigate("/story/type-story");
-                }}
-              >
-                <img src={SubmitButton} />
-              </a>
+          <Translator
+           cacheProvider={cacheProvider}
+            from='en'
+            to={currentLanguage}
+            googleApiKey='AIzaSyDJyDB2bnmeDG4KHOZkHnrDqhrqnUI375M'
+          >
+            <div className="modal-content">
+              <div className="modal-body text-center">
+                <p className="text-uppercase">
+                  {t('Your post has been properly submitted')}
+                </p>
+                <p>{t('and is published under')}</p>
+                <h3>ID:HERESAYS000{ReferrenceId} </h3>
+                <p>{t('Please copy this for your reference')}</p>
+                <a
+                  onClick={() => {
+                    setThanksTypeModal1(false);
+                    // setTopicData("");
+                    reset();
+                    navigate("/story/type-story");
+                  }}
+                >
+                  <img src={SubmitButton} />
+                </a>
+              </div>
             </div>
-          </div>
+          </Translator>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -13,8 +13,14 @@ import Banner from "../components/banner";
 import { Loader } from "../components/loader";
 import { Translator, Translate } from "react-auto-translate";
 import Header from "../components/header";
+import {AllLanguageFromJson} from "../../constants/json/languages"
+import { withNamespaces, NamespacesConsumer, Trans, useTranslation } from 'react-i18next';
+import AllCountryJsonData from "../../constants/locales/CountryTranslation.json"
+
+
 // import translatedCountryData from '../../constants/json/countryTranslation.json'
 const WriteStory = (props) => {
+  const { t, i18n } = useTranslation();
   const [ShowLanguageModal, setShowLanguageModal] = useState(false);
   const [allCountry, setAllCountry] = useState("");
   const [countries, setCountries] = useState([]);
@@ -31,6 +37,7 @@ const WriteStory = (props) => {
   const [topicClass, setTopicClass] = useState("");
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState('');
+  const [formData, setformData] = useState({});
   const [state, setState] = useState({
     ip: "",
     countryName: "",
@@ -49,6 +56,20 @@ const WriteStory = (props) => {
   } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const cacheProvider = {
+    get: (language, key) =>
+      ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
+      language
+      ],
+    set: (language, key, value) => {
+      const existing = JSON.parse(localStorage.getItem('translations')) || {
+        [key]: {},
+      };
+      existing[key] = { ...existing[key], [language]: value };
+      localStorage.setItem('translations', JSON.stringify(existing));
+    },
+  };
 
   var options = {
     enableHighAccuracy: true,
@@ -180,7 +201,16 @@ const WriteStory = (props) => {
   //   }
   let localLanguage = localStorage.getItem("prefered_language")
     ? localStorage.getItem("prefered_language")
-    : navigator.language;
+    : "en";
+
+
+    let currentLanguageSetting = localStorage.getItem("prefered_language")
+    ? localStorage.getItem("prefered_language")
+    : "en";
+  const [currentLanguage, setCurrentLanguage] = useState(
+    currentLanguageSetting
+  );
+
   const getAllData = () => {
     // axios
     //   .all([
@@ -212,7 +242,7 @@ const WriteStory = (props) => {
     //   )
     //   .catch((error) => console.log(error));
 
-      axios.get(`${ApiUrl}i18n_locale`).then((res)=>{ setAllLaguages(res.data.data);}).catch((error) => console.log(error));
+    axios.get(`${ApiUrl}i18n_locale`).then((res) => { setAllLaguages(res.data.data); }).catch((error) => console.log(error));
   };
 
   const onLanguageChange = (data) => {
@@ -252,16 +282,8 @@ const WriteStory = (props) => {
 
   return (
     <>
-      <Translator
-        from="en"
-        to={
-          localStorage.getItem("prefered_language")
-            ? localStorage.getItem("prefered_language")
-            : navigator.language
-        }
-        googleApiKey="AIzaSyDJyDB2bnmeDG4KHOZkHnrDqhrqnUI375M"
-      >
-        <div className="container3">
+      
+        <div className="container3 mobile_height">
           <Header />
           <div className="middle text-centercontrol">
             {/* <div className="B1"></div> */}
@@ -282,120 +304,148 @@ const WriteStory = (props) => {
                         <span></span>
                       </Link>
                       <form
-                          onSubmit={handleSubmit(onSubmit)}
-                          className="ng-untouched ng-pristine ng-invalid"
-                        >
-                          <div className="writestory_popup">
-                      <div className="modal-body">
-                       
-                          <div className="row custom-field-row write-align">
-                            <div className="col-md-12 custom-field-col">
-                              <div className="row custom-field-row rab-flex-direction">
-                                <div className="col-md-12 custom-field-heading cmn-title-head text-center">
-                                  <h2>
-                                    <Translate>SUBMIT</Translate>
-                                  </h2>
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="ng-untouched ng-pristine ng-invalid"
+                      >
+                        <div className="writestory_popup">
+                          <div className="modal-body">
+
+                            <div className="row custom-field-row write-align">
+                              <div className="col-md-12 custom-field-col">
+                                <div className="row custom-field-row rab-flex-direction">
+                                  <div className="col-md-12 custom-field-heading cmn-title-head text-center">
+                                    <h2>
+                                      {t('SUBMIT')}
+                                    </h2>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            {/* topic  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group input-custom-field">
-                                <input
-                                  type="text"
-                                  placeholder="Topic"
-                                  // formcontrolname="topic"
-                                  className="form-control ng-untouched ng-pristine ng-invalid "
-                                  {...register("TopicName", {
-                                    required: true,
-                                    onChange: () => {
-                                      setInput({ ...input, TopicName: true });
-                                    },
-                                  })}
-                                />
-                              </div>
-                              {errors.TopicName && (
-                                <span className="text-danger">
-                                  <Translate>TopicName is required</Translate>
-                                </span>
-                              )}
-                            </div>
-
-
-                            {/* publish  */}
-                            <div className="col-md-4 custom-field-col">
-
-                              <div className="form-group input-custom-field">
-                                <input
-                                  type="text"
-                                  placeholder="Published By"
-                                  formcontrolname="published_by"
-                                  {...register("PublisherName", {
-                                    required: true,
-                                    onChange: () => {
-                                      setInput({
-                                        ...input,
-                                        PublisherName: true,
-                                      });
-                                    },
-                                  })}
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                />
-                              </div>
-                              {errors.PublisherName && (
-                                <span className="text-danger">
-                                  <Translate>
-                                    Publisher Name is required
-                                  </Translate>
-                                </span>
-                              )}
-                            </div>
-                            {/* lang  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group select-custom-field">
-                                <select
-                                  formcontrolname="language_id"
-                                  {...register("Language")}
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                  // defaultValue={localLanguage}
-                                  onChange={(e) => { localStorage.setItem("prefered_language", e.target.value) }}
-                                >
-                                  {
-                                    !localLanguage ? (<option value="">Language</option>) : null
-                                  }
-
-                                  {AllLaguages &&
-                                    AllLaguages.map((x, index) => {
-                                      return (
-
-                                        <option
-                                          key={index}
-                                          value={x.attributes.code}
-                                          selected={
-                                            x.attributes.code == localLanguage
-                                          }
-                                        >
-                                          {x.attributes.name}
-                                        </option>
-                                      )
+                              {/* topic  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group input-custom-field">
+                                  <input
+                                    type="text"
+                                    placeholder={t('Topic')}
+                                    // formcontrolname="topic"
+                                    className="form-control ng-untouched ng-pristine ng-invalid "
+                                    {...register("TopicName", {
+                                      required: true,
+                                      onChange: () => {
+                                        setInput({ ...input, TopicName: true });
+                                      },
                                     })}
-                                </select>
+                                  />
+                                  {/* {!input.TopicName && !formData.TopicName && (
+                                    <p
+                                      className="placeHolder text-white"
+                                      style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        left: "8px",
+                                        bottom: "",
+                                      }}
+                                      onClick={() => { setTopicClass("topic") }}
+                                    >
+                                      {t('Topic')}
+                                    </p>
+                                  )} */}
+                                </div>
+                                {errors.TopicName && (
+                                  <span className="text-danger">
+                                    {t('TopicName is required')}
+                                  </span>
+                                )}
                               </div>
-                              {errors.Language && (
-                                <span className="text-danger">
-                                  Language is required
-                                </span>
-                              )}
-                            </div>
-                            {/* country  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group select-custom-field">
-                              <CountryDropdown
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                  defaultOptionLabel="country"
-                                  value={country}
-                                  onChange={selectCountry} />
-                                {/* <select
+
+
+                              {/* publish  */}
+                              <div className="col-md-4 custom-field-col">
+
+                                <div className="form-group input-custom-field">
+                                  <input
+                                    type="text"
+                                    placeholder={t('Published BY')}
+                                    formcontrolname="published_by"
+                                    {...register("PublisherName", {
+                                      required: true,
+                                      onChange: () => {
+                                        setInput({
+                                          ...input,
+                                          PublisherName: true,
+                                        });
+                                      },
+                                    })}
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                  />
+                                  {/* {!input.PublisherName &&
+                                    !formData.PublisherName && (
+                                      <p
+                                        className="placeHolder text-white"
+                                        style={{
+                                          position: "absolute",
+                                          top: "10px",
+                                          left: "8px",
+                                          bottom: "",
+                                        }}
+                                      >
+                                        {t('Published BY')}
+                                      </p>
+                                    )} */}
+                                </div>
+                                {errors.PublisherName && (
+                                  <span className="text-danger">
+                                    {t('Publisher Name is required')}
+                                      
+                                    
+                                  </span>
+                                )}
+                              </div>
+                              {/* lang  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group select-custom-field">
+                                  <select
+                                    formcontrolname="language_id"
+                                    {...register("Language")}
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                    value={currentLanguageSetting}
+                                    onChange={(e) => { localStorage.setItem("prefered_language", e.target.value) }}
+                                  >
+                                    {
+                                      !currentLanguage ? (<option value="">Language</option>) : null
+                                    }
+
+                                    {AllLanguageFromJson &&
+                                      AllLanguageFromJson.map((x, index) => {
+                                        return (
+
+                                          <option
+                                            key={index}
+                                            value={x.BCP47}
+                                            // selected={
+                                            //   x.BCP47 == currentLanguage
+                                            // }
+                                          >
+                                            {x.Native}
+                                          </option>
+                                        )
+                                      })}
+                                  </select>
+                                </div>
+                                {errors.Language && (
+                                  <span className="text-danger">
+                                    Language is required
+                                  </span>
+                                )}
+                              </div>
+                              {/* country  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group select-custom-field">
+                                  {/* <CountryDropdown
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                    defaultOptionLabel="country"
+                                    value={country}
+                                    onChange={selectCountry} /> */}
+                                  <select
                                   // value={countryText}
                                   formcontrolname="country"
                                   className="form-control ng-untouched ng-pristine ng-invalid"
@@ -409,124 +459,186 @@ const WriteStory = (props) => {
 
                                 >
                                   <option value="">{countryText ? countryText : "Country"}</option>
-                                  {Country?.getAllCountries().map((x, index) => {
+                                  {AllCountryJsonData[currentLanguageSetting]?.map((x, index) => {
                                     return (
-                                      <option key={index} value={JSON.stringify(x)}
+                                      <option key={index} value={x.isocode}
                                         selected={countryText === x.name}
                                       >
                                         {x.name}
                                       </option>
                                     );
                                   })}
-                                </select> */}
+                                </select>
+                                </div>
                               </div>
-                            </div>
-                            {/* city  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group select-custom-field">
-                              <RegionDropdown
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                  blankOptionLabel="State"
-                                  defaultOptionLabel="State"
-                                  country={country}
-                                  value={region}
-                                  onChange={selectRegion} />
-                                {/* <select
-                                  formcontrolname="city"
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                  {...register("City")}
-                                >
-                                  <option value="">{cityText ? cityText : "City"}</option>
-                                  {City.getCitiesOfCountry(
-                                    allCountry && allCountry.isoCode
-                                  ).map((x, index) => {
-                                    return (
-                                      <option key={index} value={x.name}>{x.name}</option>
-                                    );
-                                  })}
-                                </select> */}
+                              {/* city  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group input-custom-field">
+                                  {/* <RegionDropdown
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                    blankOptionLabel="State"
+                                    defaultOptionLabel="State"
+                                    country={country}
+                                    value={region}
+                                    onChange={selectRegion} /> */}
+                                  <input
+                                    type="text"
+                                    placeholder={t('City')}
+                                    formcontrolname="city"
+                                    {...register("City", {
+                                      onChange: () => {
+                                        setInput({ ...input, City: true });
+                                      },
+                                    })}
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                  />
+                                  {/* {!input.City && !formData.City && (
+                                    <p
+                                      className="placeHolder text-white"
+                                      style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        left: "8px",
+                                        bottom: "",
+                                      }}
+                                    >
+                                      {t('City')}
+                                    </p>
+                                  )} */}
+                                </div>
                               </div>
-                            </div>
-                            {/* place  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group input-custom-field">
-                                <input
-                                  type="text"
-                                  placeholder="Place"
-                                  formcontrolname="place"
-                                  {...register("Place", {
-                                    onChange: () => {
-                                      setInput({ ...input, Place: true });
-                                    },
-                                  })}
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                />
+                              {/* place  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group input-custom-field">
+                                  <input
+                                    type="text"
+                                    placeholder={t('Place')}
+                                    formcontrolname="place"
+                                    {...register("Place", {
+                                      onChange: () => {
+                                        setInput({ ...input, Place: true });
+                                      },
+                                    })}
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                  />
+                                  {/* {!input.Place && !formData.Place && (
+                                    <p
+                                      className="placeHolder text-white"
+                                      style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        left: "8px",
+                                        bottom: "",
+                                      }}
+                                    >
+                                      {t('Place')}
+                                    </p>
+                                  )} */}
+                                </div>
                               </div>
-                            </div>
-                            {/* sub 1  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group input-custom-field">
-                                <input
-                                  type="text"
-                                  placeholder="Subject 1"
-                                  formcontrolname="subject_id"
-                                  {...register("Subject1", {
-                                    onChange: () => {
-                                      setInput({ ...input, Subject1: true });
-                                    },
-                                  })}
-                                  className="form-control ng-untouched ng-pristine ng-invalid"
-                                />
+                              {/* sub 1  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group input-custom-field">
+                                  <input
+                                    type="text"
+                                    placeholder={t('Subject 1')}
+                                    formcontrolname="subject_id"
+                                    {...register("Subject1", {
+                                      onChange: () => {
+                                        setInput({ ...input, Subject1: true });
+                                      },
+                                    })}
+                                    className="form-control ng-untouched ng-pristine ng-invalid"
+                                  />
+                                  {/* {!input.Subject1 && !formData.Subject1 && (
+                                    <p
+                                      className="placeHolder text-white"
+                                      style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        left: "8px",
+                                        bottom: "",
+                                      }}
+                                    >
+                                      {t('Subject 1')}
+                                    </p>
+                                  )} */}
+                                </div>
                               </div>
-                            </div>
-                            {/* sub2  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group input-custom-field">
-                                <input
-                                  type="text"
-                                  placeholder="Subject 2"
-                                  formcontrolname="subject_second"
-                                  {...register("Subject2", {
-                                    onChange: () => {
-                                      setInput({ ...input, Subject2: true });
-                                    },
-                                  })}
-                                  className="form-control ng-untouched ng-pristine ng-valid"
-                                />
+                              {/* sub2  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group input-custom-field">
+                                  <input
+                                    type="text"
+                                    placeholder={t('Subject 2')}
+                                    formcontrolname="subject_second"
+                                    {...register("Subject2", {
+                                      onChange: () => {
+                                        setInput({ ...input, Subject2: true });
+                                      },
+                                    })}
+                                    className="form-control ng-untouched ng-pristine ng-valid"
+                                  />
+                                  {/* {!input.Subject2 && !formData.Subject2 && (
+                                    <p
+                                      className="placeHolder text-white"
+                                      style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        left: "8px",
+                                        bottom: "",
+                                      }}
+                                    >
+                                      {t('Subject 2')}
+                                    </p>
+                                  )} */}
 
+                                </div>
                               </div>
-                            </div>
-                            {/* sub - 3  */}
-                            <div className="col-md-4 custom-field-col">
-                              <div className="form-group input-custom-field">
-                                <input
-                                  type="text"
-                                  placeholder="Subject 3"
-                                  formcontrolname="subject_third"
-                                  {...register("Subject3", {
-                                    onChange: () => {
-                                      setInput({ ...input, Subject3: true });
-                                    },
-                                  })}
-                                  className="form-control ng-untouched ng-pristine ng-valid"
-                                />
+                              {/* sub - 3  */}
+                              <div className="col-md-4 custom-field-col">
+                                <div className="form-group input-custom-field">
+                                  <input
+                                    type="text"
+                                    placeholder={t('Subject 3')}
+                                    formcontrolname="subject_third"
+                                    {...register("Subject3", {
+                                      onChange: () => {
+                                        setInput({ ...input, Subject3: true });
+                                      },
+                                    })}
+                                    className="form-control ng-untouched ng-pristine ng-valid"
+                                  />
+                                  {/* {!input.Subject3 && !formData.Subject3 && (
+                                    <p
+                                      className="placeHolder text-white"
+                                      style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        left: "8px",
+                                        bottom: "",
+                                      }}
+                                    >
+                                      {t('Subject 3')}
+                                    </p>
+                                  )} */}
 
+                                </div>
                               </div>
                             </div>
+
+
                           </div>
-
-
-                      </div>
-                      </div>
-                      <div className="btn-cmn-group writestory_mobile_top new_close_write">
-                            <button
-                              type="submit"
-                              className="btn-apply write-btn-bg cmn-submit-button"
-                            >
-                              <span></span>
-                            </button>
-                          </div>
-                        </form>
+                        </div>
+                        <div className="btn-cmn-group writestory_mobile_top new_close_write">
+                          <button
+                            type="submit"
+                            className="btn-apply write-btn-bg cmn-submit-button"
+                          >
+                            <span></span>
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                   <div className="continue-btn-group">
@@ -543,9 +655,14 @@ const WriteStory = (props) => {
             </div>
             {/* <div className="B3"></div> */}
           </div>
-          <Banner />
+          <app-footer-panel>
+            <div className="bottom-wrapper-initial-mobile">
+              <div className="google-ads-wrap ng-star-inserted">
+                <Banner />
+              </div>
+            </div>
+          </app-footer-panel>
         </div>
-      </Translator >
     </>
   );
 };

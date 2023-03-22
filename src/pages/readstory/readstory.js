@@ -10,9 +10,14 @@ import { ApiUrl } from "../../config/config";
 import { useForm } from "react-hook-form";
 import Header from "../components/header";
 import { Translator, Translate } from "react-auto-translate";
+import { AllLanguageFromJson } from "../../constants/json/languages";
+import { withNamespaces, NamespacesConsumer, Trans, useTranslation } from 'react-i18next';
+import AllCountryJsonData from "../../constants/locales/CountryTranslation.json"
+
 
 
 const ReadStory = (props) => {
+  const { t, i18n } = useTranslation();
   const [ShowLanguageModal, setShowLanguageModal] = useState(false);
   const [userAgreementData, setUserAgreementData] = useState();
   const [disclaimer, setDisclaimer] = useState();
@@ -39,6 +44,7 @@ const ReadStory = (props) => {
   const [addBannerStoryData, setAddBannerStoryData] = useState();
   const [isRunning, setRunning] = useState(true);
   const [countryText, setCountryText] = useState("");
+  const [dateType, setDateType] = useState("text");
   const [cityText, setCityText] = useState("");
   const [langText, setLangText] = useState("");
   const [state, setState] = useState({
@@ -53,13 +59,21 @@ const ReadStory = (props) => {
 
   let localLanguage = localStorage.getItem("prefered_language")
     ? localStorage.getItem("prefered_language")
-    : (navigator.language == "en") ? "en-US" : navigator.language;
+    : "em";
+
+
+  let currentLanguageSetting = localStorage.getItem("prefered_language")
+    ? localStorage.getItem("prefered_language")
+    : "en";
+  const [currentLanguage, setCurrentLanguage] = useState(
+    currentLanguageSetting
+  );
 
 
   const getAddBannerData = () => {
     axios.get(`${ApiUrl}getBanner`).then((result) => {
       setAddBannerStoryData(
-        result.data.data.filter((x) => x.attributes.published_at != null)
+        result?.data?.data?.filter((x) => x?.attributes?.published_at != null)
       );
     });
   };
@@ -138,13 +152,13 @@ const ReadStory = (props) => {
         let data = response.data;
         let res = await tranlateText(localStorage.getItem("prefered_language")
           ? localStorage.getItem("prefered_language")
-          : navigator.language, "Country")
+          : "en", "Country")
         let res2 = await tranlateText(localStorage.getItem("prefered_language")
           ? localStorage.getItem("prefered_language")
-          : navigator.language, "City")
+          : "en", "City")
         let res3 = await tranlateText(localStorage.getItem("prefered_language")
           ? localStorage.getItem("prefered_language")
-          : navigator.language, "Language")
+          : "en", "Language")
 
         // setCountry(
         //   Country.getAllCountries().filter(
@@ -382,19 +396,24 @@ const ReadStory = (props) => {
   const navigate = useNavigate();
   const handleOnClick = () => navigate("/readstory/storylist");
 
+  const cacheProvider = {
+    get: (language, key) =>
+      ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
+      language
+      ],
+    set: (language, key, value) => {
+      const existing = JSON.parse(localStorage.getItem('translations')) || {
+        [key]: {},
+      };
+      existing[key] = { ...existing[key], [language]: value };
+      localStorage.setItem('translations', JSON.stringify(existing));
+    },
+  };
+
   // if (!props.imagesPreloaded) return <Loader></Loader>;
   return (
     <>
-      <Translator
-        // cacheProvider={cacheProvider}
-        from="en"
-        to={
-          localStorage.getItem("prefered_language")
-            ? localStorage.getItem("prefered_language")
-            : navigator.language
-        }
-        googleApiKey="AIzaSyDJyDB2bnmeDG4KHOZkHnrDqhrqnUI375M"
-      >
+    
         <div className=" readstory_background read_story_mobile">
           <Header />
           <div className="middle readstory_middle">
@@ -430,25 +449,25 @@ const ReadStory = (props) => {
                         </div>
                         <div className="modal-body">
                           <div className="row custom-field-row row-align">
-                            <div className="col-md-8 custom-field-col">
+                            <div className="col-md-12 custom-field-col">
                               <div className="row custom-field-row rab-flex-direction">
 
-                                <div className="col-md-6 custom-field-col">
+                                {/* <div className="col-md-6 custom-field-col">
 
-                                </div>
-                                <div className="col-md-6 custom-field-heading cmn-title-head text-center">
+                                </div> */}
+                                <div className="col-md-12 custom-field-heading cmn-title-head text-center">
                                   <h2>
                                     {" "}
-                                    <Translate>SUBMIT</Translate>
+                                    {t('SUBMIT')}
                                   </h2>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="col-md-4 custom-field-col">
+                            {/* <div className="col-md-4 custom-field-col">
 
 
-                            </div>
+                            </div> */}
 
 
 
@@ -457,33 +476,34 @@ const ReadStory = (props) => {
                                 <input
                                   type="text"
                                   // formcontrolname="topic"
-                                  placeholder="Topic"
+                                  placeholder={t('Topic')}
                                   className="form-control ng-pristine ng-valid ng-touched"
                                   value={
-                                    formData.TopicName
-                                      ? formData.TopicName
-                                      : input && input.TopicName
+                                   input.TopicName
                                   }
                                   onClick={(e) =>
                                     onFormDataInput(e, "TopicName")
                                   }
-                                  onChange={(e) =>
-                                    onChange(e, allTopic, "TopicName")
-                                  }
+                                  onChange= {(e) => {
+                                    setNewQueryString(`[topic_name]=${e.target.value}`);
+                                  }}
+                                  // onChange={(e) =>
+                                  //   onChange(e, allTopic, "TopicName")
+                                  // }
                                 />
-                                {/* {!input.TopicName&&!formData.TopicName&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Topic</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.TopicName && !formData.TopicName &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Topic')}
+                                  </p>
+                                } */}
 
                                 {showSuggestions == "TopicName" &&
                                   input.TopicName && (
@@ -498,40 +518,46 @@ const ReadStory = (props) => {
                               <div className="form-group input-custom-field">
                                 <input
                                   type="text"
-                                  placeholder="Published By"
+                                  placeholder={t('Published BY')}
                                   formcontrolname="published_by"
                                   //placeholder={}
                                   className="form-control ng-pristine ng-valid ng-touched"
+                                  // value={
+                                  //   formData.PublisherName
+                                  //     ? formData.PublisherName
+                                  //     : input && input.publishedBy
+                                  // }
                                   value={
-                                    formData.PublisherName
-                                      ? formData.PublisherName
-                                      : input && input.publishedBy
+                                   input.publishedBy
                                   }
                                   onClick={(e) =>
                                     onFormDataInput(e, "publishedBy")
                                   }
-                                  onChange={(e) =>
-                                    onChange(
-                                      e,
-                                      allPublishedBy,
-                                      "publishedBy"
-                                    )
-                                  }
+                                  onChange= {(e) => {
+                                    setNewQueryString(`[publisher_name]=${e.target.value}`);
+                                  }}
+                                  // onChange={(e) =>
+                                  //   onChange(
+                                  //     e,
+                                  //     allPublishedBy,
+                                  //     "publishedBy"
+                                  //   )
+                                  // }
 
                                 />
-                                {/* {!input.publishedBy&&!formData.PublisherName&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Published By</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.publishedBy && !formData.PublisherName &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Published BY')}
+                                  </p>
+                                } */}
                                 {showSuggestions == "publishedBy" &&
                                   input.publishedBy && (
                                     <SuggestionsListComponent
@@ -547,26 +573,26 @@ const ReadStory = (props) => {
                                   formcontrolname="language_id"
                                   {...register("Language")}
                                   className="form-control ng-pristine ng-valid ng-touched"
-                                  // defaultValue={localLanguage}
+                                  value={currentLanguageSetting}
                                   onChange={(e) => { localStorage.setItem("prefered_language", e.target.value) }}
                                 >
 
                                   {
-                                    !localLanguage ? (<option value="">Language</option>) : null
+                                    !currentLanguage ? (<option value="">Language</option>) : null
                                   }
 
                                   {/* <option value="">{langText?langText:"Language"}</option> */}
-                                  {AllLaguages &&
-                                    AllLaguages.map((x, index) => {
+                                  {AllLanguageFromJson &&
+                                    AllLanguageFromJson.map((x, index) => {
                                       return (
                                         <option
                                           key={index}
-                                          value={x.attributes.code}
-                                          selected={
-                                            x.attributes.code == localLanguage
-                                          }
+                                          value={x.BCP47}
+                                          // selected={
+                                          //   x.BCP47 == currentLanguage
+                                          // }
                                         >
-                                          {x.attributes.name}
+                                          {x.Native}
                                         </option>
                                       )
                                     })}
@@ -578,12 +604,12 @@ const ReadStory = (props) => {
 
                             <div className="col-md-4 custom-field-col">
                               <div className="form-group select-custom-field">
-                                <CountryDropdown
+                                {/* <CountryDropdown
                                   className="form-control ng-untouched ng-pristine ng-invalid"
                                   defaultOptionLabel="country"
                                   value={country}
-                                  onChange={selectCountry} />
-                                {/* <select
+                                  onChange={selectCountry} /> */}
+                                <select
                                   formcontrolname="country"
                                   className="form-control ng-untouched ng-pristine ng-invalid"
                                   onChange={(e) => {
@@ -593,27 +619,38 @@ const ReadStory = (props) => {
                                 >
 
                                   <option value="">{countryText ? countryText : "Country"}</option>
-                                  {Country.getAllCountries().map((x, index) => {
+                                  {AllCountryJsonData[currentLanguageSetting]?.map((x, index) => {
                                     return (
-                                      <option key={index} value={JSON.stringify(x)}
+                                      <option key={index} value={x.isocode}
                                         selected={countryText === x.name}
                                       >
                                         {x.name}
                                       </option>
                                     );
                                   })}
-                                </select> */}
+                                </select>
                               </div>
                             </div>
                             <div className="col-md-4 custom-field-col">
-                              <div className="form-group select-custom-field">
-                                <RegionDropdown
+                              <div className="form-group input-custom-field">
+                                {/* <RegionDropdown
                                   className="form-control ng-untouched ng-pristine ng-invalid"
                                   blankOptionLabel="State"
                                   defaultOptionLabel="State"
                                   country={country}
                                   value={region}
-                                  onChange={selectRegion} />
+                                  onChange={selectRegion} /> */}
+                                <input
+                                  type="text"
+                                  placeholder={t('City')}
+                                  formcontrolname="city"
+                                  {...register("City", {
+                                    onChange: () => {
+                                      setInput({ ...input, City: true });
+                                    },
+                                  })}
+                                  className="form-control ng-untouched ng-pristine ng-invalid"
+                                />
                                 {/* <select
                                   formcontrolname="city"
                                   className="form-control ng-untouched ng-pristine ng-invalid"
@@ -633,7 +670,7 @@ const ReadStory = (props) => {
                               <div className="form-group input-custom-field">
                                 <input
                                   type="text"
-                                  placeholder="Place"
+                                  placeholder={t('Place')}
                                   // formcontrolname="place"
                                   className="form-control ng-pristine ng-valid ng-touched"
                                   value={
@@ -646,19 +683,19 @@ const ReadStory = (props) => {
                                     onChange(e, allPlace, "Place")
                                   }
                                 />
-                                {/* {!input.Place&&!formData.Place&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Place</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.Place && !formData.Place &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Place')}
+                                  </p>
+                                } */}
                                 {showSuggestions == "Place" && input && (
                                   <SuggestionsListComponent name={"Place"} />
                                 )}
@@ -673,7 +710,7 @@ const ReadStory = (props) => {
                                 <input
                                   type="text"
                                   // formcontrolname="subject_id"
-                                  placeholder="Subject 1"
+                                  placeholder={t('Subject 1')}
                                   className="form-control ng-untouched ng-pristine ng-valid"
                                   value={
                                     formData.Subject1
@@ -687,19 +724,19 @@ const ReadStory = (props) => {
                                     onChange(e, allSubject1, "Subject1")
                                   }
                                 />
-                                {/* {!input.Subject1&&!formData.Subject1&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Subject 1</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.Subject1 && !formData.Subject1 &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Subject 1')}
+                                  </p>
+                                } */}
                                 {showSuggestions == "Subject1" && input && (
                                   <SuggestionsListComponent name={"Subject1"} />
                                 )}
@@ -710,7 +747,7 @@ const ReadStory = (props) => {
                                 <input
                                   type="text"
                                   formcontrolname="subject_second"
-                                  placeholder="Subject 2"
+                                  placeholder={t('Subject 2')}
                                   className="form-control ng-untouched ng-pristine ng-valid"
                                   value={
                                     formData.Subject2 ? formData.Subject2 : ""
@@ -722,19 +759,19 @@ const ReadStory = (props) => {
                                     onChange(e, allSubject2, "Subject2")
                                   }
                                 />
-                                {/* {!input.Subject2&&!formData.Subject2&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Subject 2</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.Subject2 && !formData.Subject2 &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Subject 2')}
+                                  </p>
+                                } */}
                                 {showSuggestions == "Subject2" && input && (
                                   <SuggestionsListComponent name={"Subject2"} />
                                 )}
@@ -745,7 +782,7 @@ const ReadStory = (props) => {
                                 <input
                                   type="text"
                                   // formcontrolname="subject_third"
-                                  placeholder="Subject 3"
+                                  placeholder={t('Subject 3')}
                                   className="form-control ng-untouched ng-pristine ng-valid"
                                   value={
                                     formData.Subject3 ? formData.Subject3 : ""
@@ -757,19 +794,19 @@ const ReadStory = (props) => {
                                     onChange(e, allSubject3, "Subject3")
                                   }
                                 />
-                                {/* {!input.Subject3&&!formData.Subject3&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Subject 3</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.Subject3 && !formData.Subject3 &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Subject 3')}
+                                  </p>
+                                } */}
                                 {showSuggestions == "Subject3" && input && (
                                   <SuggestionsListComponent name={"Subject3"} />
                                 )}
@@ -783,18 +820,20 @@ const ReadStory = (props) => {
                               <div className="form-group input-custom-field-2">
                                 <div
                                   id="fromdatepickerRead"
-                                  data-date-format="mm-dd-yyyy"
+                                  data-date-format={t('Date')}
                                   className="input-group date date-field"
                                 >
                                   <input
-                                    placeholder="Enter date"
-                                    type="date"
+                                    placeholder={t('Date')}
+                                    type={dateType}
+                                    onFocus={()=>{setDateType("date")}}
+                                    // onBlur={()=>{setDateType("text")}}
                                     // id="modified"
                                     bsdaterangepicker=""
                                     formcontrolname="from_date"
                                     className="form-control ng-pristine ng-valid ng-touched calendar"
                                   />
-
+  
                                 </div>
                               </div>
                             </div>
@@ -813,9 +852,9 @@ const ReadStory = (props) => {
                               <div className="form-group input-custom-field-2">
                                 <input
                                   type="text"
-                                  placeholder="Reference Id"
+                                  // placeholder="Reference Id"
                                   formcontrolname="reference_id"
-                                  // placeholder="Reference ID"
+                                  placeholder={t('Reference Id')}
                                   className="form-control ng-pristine ng-valid ng-touched"
                                   value={
                                     formData.ReferenceId
@@ -829,19 +868,19 @@ const ReadStory = (props) => {
                                     onChange(e, ALLReferenceID, "ReferenceId")
                                   }
                                 />
-                                {/* {!input.ReferenceId&&!formData.ReferenceId&&
-                                    <p
-                                      className="placeHolder text-white"
-                                      style={{
-                                        position: "absolute",
-                                        top: "10px",
-                                        left:"8px",
-                                        bottom: "",
-                                      }}
-                                    >
-                                      <Translate>Reference Id</Translate>
-                                    </p>
-                                    } */}
+                                {/* {!input.ReferenceId && !formData.ReferenceId &&
+                                  <p
+                                    className="placeHolder text-white"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      left: "8px",
+                                      bottom: "",
+                                    }}
+                                  >
+                                    {t('Reference Id')}
+                                  </p>
+                                } */}
                                 {showSuggestions == "ReferenceId" &&
                                   input.ReferenceId && (
                                     <SuggestionsListComponent
@@ -877,7 +916,7 @@ const ReadStory = (props) => {
           </div>
           {/* <Banner /> */}
         </div>
-      </Translator>
+      
     </>
   );
 };

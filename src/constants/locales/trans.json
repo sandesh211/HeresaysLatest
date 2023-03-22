@@ -1,0 +1,752 @@
+"rw":[
+  {"isocode":"AF",
+    "name": "Afuganisitani"
+  },
+  {"isocode":"AX",
+    "name": "Ibirwa bya Aland"
+  },
+  {"isocode":"Al",
+    "name": "Alubaniya"
+  },
+  {"isocode":"DZ",
+    "name": "Alijeriya"
+  },
+  {"isocode":"AS",
+    "name": "Samoa y'Abanyamerika"
+  },
+  {"isocode":"AD",
+    "name": "Andorra"
+  },
+  {"isocode":"AO",
+    "name": "Angola"
+  },
+  {"isocode":"AI",
+    "name": "Anguilla"
+  },
+  {"isocode":"AQ",
+    "name": "Antaragitika"
+  },
+  {"isocode":"AG",
+    "name": "Antigua na Barbuda"
+  },
+  {"isocode":"AR",
+    "name": "Arijantine"
+  },
+  {"isocode":"AM",
+    "name": "Arumeniya"
+  },
+  {"isocode":"AW",
+    "name": "Aruba"
+  },
+  {"isocode":"AU",
+    "name": "Australiya"
+  },
+  {"isocode":"AT",
+    "name": "Otirishiya"
+  },
+  {"isocode":"AZ",
+    "name": "Azaribayijan"
+  },
+  {"isocode":"BS",
+    "name": "Bahamas"
+  },
+  {"isocode":"BH",
+    "name": "Bahrein"
+  },
+  {"isocode":"BD",
+    "name": "Bangladesh"
+  },
+  {"isocode":"BB",
+    "name": "Barubade"
+  },
+  {"isocode":"BY",
+    "name": "Biyelorusiya"
+  },
+  {"isocode":"BE",
+    "name": "Ububiligi"
+  },
+  {"isocode":"BZ",
+    "name": "Belize"
+  },
+  {"isocode":"BJ",
+    "name": "Bénin"
+  },
+  {"isocode":"BM",
+    "name": "Bermuda"
+  },
+  {"isocode":"BT",
+    "name": "Bhutan"
+  },
+  {"isocode":"BO",
+    "name": "Boliviya"
+  },
+  {"isocode":"BA",
+    "name": "Bosiniya na Herzegovina"
+  },
+  {"isocode":"BW",
+    "name": "Botswana"
+  },
+  {"isocode":"BV",
+    "name": "Ikirwa cya Bouvet"
+  },
+  {"isocode":"BR",
+    "name": "Burezili"
+  },
+  {"isocode":"IO",
+    "name": "Intara y’inyanja yu Buhinde"
+  },
+  {"isocode":"BN",
+    "name": "Brunei"
+  },
+  {"isocode":"BG",
+    "name": "Bulugariya"
+  },
+  {"isocode":"BF",
+    "name": "Burkina Faso"
+  },
+  {"isocode":"BI",
+    "name": "Burundi"
+  },
+  {"isocode":"KH",
+    "name": "Kamboje"
+  },
+  {"isocode":"CM",
+    "name": "Kameruni"
+  },
+  {"isocode":"CA",
+    "name": "Kanada"
+  },
+  {"isocode":"CV",
+    "name": "Cape Verde"
+  },
+  {"isocode":"KY",
+    "name": "Ibirwa bya Cayman"
+  },
+  {"isocode":"CF",
+    "name": "Repubulika ya Centrafrique"
+  },
+  {"isocode":"TD",
+    "name": "Tchad"
+  },
+  {"isocode":"CL",
+    "name": "Chili"
+  },
+  {"isocode":"CN",
+    "name": "Ubushinwa"
+  },
+  {"isocode":"CX",
+    "name": "Ikirwa cya Noheri"
+  },
+  {"isocode":"CC",
+    "name": "Ibirwa bya Cocos (Keeling)"
+  },
+  {"isocode":"CO",
+    "name": "Kolombiya"
+  },
+  {"isocode":"KM",
+    "name": "Comoros"
+  },
+  {"isocode":"CG",
+    "name": "Kongo"
+  },
+  {"isocode":"CD",
+    "name": "Kongo Repubulika Iharanira Demokarasi ya"
+  },
+  {"isocode":"CK",
+    "name": "Teka Ibirwa"
+  },
+  {"isocode":"CR",
+    "name": "Kosta Rika"
+  },
+  {"isocode":"CI",
+    "name": "Cote D'Ivoire (Coryte d'Ivoire)"
+  },
+  {"isocode":"HR",
+    "name": "Korowasiya (Hrvatska)"
+  },
+  {"isocode":"CU",
+    "name": "Kuba"
+  },
+  {"isocode":"CY",
+    "name": "Kupuro"
+  },
+  {"isocode":"CZ",
+    "name": "Repubulika ya Ceki"
+  },
+  {"isocode":"DK",
+    "name": "Danemark"
+  },
+  {"isocode":"DJ",
+    "name": "Djibouti"
+  },
+  {"isocode":"DM",
+    "name": "Dominica"
+  },
+  {"isocode":"DO",
+    "name": "Repubulika ya Dominikani"
+  },
+  {"isocode":"TL",
+    "name": "Iburasirazuba"
+  },
+  {"isocode":"EC",
+    "name": "Uquateur"
+  },
+  {"isocode":"EG",
+    "name": "Misiri"
+  },
+  {"isocode":"SV",
+    "name": "El Salvador"
+  },
+  {"isocode":"GQ",
+    "name": "Gineya ya Ekwatoriya"
+  },
+  {"isocode":"ER",
+    "name": "Eritereya"
+  },
+  {"isocode":"EE",
+    "name": "Esitoniya"
+  },
+  {"isocode":"ET",
+    "name": "Etiyopiya"
+  },
+  {"isocode":"FK",
+    "name": "Ibirwa bya Falkland"
+  },
+  {"isocode":"FO",
+    "name": "Ibirwa bya Faroe"
+  },
+  {"isocode":"FJ",
+    "name": "Ibirwa bya Fiji"
+  },
+  {"isocode":"FI",
+    "name": "Finlande"
+  },
+  {"isocode":"FR",
+    "name": "Ubufaransa"
+  },
+  {"isocode":"GF",
+    "name": "Igifaransa Guiana"
+  },
+  {"isocode":"PF",
+    "name": "Polineziya y'Abafaransa"
+  },
+  {"isocode":"TF",
+    "name": "Intara y'Amajyepfo y'Ubufaransa"
+  },
+  {"isocode":"GA",
+    "name": "Gabon"
+  },
+  {"isocode":"GM",
+    "name": "Gambiya"
+  },
+  {"isocode":"GE",
+    "name": "Jeworujiya"
+  },
+  {"isocode":"DE",
+    "name": "Ubudage"
+  },
+  {"isocode":"GH",
+    "name": "Gana"
+  },
+  {"isocode":"GI",
+    "name": "Gibraltar"
+  },
+  {"isocode":"GR",
+    "name": "Ubugereki"
+  },
+  {"isocode":"GL",
+    "name": "Greenland"
+  },
+  {"isocode":"GD",
+    "name": "Grenada"
+  },
+  {"isocode":"GP",
+    "name": "Guadeloupe"
+  },
+  {"isocode":"GU",
+    "name": "Guam"
+  },
+  {"isocode":"GT",
+    "name": "Guatemala"
+  },
+  {"isocode":"GG",
+    "name": "Guernsey na Alderney"
+  },
+  {"isocode":"GN",
+    "name": "Gineya"
+  },
+  {"isocode":"GW",
+    "name": "Gineya-Bissau"
+  },
+  {"isocode":"GY",
+    "name": "Guyana"
+  },
+  {"isocode":"HT",
+    "name": "Haiti"
+  },
+  {"isocode":"HM",
+    "name": "Ikirwa cya Heard n'ibirwa bya McDonald"
+  },
+  {"isocode":"HN",
+    "name": "Honduras"
+  },
+  {"isocode":"HK",
+    "name": "Hong Kong S.A.R."
+  },
+  {"isocode":"HU",
+    "name": "Hongiriya"
+  },
+  {"isocode":"IS",
+    "name": "Isilande"
+  },
+  {"isocode":"IN",
+    "name": "Ubuhinde"
+  },
+  {"isocode":"ID",
+    "name": "Indoneziya"
+  },
+  {"isocode":"IR",
+    "name": "Irani"
+  },
+  {"isocode":"IQ",
+    "name": "Iraki"
+  },
+  {"isocode":"IE",
+    "name": "Irilande"
+  },
+  {"isocode":"IL",
+    "name": "Isiraheli"
+  },
+  {"isocode":"IT",
+    "name": "Ubutaliyani"
+  },
+  {"isocode":"JM",
+    "name": "Jamayike"
+  },
+  {"isocode":"JP",
+    "name": "Ubuyapani"
+  },
+  {"isocode":"JE",
+    "name": "Jersey"
+  },
+  {"isocode":"JO",
+    "name": "Yorodani"
+  },
+  {"isocode":"KZ",
+    "name": "Qazaqistan"
+  },
+  {"isocode":"KE",
+    "name": "Kenya"
+  },
+  {"isocode":"KI",
+    "name": "Kiribati"
+  },
+  {"isocode":"KP",
+    "name": "Koreya y'Amajyaruguru"
+  },
+  {"isocode":"KR",
+    "name": "Koreya y'Amajyepfo"
+  },
+  {"isocode":"KW",
+    "name": "Koweti"
+  },
+  {"isocode":"KG",
+    "name": "Kirigizisitani"
+  },
+  {"isocode":"LA",
+    "name": "Laos"
+  },
+  {"isocode":"LV",
+    "name": "Lativiya"
+  },
+  {"isocode":"LB",
+    "name": "Libani"
+  },
+  {"isocode":"LS",
+    "name": "Lesotho"
+  },
+  {"isocode":"LR",
+    "name": "Liberiya"
+  },
+  {"isocode":"LY",
+    "name": "Libiya"
+  },
+  {"isocode":"LI",
+    "name": "Liechtenstein"
+  },
+  {"isocode":"LT",
+    "name": "Lituwaniya"
+  },
+  {"isocode":"LU",
+    "name": "Luxembourg"
+  },
+  {"isocode":"MO",
+    "name": "Macau S.A.R."
+  },
+  {"isocode":"MK",
+    "name": "Makedoniya"
+  },
+  {"isocode":"MG",
+    "name": "Madagasikari"
+  },
+  {"isocode":"MW",
+    "name": "Malawi"
+  },
+  {"isocode":"MY",
+    "name": "Maleziya"
+  },
+  {"isocode":"MV",
+    "name": "Malidiya"
+  },
+  {"isocode":"ML",
+    "name": "Mali"
+  },
+  {"isocode":"MT",
+    "name": "Malta"
+  },
+  {"isocode":"IM",
+    "name": "Umuntu (Ikirwa cya)"
+  },
+  {"isocode":"MH",
+    "name": "Ibirwa bya Marshall"
+  },
+  {"isocode":"MQ",
+    "name": "Martinique"
+  },
+  {"isocode":"MR",
+    "name": "Mauritania"
+  },
+  {"isocode":"MU",
+    "name": "Maurice"
+  },
+  {"isocode":"YT",
+    "name": "Mayotte"
+  },
+  {"isocode":"MX",
+    "name": "Mexico"
+  },
+  {"isocode":"FM",
+    "name": "Micronesia"
+  },
+  {"isocode":"MD",
+    "name": "Moldaviya"
+  },
+  {"isocode":"MC",
+    "name": "Monaco"
+  },
+  {"isocode":"MN",
+    "name": "Mongoliya"
+  },
+  {"isocode":"ME",
+    "name": "Montenegro"
+  },
+  {"isocode":"MS",
+    "name": "Montserrat"
+  },
+  {"isocode":"MA",
+    "name": "Maroc"
+  },
+  {"isocode":"MZ",
+    "name": "Mozambique"
+  },
+  {"isocode":"MM",
+    "name": "Miyanimari"
+  },
+  {"isocode":"NA",
+    "name": "Namibiya"
+  },
+  {"isocode":"NR",
+    "name": "Nauru"
+  },
+  {"isocode":"NP",
+    "name": "Nepal"
+  },
+  {"isocode":"BQ",
+    "name": "Bonaire, Sint Eustatius na Saba"
+  },
+  {"isocode":"NL",
+    "name": "Ubuholandi"
+  },
+  {"isocode":"NC",
+    "name": "Caledoniya Nshya"
+  },
+  {"isocode":"NZ",
+    "name": "Nouvelle-Zélande"
+  },
+  {"isocode":"NI",
+    "name": "Nikaragwa"
+  },
+  {"isocode":"NE",
+    "name": "Niger"
+  },
+  {"isocode":"NG",
+    "name": "Nijeriya"
+  },
+  {"isocode":"NU",
+    "name": "Niue"
+  },
+  {"isocode":"NF",
+    "name": "Ikirwa cya Norfolk"
+  },
+  {"isocode":"MP",
+    "name": "Ibirwa bya Mariana y'Amajyaruguru"
+  },
+  {"isocode":"NO",
+    "name": "Noruveje"
+  },
+  {"isocode":"OM",
+    "name": "Oman"
+  },
+  {"isocode":"PK",
+    "name": "Pakisitani"
+  },
+  {"isocode":"PW",
+    "name": "Palau"
+  },
+  {"isocode":"PS",
+    "name": "Intara ya Palesitine Yigaruriwe"
+  },
+  {"isocode":"PA",
+    "name": "Panama"
+  },
+  {"isocode":"PG",
+    "name": "Papouasie-Nouvelle-Guinée"
+  },
+  {"isocode":"PY",
+    "name": "Paraguay"
+  },
+  {"isocode":"PE",
+    "name": "Peru"
+  },
+  {"isocode":"PH",
+    "name": "Philippines"
+  },
+  {"isocode":"PN",
+    "name": "Ikirwa cya Pitcairn"
+  },
+  {"isocode":"PL",
+    "name": "Polonye"
+  },
+  {"isocode":"PT",
+    "name": "Porutugali"
+  },
+  {"isocode":"PR",
+    "name": "Porto Rico"
+  },
+  {"isocode":"QA",
+    "name": "Qatar"
+  },
+  {"isocode":"RE",
+    "name": "Guhura"
+  },
+  {"isocode":"RO",
+    "name": "Rumaniya"
+  },
+  {"isocode":"RU",
+    "name": "Uburusiya"
+  },
+  {"isocode":"RW",
+    "name": "Rwanda"
+  },
+  {"isocode":"SH",
+    "name": "Mutagatifu Helena"
+  },
+  {"isocode":"KN",
+    "name": "Mutagatifu Kitts na Nevis"
+  },
+  {"isocode":"LC",
+    "name": "Mutagatifu Lusiya"
+  },
+  {"isocode":"PM",
+    "name": "Mutagatifu Pierre na Miquelon"
+  },
+  {"isocode":"VC",
+    "name": "Mutagatifu Visenti na Grenadine"
+  },
+  {"isocode":"BL",
+    "name": "Mutagatifu-Barthelemy"
+  },
+  {"isocode":"MF",
+    "name": "Saint-Martin (igice cy'igifaransa)"
+  },
+  {"isocode":"WS",
+    "name": "Samoa"
+  },
+  {"isocode":"SM",
+    "name": "San Marino"
+  },
+  {"isocode":"ST",
+    "name": "Sao Tome na Principe"
+  },
+  {"isocode":"SA",
+    "name": "Arabiya Sawudite"
+  },
+  {"isocode":"SN",
+    "name": "Senegali"
+  },
+  {"isocode":"RS",
+    "name": "Seribiya"
+  },
+  {"isocode":"SC",
+    "name": "Seychelles"
+  },
+  {"isocode":"SL",
+    "name": "Siyera Lewone"
+  },
+  {"isocode":"SG",
+    "name": "Singapore"
+  },
+  {"isocode":"SK",
+    "name": "Slowakiya"
+  },
+  {"isocode":"SI",
+    "name": "Siloveniya"
+  },
+  {"isocode":"SB",
+    "name": "Ibirwa bya Salomo"
+  },
+  {"isocode":"SO",
+    "name": "Somaliya"
+  },
+  {"isocode":"ZA",
+    "name": "Afurika y'Epfo"
+  },
+  {"isocode":"GS",
+    "name": "Jeworujiya y'Amajyepfo"
+  },
+  {"isocode":"SS",
+    "name": "Sudani y'Amajyepfo"
+  },
+  {"isocode":"ES",
+    "name": "Espanye"
+  },
+  {"isocode":"LK",
+    "name": "Sri Lanka"
+  },
+  {"isocode":"SD",
+    "name": "Sudani"
+  },
+  {"isocode":"SR",
+    "name": "Suri"
+  },
+  {"isocode":"SJ",
+    "name": "Ibirwa bya Svalbard na Jan Mayen"
+  },
+  {"isocode":"SZ",
+    "name": "Swaziland"
+  },
+  {"isocode":"SE",
+    "name": "Suwede"
+  },
+  {"isocode":"CH",
+    "name": "Busuwisi"
+  },
+  {"isocode":"SY",
+    "name": "Siriya"
+  },
+  {"isocode":"TW",
+    "name": "Tayiwani"
+  },
+  {"isocode":"TJ",
+    "name": "Tajikistan"
+  },
+  {"isocode":"TZ",
+    "name": "Tanzaniya"
+  },
+  {"isocode":"TH",
+    "name": "Tayilande"
+  },
+  {"isocode":"TG",
+    "name": "Kugenda"
+  },
+  {"isocode":"TK",
+    "name": "Tokelau"
+  },
+  {"isocode":"TO",
+    "name": "Tonga"
+  },
+  {"isocode":"TT",
+    "name": "Trinidad na Tobago"
+  },
+  {"isocode":"TN",
+    "name": "Tuniziya"
+  },
+  {"isocode":"TR",
+    "name": "Turukiya"
+  },
+  {"isocode":"TM",
+    "name": "Turukimenisitani"
+  },
+  {"isocode":"TC",
+    "name": "Turukiya n'ibirwa bya Caicos"
+  },
+  {"isocode":"TV",
+    "name": "Tuvalu"
+  },
+  {"isocode":"UG",
+    "name": "Uganda"
+  },
+  {"isocode":"UA",
+    "name": "Ukraine"
+  },
+  {"isocode":"AE",
+    "name": "United Arab Emirates"
+  },
+  {"isocode":"GB",
+    "name": "Ubwongereza"
+  },
+  {"isocode":"US",
+    "name": "Leta zunz'ubumwe"
+  },
+  {"isocode":"UM",
+    "name": "Amerika Ibirwa bito byo hanze"
+  },
+  {"isocode":"UY",
+    "name": "Uruguay"
+  },
+  {"isocode":"UZ",
+    "name": "Uzubekisitani"
+  },
+  {"isocode":"VU",
+    "name": "Vanuatu"
+  },
+  {"isocode":"VA",
+    "name": "Umujyi wa Vatikani (Reba Ahera)"
+  },
+  {"isocode":"VE",
+    "name": "Venezuwela"
+  },
+  {"isocode":"VN",
+    "name": "Vietnam"
+  },
+  {"isocode":"VG",
+    "name": "Ibirwa bya Virginie (Abongereza)"
+  },
+  {"isocode":"VI",
+    "name": "Ibirwa bya Virginie (Amerika)"
+  },
+  {"isocode":"WF",
+    "name": "Ibirwa bya Wallis na Futuna"
+  },
+  {"isocode":"EH",
+    "name": "Sahara y'Uburengerazuba"
+  },
+  {"isocode":"YE",
+    "name": "Yemeni"
+  },
+  {"isocode":"ZM",
+    "name": "Zambiya"
+  },
+  {"isocode":"ZW",
+    "name": "Zimbabwe"
+  },
+  {"isocode":"XK",
+    "name": "Kosovo"
+  },
+  {"isocode":"CW",
+    "name": "Curaçao"
+  },
+  {"isocode":"SX",
+    "name": "Sint Maarten (igice cyu Buholandi)"
+  }
+]

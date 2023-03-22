@@ -334,7 +334,7 @@ const LikeIcon = ({ listStoryId, data }) => {
               <span className="mx-2">
                 {likeIconDetails &&
                   likeIconDetails.map((x , index) => {
-                    return <h5 key={index} className="count">{x.ok}</h5>;
+                    return <h5 key={index} className="count">{x.ok ? x.ok : 0}</h5>;
                   })}
               </span>
 
@@ -364,7 +364,7 @@ const LikeIcon = ({ listStoryId, data }) => {
             <span className="mx-2">
               {likeIconDetails &&
                 likeIconDetails.map((x , index) => {
-                  return <h5 key={index} className="count">{x.finance}</h5>;
+                  return <h5 key={index} className="count">{x.finance ? x.finance : 0}</h5>;
                 })}
             </span>
           </div>
@@ -390,7 +390,7 @@ const LikeIcon = ({ listStoryId, data }) => {
               <span className="mx-2">
                 {likeIconDetails &&
                   likeIconDetails.map((x , index) => {
-                    return <h5  key={index} className="count">{x.liar}</h5>;
+                    return <h5  key={index} className="count">{x.liar ? x.liar :0}</h5>;
                   })}
               </span>
             </div>

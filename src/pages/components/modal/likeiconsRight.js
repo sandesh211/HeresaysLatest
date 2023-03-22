@@ -278,7 +278,13 @@ const LikeIcon = ({ listStoryId, data }) => {
                 <div className="E1 E1S">
                     <div className="help-icon">
                         <div className="likeCount1">
-                            <div className="like-icon-border">
+                        <span className="d-block d-md-none d-lg-none">
+                                {likeIconDetails &&
+                                    likeIconDetails.map((x , index) => {
+                                        return <h5 key={index} className="count">{x.like ? x.like : 0 }</h5>;
+                                    })}
+                            </span>
+                            <div className="like-icon-border ">
                                 <div
                                     className="like-icon-back"
                                     disabled={isDisabled ? true : false}
@@ -294,10 +300,10 @@ const LikeIcon = ({ listStoryId, data }) => {
                                     <img className="icon iconbook" src={Like} />
                                 </div>
                             </div>
-                            <span className="mx-2">
+                            <span className="mx-2 d-md-block d-lg-block d-none">
                                 {likeIconDetails &&
                                     likeIconDetails.map((x , index) => {
-                                        return <h5 key={index} className="count">{x.like}</h5>;
+                                        return <h5 key={index} className="count">{x.like ? x.like : 0 }</h5>;
                                     })}
                             </span>
                         </div>
@@ -325,6 +331,12 @@ const LikeIcon = ({ listStoryId, data }) => {
 
                     <div className="help-icon">
                         <div className="likeCount1 ">
+                        <span className="d-block d-md-none d-lg-none">
+                                {likeIconDetails &&
+                                    likeIconDetails.map((x , index) => {
+                                        return <h5 key={index} className="count">{x.dislike ? x.dislike : 0}</h5>;
+                                    })}
+                            </span>
                             <div className="like-icon-border">
                                 <div className="like-icon-back" disabled={isDisabled ? true : false}>
                                     <img
@@ -342,10 +354,10 @@ const LikeIcon = ({ listStoryId, data }) => {
                                     />
                                 </div>
                             </div>
-                            <span className="mx-2">
+                            <span className="mx-2 d-md-block d-lg-block d-none">
                                 {likeIconDetails &&
                                     likeIconDetails.map((x , index) => {
-                                        return <h5 key={index} className="count">{x.dislike}</h5>;
+                                        return <h5 key={index} className="count">{x.dislike ? x.dislike : 0}</h5>;
                                     })}
                             </span>
                         </div>

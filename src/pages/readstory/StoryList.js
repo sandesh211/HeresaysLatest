@@ -110,7 +110,7 @@ const StoryList = (props) => {
 
   let currentLanguageSetting = localStorage.getItem("prefered_language")
     ? localStorage.getItem("prefered_language")
-    : navigator.language;
+    : "en";
   const [currentLanguage, setCurrentLanguage] = useState(
     currentLanguageSetting
   );
@@ -213,7 +213,19 @@ const StoryList = (props) => {
   //     setTopicData(topicData + result);
   //   },
   // });
-
+  const cacheProvider = {
+    get: (language, key) =>
+      ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
+      language
+      ],
+    set: (language, key, value) => {
+      const existing = JSON.parse(localStorage.getItem('translations')) || {
+        [key]: {},
+      };
+      existing[key] = { ...existing[key], [language]: value };
+      localStorage.setItem('translations', JSON.stringify(existing));
+    },
+  };
 
 
   const handleOnClick = (id) =>
@@ -224,6 +236,7 @@ const StoryList = (props) => {
     <>
       {
         <Translator
+        cacheProvider={cacheProvider}
           from="en"
           to={currentLanguage}
           googleApiKey="AIzaSyDJyDB2bnmeDG4KHOZkHnrDqhrqnUI375M"

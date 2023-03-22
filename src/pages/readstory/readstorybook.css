@@ -977,15 +977,13 @@ button.remove {
 
 
 
-.manualpage-rsb.page-cover-rsb.overflow-box.stf__item.--hard.--right.--simple .page-content-rsb {
-  /* justify-content: center; */
-}
-
-
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media only screen and (min-width : 320px) and (max-width : 480px) {
   p.fixed_foot_text {
     font-size: 11px;
     text-align: center;
+}
+.E1 .E1S {
+  margin-bottom: 17px !important;
 }
 
 .E1.E1S {
@@ -1066,6 +1064,8 @@ img.position-absolute.bottom-0.start-50.translate-middle-x {
 }
 .D1.DD2 .E1.E1S {
   margin: 0;
+  margin-bottom: 22px !important;
+
 }
 .demo-book.stf__parent {
   overflow: hidden;
@@ -1092,10 +1092,13 @@ img.position-absolute.bottom-0.start-50.translate-middle-x {
 }
 
 
-@media only screen and (min-device-width : 481px) and (max-device-width : 575px) {
+@media only screen and (min-width : 481px) and (max-width : 575px) {
   p.fixed_foot_text {
     font-size: 11px;
     text-align: center;
+}
+.E1 .E1S {
+  margin-bottom: 22px !important;
 }
 
 .E1.E1S {
@@ -1178,6 +1181,7 @@ span.sLReport {
 }
 .D1.DD2 .E1.E1S {
   margin: 0;
+  height: auto;
 }
 .demo-book.stf__parent {
   overflow: hidden;
@@ -1203,10 +1207,13 @@ span.sLReport {
 
 }
 
-@media only screen and (min-device-width : 576px) and (max-device-width : 767px) {
+@media only screen and (min-width : 576px) and (max-width : 767px) {
   p.fixed_foot_text {
     font-size: 11px;
     text-align: center;
+}
+.E1 .E1S {
+  margin-bottom: 11px !important;
 }
 
 .E1.E1S {
@@ -1289,6 +1296,7 @@ span.sLReport {
 }
 .D1.DD2 .E1.E1S {
   margin: 0;
+  height: auto;
 }
 .demo-book.stf__parent {
   overflow: hidden;
@@ -1314,7 +1322,7 @@ span.sLReport {
 
 }
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 800px) {
+@media only screen and (min-width : 768px) and (max-width : 800px) {
   .readastory-modal-dialog-rsb.modal-dialog-rsb .modal-body-rsb {
     max-height: 450px;
     overflow: auto;
@@ -1377,7 +1385,7 @@ width: 100%;
 }
 
 
-@media only screen and (min-device-width : 801px) and (max-device-width : 1024px) { 
+@media only screen and (min-width : 801px) and (max-width : 1024px) { 
 
   .help-icon.shareIcons.emailDiv {
     bottom: -60px !important;
@@ -1457,7 +1465,7 @@ img.position-absolute.bottom-0.start-0.translate-middle.left_prev_btns {
 } */
 
 
-@media only screen and (max-device-width : 1024px) {
+@media only screen and (max-width : 1024px) {
   p.fixed_foot_text {
     font-size: 11px;
     text-align: center;
@@ -1574,8 +1582,6 @@ form.share_submit {
 }
 
 
-
-
 .demo-book.read_storybook {
   min-height: calc(100vh - 400px) !important; width: 100% !important;
 }
@@ -1583,3 +1589,28 @@ form.share_submit {
 .middle.middle_readstory.readstorybookwbs .B2.C.readstorybook_secone_div {
   justify-content: flex-start;
 }
+
+.text_content_pages .page-content.page_text {
+  height: 100% !important;
+  /* display: inline-block; */
+  margin: 0;
+  align-items: center;
+}
+
+.text_content_pages .page.page-cover.page-borders {
+  padding: 0 25px 0 10px;
+  height: 100%;
+  top: 80px !important;
+}
+
+.text_content_pages .page-content.page_text p {
+  margin-top: 0px;
+}
+
+.ShowingID {
+  position: absolute;
+  bottom: 15px;
+  margin: 0;
+  color: #000; font-weight: 600;
+}
+

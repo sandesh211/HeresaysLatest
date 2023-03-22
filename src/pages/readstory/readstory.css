@@ -5,7 +5,8 @@
   cursor: pointer;
   display: block;
   position: absolute;
-  right: -25px;
+  /* right: -25px; */
+  right: -16px;
   top: -25px;
   border-radius: 50%;
   padding: 4px;
@@ -7814,9 +7815,9 @@ ul {
 .bg-welcome .continue-btn-group .btn-continue {
   width: 140px !important;
   height: 92px !important;
-  background: #b58d4f;
+  /* background: #b58d4f;
   background-image: linear-gradient( to right, #bf752e 0, #ebda6f 16%, #d9bc76 45%, #cea05a 55%, #e1c395 48%, #cb9b51 78%, #c27a2e 100% );
-  border: solid #a27b3a;
+  border: solid #a27b3a; */
 }
 
 .hvr-float-shadow {
@@ -8205,6 +8206,8 @@ ul {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 268px;
+  /* scrollbar-width: thin; */
+
 }
 
 .attention-modal-dialog.modal-dialog
@@ -10192,6 +10195,11 @@ ul {
    border-top: 8px solid #644210;
 }
 
+.attention-modal-dialog.modal-dialog .modal-content .modal-body::-webkit-scrollbar {
+  width: 15px !important;
+  background-color: #eee !important;
+}
+
 .attention-modal-dialog.modal-dialog .modal-content .modal-body p {
   color: #041241;
   font-size: 20px;
@@ -10201,6 +10209,7 @@ ul {
 
 .attention-modal-dialog.modal-dialog .close-button-style {
   right: -16px;
+  z-index: 3;
   top: -16px;
 }
 
@@ -26842,9 +26851,41 @@ input#modified::-webkit-calendar-picker-indicator {
   }
 
   .starting-logo {
-    transform: translateY(-40%) scale(0.4);
+    transform: translateY(-40%) scale(0.5);
+}
+
+  @-webkit-keyframes zoomInlogo {
+    0% {
+      transform: scale(0.1);
+    }
+  
+    50% {
+      transform: scale(0.9);
+    }
+  
+    to {
+      transform: translateY(-40%) scale(0.5);
+    }
+  }
+  
+  @keyframes zoomInlogo {
+    0% {
+      transform: scale(0.1);
+    }
+  
+    50% {
+      transform: scale(0.9);
+    }
+  
+    to {
+      transform: translateY(-40%) scale(0.5);
+    }
   }
 
+  /* .ng-star-inserted .img-responsive {
+    min-width: 650px !important;
+    max-width: 250px !important;
+} */
   .welcome-item {
     padding: 0;
     /* margin: 0 5px; */
@@ -26967,7 +27008,7 @@ input#modified::-webkit-calendar-picker-indicator {
   font-size: 16px !important;
 }
 
-@media screen and (min-device-width: 960px) and (max-device-width: 1280px) and (-webkit-min-device-pixel-ratio: 1) {
+@media screen and (min-width: 960px) and (max-width: 1280px) and (-webkit-min-pixel-ratio: 1) {
   .story-book-row {
     max-height: 400px;
   }

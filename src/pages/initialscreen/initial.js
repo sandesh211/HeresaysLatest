@@ -12,14 +12,19 @@ import ReactHtmlParser from "react-html-parser";
 import Disclaimer from "../../assets/images/disclaimer-icon.png"
 import Language from "../../assets/images/language-icon.png"
 import Warning from "../../assets/images/warning-icon.png"
-import { Translator, Translate } from 'react-auto-translate';
+// import { Translator, Translate } from 'react-auto-translate';
+import { withNamespaces, NamespacesConsumer, Trans, useTranslation } from 'react-i18next';
 import { Loader } from "../components/loader";
+// import { getLanguages } from 'languages-js';
+// import AllLanguageFromJson from "../../"
+import { AllLanguageFromJson } from "../../constants/json/languages";
+
 
 
 
 // let interval = undefined;
 const Initial = (props) => {
-  
+  const { t, i18n } = useTranslation();
   const [showSociaModal, setShowSocialModal] = useState(false);
   const [socialUrl, setSocialUrl] = useState(false);
   const [modalShowTerm, setModalShowTerm] = useState(false);
@@ -30,6 +35,7 @@ const Initial = (props) => {
   const [disclaimer, setDisclaimer] = useState();
   const [attention, setAttention] = useState();
   const [AllLaguages, setAllLaguages] = useState(false);
+  const [languages, setLanguages] = useState([]);
   const [ThanksTypeModalForGraph, setThanksTypeModalForGraph] = useState(null);
   const [disclaimerData, setDisclaimerData] = useState([]);
   const [attentionData, setAttentionData] = useState([]);
@@ -47,20 +53,47 @@ const Initial = (props) => {
   };
   let currentLanguageSetting = localStorage.getItem("prefered_language")
     ? localStorage.getItem("prefered_language")
-    : navigator.language;
+    : "en";
   const [currentLanguage, setCurrentLanguage] = useState(
     currentLanguageSetting
   );
 
+  const cacheProvider = {
+    get: (language, key) =>
+      ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
+      language
+      ],
+    set: (language, key, value) => {
+      const existing = JSON.parse(localStorage.getItem('translations')) || {
+        [key]: {},
+      };
+      existing[key] = { ...existing[key], [language]: value };
+      localStorage.setItem('translations', JSON.stringify(existing));
+    },
+  };
 
+  // useEffect(()=>{
+  //   const fetchData = async () => {
+  //     const languages = await getLanguages();
+  //     console.log("languagesss" ,languages);
+  //     setLanguages(languages);
+  //   };
 
+  //   fetchData();
+  // },[])
+
+  useEffect(()=>{
+    axios.get(`${ApiUrl}getBook`).then((response)=>{
+      console.log("bookdataresponse" , response)
+    })
+  },[])
 
   useEffect(() => {
     let currentLanguageSetting = localStorage.getItem("prefered_language")
       ? localStorage.getItem("prefered_language")
-      : navigator.language;
-    if (currentLanguageSetting == navigator.language) {
-      localStorage.setItem("prefered_language", navigator.language);
+      : "en";
+    if (currentLanguageSetting == "en") {
+      localStorage.setItem("prefered_language", "en");
     }
     getAllData(currentLanguageSetting);
     getDisclaimerData();
@@ -69,15 +102,13 @@ const Initial = (props) => {
     getAddBannerData();
   }, []);
 
-
-
   // useEffect(() => {
   //   setTimeout(() => {
   //     setRunning(!running);
   //   }, 2000)
   // }, [])
 
-  const clearLocal =()=>{
+  const clearLocal = () => {
     localStorage.clear();
   }
 
@@ -94,10 +125,11 @@ const Initial = (props) => {
   const getAttentionData = () => {
     axios.get(`${ApiUrl}getAttention`).then((result) => {
       setAttentionData(
-        result.data.data[0].attributes.published_at
-          ? result.data.data[0].attributes
+        result.data.data[0].attributes
+          ? result.data.data[0].attributes.attention
           : ""
       );
+   
     });
   };
   const getDisclaimerData = () => {
@@ -124,18 +156,20 @@ const Initial = (props) => {
           (firstResponse, secondResponse, thirdResponse, attentionResponse) => {
 
             setAllLaguages(firstResponse.data.data);
-            // console.log("i18n_locale", firstResponse.data.data);
+            console.log("secondResponse", secondResponse);
+            console.log("thirdResponse", thirdResponse);
+            console.log("attentionResponse", attentionResponse);
             let requiredAttentionData = Object.fromEntries(
               Object.entries(
                 JSON.parse(
-                  unescape(attentionResponse.data.data[0].attributes.attention)
+                  decodeURIComponent(attentionResponse.data.data[0].attributes.attention)
                 )
               ).filter(([key]) => key.includes(currentLanguage))
             )[currentLanguage];
             let requiredDisclaimerData = Object.fromEntries(
               Object.entries(
                 JSON.parse(
-                  unescape(thirdResponse.data.data[0].attributes.description)
+                  decodeURIComponent(thirdResponse.data.data[0].attributes.description)
                 )
               ).filter(([key]) => key.includes(currentLanguage))
             )[currentLanguage];
@@ -143,13 +177,13 @@ const Initial = (props) => {
               requiredDisclaimerData ? requiredDisclaimerData.value : ""
             );
             setAttention(
-              requiredAttentionData && requiredAttentionData.value
+              requiredAttentionData ? requiredAttentionData.value : ""
             );
-            // console.log("secondResponse.data.data[1].attributes.description", unescape(secondResponse.data.data[1].attributes.description));
+            // console.log("secondResponse.data.data[1].attributes.description", decodeURIComponent(secondResponse.data.data[1].attributes.description));
             let requiredTermsData = Object.fromEntries(
               Object.entries(
                 JSON.parse(
-                  unescape(secondResponse.data.data[1].attributes.description)
+                  decodeURIComponent(secondResponse.data.data[0].attributes.description)
                 )
               ).filter(([key]) => key.includes(currentLanguage))
             )[currentLanguage];
@@ -163,6 +197,7 @@ const Initial = (props) => {
 
   const onLanguageChange = async (data) => {
     localStorage.setItem("prefered_language", data);
+    i18n.changeLanguage(data);
     setCurrentLanguage(data);
     getAllData(data);
     setShowLanguageModal(false);
@@ -171,11 +206,13 @@ const Initial = (props) => {
 
   if (!props.imagesPreloaded) return <Loader></Loader>;
   return (
-    <Translator
-      from='en'
-      to={currentLanguage}
-      googleApiKey='AIzaSyDJyDB2bnmeDG4KHOZkHnrDqhrqnUI375M'
-    >
+    // <Translator
+    //   cacheProvider={cacheProvider}
+    //   from='en'
+    //   to={currentLanguage}
+    //   googleApiKey='AIzaSyApqsFNbDNj6KTczy3u-kNvmXrQ_2ACQPM'
+    // >
+    <>
       <div className="main">
         <div
           className="mobile_height starting-background-fade-bg animate-fadeIn-started-bg ng-star-inserted initial_page_container"
@@ -183,7 +220,7 @@ const Initial = (props) => {
         ></div>
 
         {/* center_Start */}
-        <div className="mobile_heights animate__animated animate__fadeIn bg-welcome duration_animation_bg hidden-welcome-body welcome-body-wrapper ng-star-inserted initial_page_maincontainer"
+        <div className="mobile_height animate__animated animate__fadeIn bg-welcome duration_animation_bg hidden-welcome-body welcome-body-wrapper ng-star-inserted initial_page_maincontainer"
         >
           <div className="home-top-box">
             <div className="home-logo-bx flex-1 welcome-logo">
@@ -197,7 +234,7 @@ const Initial = (props) => {
                 />
               </a>
             </div>
-            <div className="A3 language_icon initial_exit" onClick={() => {clearLocal()}}>
+            <div className="A3 language_icon initial_exit" onClick={() => { clearLocal() }}>
               <a href="https://www.google.com/" className="header-exit-button">
                 <span>
                   <i className="header-exit-icon"></i>
@@ -222,7 +259,7 @@ const Initial = (props) => {
                     <img
                       src={Disclaimer.toString()}
                     />
-                    <span className="explanation">Explanation</span>
+                    <span className="explanation">{t('Explanation')}</span>
                   </a>
                 </div>
                 <div
@@ -237,7 +274,7 @@ const Initial = (props) => {
                     <img
                       src={Language.toString()}
                     />
-                    <span>Language</span>
+                    <span>{t('Language')}</span>
                   </a>
                 </div>
                 <div
@@ -252,7 +289,7 @@ const Initial = (props) => {
                     <img
                       src={Warning.toString()}
                     />
-                    <span className="jurisdiction">Jurisdiction</span>
+                    <span className="jurisdiction">{t('Jurisdiction')}</span>
                   </a>
                 </div>
               </div>
@@ -265,7 +302,7 @@ const Initial = (props) => {
                   data-target="#TermsModal"
                   className="btn-continue arrow-bounce-left"
                 >
-                  <span className="click-here">ACCESS</span><br />
+                  <span className="click-here">{t('ACCESS')}</span><br />
                   <img
                     src={Arrow.toString()}
                   />
@@ -295,7 +332,7 @@ const Initial = (props) => {
               >
                 <div className="modal-content">
                   <div className="modal-body text-center">
-                    <p className="text-uppercase"><Translate>{ThanksTypeModalForGraph}</Translate></p>
+                    <p className="text-uppercase">{ThanksTypeModalForGraph}</p>
                     <div className="modal-footer sociallink-footer">
                       <a
                         onClick={() => {
@@ -315,7 +352,7 @@ const Initial = (props) => {
             {/* ThanksTypeModalForGraph End */}
           </div>
 
-          
+
 
           <app-footer-panel>
             <div className="bottom-wrapper-initial" style={{ position: "fixed", bottom: "0", left: "0", right: "0" }}>
@@ -378,9 +415,9 @@ const Initial = (props) => {
             >
               <div className="modal-dialog modal-dialog-centered disclaimer-modal-dialog">
 
-                <div className="modal-content bg-black-bg">
+                <div className="modal-content d-block bg-black-bg">
                   <div className="disclaimer-title-head cmn-title-head text-center">
-                    <h2><Translate>EXPLANATION</Translate></h2>
+                    <h2>{t('Explanation')}</h2>
                   </div>
 
                   <div className="border-style-8-gray">
@@ -427,7 +464,7 @@ const Initial = (props) => {
           >
             <div className="modal-dialog modal-dialog-centered language-modal-dialog">
               <div className="language-title-head cmn-title-head text-center">
-                <h2> <Translate>LANGUAGE SELECTION</Translate></h2>
+                <h2> {t('LANGUAGE SELECTION')}</h2>
               </div>
               <div className="modal-content border-style-8 initial_language_model">
                 <a
@@ -439,17 +476,17 @@ const Initial = (props) => {
                 </a>
                 <div className="modal-body">
                   <div className="language-item-row">
-                    {AllLaguages?.map((x, index) => {
+                    {AllLanguageFromJson?.map((x, index) => {
                       return (
                         <button
                           key={index}
                           className="mx-4 my-2 button-75"
                           onClick={() => {
-                            onLanguageChange(x.attributes.code);
+                            onLanguageChange(x.BCP47);
                           }}
                         >
 
-                          <span>{x.attributes.name}</span>
+                          <span>{x.Native}</span>
                         </button>
 
                       );
@@ -497,12 +534,12 @@ const Initial = (props) => {
                 </a>
                 <div className="attention-head-top-bx">
                   <div className="disclaimer-title-head cmn-title-head text-center animation-time-title animate__animated animate__flipInX">
-                    <h2><Translate>Attention</Translate></h2>
+                    <h2>{t('Attention')}</h2>
                   </div>
                 </div>
                 <div className="modal-body">
                   {ReactHtmlParser(
-                    attentionData && attentionData ? attention : ""
+                    attentionData && attentionData ? decodeURIComponent(attention) : ""
                   )}
                 </div>
               </div>
@@ -522,19 +559,24 @@ const Initial = (props) => {
           aria-labelledby="LanguageModal"
           aria-hidden="true"
           data-backdrop="static"
-          className="modal fade zoom-in-center show"
+          // className="modal fade zoom-in-center show"
+          className={
+            modalShowTerm
+              ? "modal fade zoom-in zoom-in-right show"
+              : "modal fade zoom-in zoom-in-right"
+          }
         >
           <div className="modal-dialog modal-dialog-centered terms-modal-dialog">
-            <div className="modal-content">
+            <div className="modal-content modal-content-term">
               <div className="modal-body">
                 <div className="terms-wrapper">
-                  <div className="terms-wrap">
+                  <div className="terms-wrap terms-wrap-term">
                     <div className="disclaimer-title-head cmn-title-head text-center">
                       <h2>
-                        <span ><Translate> Terms of use</Translate></span>
+                        <span >{t('Terms of use')}</span>
                       </h2>
                     </div>
-                    <div className="terms-info">
+                    <div className="terms-info terms-info-term">
                       {" "}
                       {ReactHtmlParser(
                         termsData && termsData ? userAgreementData : ""
@@ -550,7 +592,7 @@ const Initial = (props) => {
                       className="btn-dontagree"
                       style={{ textDecoration: "none" }}
                     >
-                      <span className="btn-d-text"><Translate>REFUSE</Translate></span>
+                      <span className="btn-d-text">{t('REFUSE')}</span>
                     </a>
                     <Link
                       to="/home"
@@ -558,7 +600,7 @@ const Initial = (props) => {
                       className="btn-agree"
                       style={{ textDecoration: "none" }}
                     >
-                      <span><Translate>ACCEPT</Translate></span>
+                      <span>{t('ACCEPT')}</span>
                     </Link>
                   </div>
                 </div>
@@ -567,15 +609,18 @@ const Initial = (props) => {
           </div>
         </div>
       )}
+
       {/* TermsModal End */}
       <Popup
         socialUrl={socialUrl}
-        Translate={Translate}
+        // Translate={Translate}
         showSociaModal={showSociaModal}
         setShowSocialModal={setShowSocialModal}
       />
-    </Translator>
+    {/* </Translator> */}
+      </>
   );
 };
 
 export default Initial;
+// export default withNamespaces('translation')(Initial);

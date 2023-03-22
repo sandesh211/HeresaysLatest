@@ -195,54 +195,66 @@ caption {
 }
 
 @media only screen and (max-width:768px) {
+
+    .image_popup_top_div {
+        height: 100% !important;
+    }
+
+    .image_popup_inner_div {
+        min-height: calc(100% - -10.8rem) !important;
+        height: 100vh;
+    }
+
     .middle.mobile_middle.homeMiddletop .B1.tabs_view {
         height: auto !important;
     }
+
     .container1 {
-        background: url('../../assets/images/background_images/green-web.webp') ;
-        background-size : cover !important;
+        background: url('../../assets/images/background_images/green-web.webp');
+        background-size: cover !important;
         background-repeat: no-repeat !important;
     }
-    
-.container2 {
-    background-color: yellow;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    padding-left: 0rem;
-    padding-right: 0rem;
-    overflow: hidden;
-    /* background: url('../../assets/images/read-a-story-bg.png'); */
-    background: url('../../assets/images/background_images/blue-web.webp');
-    background-size : cover !important;
-    background-repeat: no-repeat !important;
-}
 
-.container3 {
-    background-color: yellow;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    padding-left: 0rem;
-    padding-right: 0rem;
-    overflow: hidden;
-    /* background: url('../../assets/images/write-a-story-bg.png'); */
-    background: url('../../assets/images/background_images/green-web.webp');
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-  
-}
+    .container2 {
+        background-color: yellow;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        overflow: hidden;
+        /* background: url('../../assets/images/read-a-story-bg.png'); */
+        background: url('../../assets/images/background_images/blue-web.webp');
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .container3 {
+        background-color: yellow;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        overflow: hidden;
+        /* background: url('../../assets/images/write-a-story-bg.png'); */
+        background: url('../../assets/images/background_images/green-web.webp');
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+
+    }
 
 
-.ReactModalPortal .ReactModal__Overlay.ReactModal__Overlay--after-open {
-    background: url('../../assets/images/background_images/green-web.webp') !important;
-    background-size : cover !important;
-    background-repeat: no-repeat !important;
-}
+    .ReactModalPortal .ReactModal__Overlay.ReactModal__Overlay--after-open {
+        background: url('../../assets/images/background_images/green-web.webp') !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+    }
+
     /* .middle {
         height: calc(100vh - -135px);
         flex-basis: 100%;
@@ -272,17 +284,17 @@ caption {
     }
 
 
-.mobalbg_typestory .page.page-cover.stf__item.--hard.--simple.--right {
-    height: 100% !important;
-    top: 0px !important;
-    bottom: 0 !important;
-    margin: 0;
-    width: 100% !important;
-}
+    .mobalbg_typestory .page.page-cover.stf__item.--hard.--simple.--right {
+        height: 100% !important;
+        top: 0px !important;
+        bottom: 0 !important;
+        margin: 0;
+        width: 100% !important;
+    }
 
-.mobalbg_typestory .page.page-cover {
-    margin: 0px !important;
-}
+    .mobalbg_typestory .page.page-cover {
+        margin: 0px !important;
+    }
 
 
 
@@ -358,6 +370,12 @@ caption {
 
 
 @media (max-width: 768px) {
+    .typestory_test_thank_modal{
+        height: 100vh !important;
+    }
+    .typestory_test_thank_inner_modal{
+        height: inherit;
+    }
     .header {
         flex-direction: column;
         justify-content: space-between;
@@ -411,6 +429,7 @@ caption {
         /* height: 50px; */
         width: 100vw;
     }
+
     .B3 {
         width: 100px;
         opacity: .8;
@@ -828,7 +847,7 @@ caption {
     opacity: 0
 }
 
-.custom-file-upload-preview_book{
+.custom-file-upload-preview_book {
     background: linear-gradient(180deg, #ffe570, #fffb95 13.74%, #be9a38 26.34%, #ebce65 47.87%, #b38a29 67.57%, #421800 78.56%, #b48a28 92.99%, #fce06b 101.93%) !important;
     padding: 5px;
     border-radius: 5px;
@@ -836,9 +855,8 @@ caption {
     margin-top: 24px;
     margin-left: 57px !important;
 }
-.custom-file-upload-preview_book img{
-    
-}
+
+.custom-file-upload-preview_book img {}
 
 .st-cmn-btn {
     border: 0;
@@ -2222,7 +2240,8 @@ caption {
     font-size: 13px !important;
     font-weight: 400 !important;
     color: rgb(14, 11, 11);
-    /* margin-top: 100px; */ line-height: 20px;
+    /* margin-top: 100px; */
+    line-height: 20px;
 }
 
 
@@ -2232,8 +2251,9 @@ caption {
         color: #000;
         font-size: 18px;
         font-weight: 600;
-        margin-top: 85px!important;
+        margin-top: 85px !important;
     }
+
     .page-content p {
         margin-top: 100px;
         /* padding: 0 0 15px !important; */
@@ -2243,7 +2263,9 @@ caption {
         color: rgb(14, 11, 11);
     }
 
-    .typestory_para {margin-top: 0px !important;}
+    .typestory_para {
+        margin-top: 0px !important;
+    }
 
     .D2.read {
         width: 100vw;
@@ -2273,7 +2295,7 @@ caption {
 
 .the_end_cover {
     text-align: center;
-    transform: translate(-50%,-50%)!important;
+    transform: translate(-50%, -50%) !important;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -2341,7 +2363,7 @@ caption {
 .edit_textarea {
     width: 490px !important;
     /* height: 370px !important; */
-    height: calc(100vh - 320px)!important;
+    height: calc(100vh - 320px) !important;
     font-size: 18px !important;
     min-height: 250px !important;
 }
@@ -2357,7 +2379,8 @@ caption {
 .upload-images {
     display: grid;
     /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
-    gap: 15px; justify-content: center;
+    gap: 15px;
+    justify-content: center;
 }
 
 .upload-images .image-item__btn-wrapper {
@@ -2387,7 +2410,8 @@ caption {
     width: 30px;
     height: 30px !important;
 }
-.cancle_Cameraimg_popUp{
+
+.cancle_Cameraimg_popUp {
     position: absolute;
     top: -11px;
     left: 233px;
@@ -2425,7 +2449,9 @@ caption {
     padding: 5px;
     border-radius: 5px;
     width: 130px;
-}.help-icon.side_img_textbox .custom-file-upload img {
+}
+
+.help-icon.side_img_textbox .custom-file-upload img {
     height: auto;
 }
 
@@ -2440,6 +2466,7 @@ caption {
     #container-circles {
         bottom: 63px !important;
     }
+
     #inner-circle {
         left: 60%;
         top: 33px;
@@ -2454,7 +2481,7 @@ caption {
         left: -37px;
         height: 55px;
         width: 55px;
-        background-color: hsla(0,0%,100%,.4);
+        background-color: hsla(0, 0%, 100%, .4);
         z-index: 1;
     }
 }
@@ -2464,7 +2491,7 @@ caption {
     bottom: 33% !important;
 }
 
-@media  screen and (min-device-width : 851px) and (max-device-width : 1280px) {
+@media screen and (min-width : 851px) and (max-width : 1280px) {
     .help-icon.side_img_textbox {
         margin-right: -126px !important;
     }
@@ -2472,7 +2499,7 @@ caption {
 
 
 @media screen and (max-width: 1112px) and (min-width: 1000px) {
-    
+
 
     .l_arrow_type {
         z-index: 3;
@@ -2529,34 +2556,34 @@ caption {
     top: -58px;
 }
 
-
 .btn-nav.back-prev-wrap.bottom_close_footer {
     justify-content: space-between;
     margin: 0;
     padding: 10px 0;
 }
 
-.header_custome_class{
-z-index: 3 !important;
+.header_custome_class {
+    /* z-index: 1 !important; */
 }
 
-.AB{
-z-index: 3;
-margin-left: 126px;
+.AB {
+    z-index: 3;
+    margin-left: 126px;
 }
 
-.r_arrow_type{
+.r_arrow_type {
     z-index: 3;
     position: absolute;
     top: 57%;
-     right: 1% ;
+    right: 1%;
     /* bottom: 36px ;  */
 }
-.l_arrow_type{
+
+.l_arrow_type {
     z-index: 3;
     position: absolute;
     top: 57%;
-     left: 1% ;
+    left: 1%;
     /* bottom: 36px ;  */
 }
 
@@ -2575,7 +2602,7 @@ margin-left: 126px;
     outline: 0;
 } */
 
-.demo-book .stf__parent{
+.demo-book .stf__parent {
     position: relative;
     display: flex;
     width: 100%;
@@ -2590,68 +2617,72 @@ margin-left: 126px;
 }
 
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 375px) {
+@media only screen and (min-width : 320px) and (max-width : 375px) {
 
 
 
 
 
-.ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
-    transform: translate(-50%,-50%)!important;
-    top: 50% !important;
-    left: 50% !important;
-    height: calc(100vh - 369px) !important;
-}
-}
-@media only screen and (min-device-width : 320px) and (max-device-width : 575px) {
-/* top replace */
-
-.tox.tox-tinymce {
-    width: 84vw !important;
-    height: 40vh !important;
-}
-.B1 {
-    width: 100px;
-    height: 43%;
-    align-items: center;
-    display: flex;
-    opacity: .4;
-}
-.middle.mobile_middle.homeMiddletop .B1.tabs_view {
-    height: auto !important;
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
+        transform: translate(-50%, -50%) !important;
+        top: 50% !important;
+        left: 50% !important;
+        height: calc(100vh - 369px) !important;
+    }
 }
 
+@media only screen and (min-width : 320px) and (max-width : 575px) {
+    /* top replace */
+
+    .tox.tox-tinymce {
+        width: 84vw !important;
+        height: 40vh !important;
+    }
+
+    .B1 {
+        width: 100px;
+        height: 43%;
+        align-items: center;
+        display: flex;
+        opacity: .4;
+    }
+
+    .middle.mobile_middle.homeMiddletop .B1.tabs_view {
+        height: auto !important;
+    }
 
 
-.middle .B2.C {
-    width: auto;
-    /* position: absolute; */
-    bottom: 0;
-}
-.readstorybook_secone_div {
-    width: auto;
-    position: absolute !important;
-    bottom: auto !important;
-}
+
+    .middle .B2.C {
+        width: auto;
+        /* position: absolute; */
+        bottom: 0;
+    }
+
+    .readstorybook_secone_div {
+        width: auto;
+        position: absolute !important;
+        bottom: auto !important;
+    }
 
 
-.middle .B2.C .C1.topic {
-    width: 95vw !important;
-}
+    .middle .B2.C .C1.topic {
+        width: 95vw !important;
+    }
 
-.C3.footer-bottom {
-    width: 90vw !important;
-}
+    .C3.footer-bottom {
+        width: 90vw !important;
+    }
 
-.ReactModal__Content.ReactModal__Content--after-open {
-    width: 100% !important;
-    inset: 0px !important;
-    /* top: 235px !important; */
-}
+    .ReactModal__Content.ReactModal__Content--after-open {
+        width: 100% !important;
+        inset: 0px !important;
+        /* top: 235px !important; */
+    }
 
-.ReactModal__Content.ReactModal__Content--after-open {
-    width: 100vw !important;
-}
+    .ReactModal__Content.ReactModal__Content--after-open {
+        width: 100vw !important;
+    }
 
 
 
@@ -2676,16 +2707,466 @@ margin-left: 126px;
         /* height: calc(50vh - -135px); */
         height: calc(0vh - -135px);
     }
-    .D3 .right_close_btn{
+
+    .D3 .right_close_btn {
         margin-bottom: 27px;
     }
+
     .right_close_btn {
         display: flex;
         justify-content: space-between;
-        padding: 0 20px;  flex-direction: initial;
-        width: 100%; height: auto;
+        padding: 0 20px;
+        flex-direction: initial;
+        width: 100%;
+        height: auto;
         margin-bottom: 27px;
     }
+
+    .help-icon.close_icon_right {
+        top: 0;
+    }
+
+    .l_arrow_type {
+        z-index: 3;
+        left: 29px;
+        bottom: 120px;
+    }
+
+    .btn-nav.back-prev-wrap.bottom_close_footer {
+        justify-content: space-between;
+        margin: 0;
+        padding: 10px 0;
+        margin-top: -70px;
+    }
+
+    .r_arrow_type {
+        z-index: 3;
+        right: 29px;
+        bottom: 120px;
+    }
+
+    .rte.text_editor {
+        width: calc(100% - 40px);
+        padding: 4px 4px 0 !important;
+        background: linear-gradient(180deg, #ffe570, #fffb95 13.74%, #be9a38 26.34%, #ebce65 47.87%, #b38a29 67.57%, #421800 78.56%, #b48a28 92.99%, #fce06b 101.93%);
+        margin: 0 0 10px;
+    }
+
+
+    textarea.textbox-lines.edit_textarea::-webkit-scrollbar {
+        width: 19px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal {
+        /* height: calc(100vh - 350px); */
+        position: absolute;
+        /* top: 140px; */
+        /* inset: 160px 0 0 0; */
+        height: 100% !important;
+        flex-direction: column;
+        justify-content: center;
+        display: flex;
+        width: calc(100vw - 0px) !important;
+        padding: 0 20px;
+    }
+
+
+
+    .edit_textarea {
+        width: 100% !important;
+        /* height: 210px !important; */
+        font-size: 16px !important;
+        height: calc(100vh - 430px) !important;
+    }
+
+    .modal_book_preview {
+        position: relative;
+        top: 235px;
+    }
+
+
+    /* .header-tops {
+            order: 1;
+        } */
+    .A1.logoposition.main_logo {
+        width: 100%;
+        transform: none;
+        /* order: 1; */
+        margin: 0%;
+    }
+
+    .middle.story_type {
+        flex-direction: inherit;
+        height: calc(100vh - 0px);
+        margin-top: 50px;
+    }
+
+    .modal_book_preview .l_arrow_type {
+        position: absolute;
+        z-index: 3;
+        bottom: 0px !important;
+        top: auto !important;
+    }
+
+    .modal_book_preview .r_arrow_type {
+        position: absolute;
+        bottom: 0px !important;
+        top: auto !important;
+    }
+
+    .B2.cards {
+        height: calc(100vh - -250vh);
+    }
+
+    .modal_book_preview {
+        position: inherit !important;
+        height: auto !important;
+    }
+
+    .modal_book_preview .page.page-cover.stf__item {
+        top: auto !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
+        transform: translate(-50%, -50%) !important;
+        top: 50% !important;
+        left: 50% !important;
+    }
+
+    .btn-nav.back-prev-wrap.bottom_close_footer.help_icon_new.typestoryfooter {
+        margin: 0;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
+        height: calc(100vh - 410px);
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .page .page-content {
+        height: 100% !important;
+    }
+
+
+
+    .home-middle-top-icon a {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .home-middle-top-icon a span.questions-span:after,
+    .home-middle-top-icon a span.questions-span:before,
+    .home-middle-top-icon a span i {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .home-middle-top-icon a span {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .A2.top_icons {
+        margin: 14px 0 0;
+    }
+
+    a.top_left_icons_2 {
+        left: 14%;
+    }
+
+    .A1.logoposition a img {
+        width: 120px !important;
+        height: auto !important;
+        margin-bottom: 27px;
+    }
+
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
+        height: 100%;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
+        transform: translate(-50%, -50%) !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: calc(100% - 10%) !important;
+        height: calc(100% - 50%) !important;
+    }
+
+    .react-html5-camera-photo>.display-error,
+    .react-html5-camera-photo>img,
+    .react-html5-camera-photo>video {
+        width: 280px;
+        height: 100%;
+    }
+
+    #container-circles {
+        bottom: 70px !important;
+    }
+
+    .image-item.cameracap .image-item__btn-wrapper {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+
+
+    .image-item.cameracap {
+        width: 350px;
+        padding: 20px 20px;
+        margin: auto;
+    }
+
+    .modal-dialog.cmmodals {
+        margin-top: 0px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01.modalcamerpopup {
+        transform: translate(0, -20px) !important;
+    }
+
+    .middle.story_type.cameraopense {
+        margin: 0 !important;
+    }
+
+    .image-item.cameracap .cancle_img_popUp {
+        width: 40px;
+        height: 40px !important;
+    }
+
+
+    /* new 12-01-2023 */
+
+    .C2.mobilerevers {
+        flex-direction: column-reverse;
+        position: relative;
+    }
+
+    .C2.mobilerevers .D3.right_close_btn {
+        position: absolute;
+        top: -100px;
+        z-index: 999;
+    }
+
+    .cmn-submit-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .cmn-submit-button span {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .cmn-submit-button span:before {
+        left: 6px;
+    }
+
+    .cmn-submit-button span:after,
+    .cmn-submit-button span:before {
+        width: 20px;
+        height: 20px;
+    }
+
+    .C2.mobilerevers .B2.cards.camera_back .add-advertisement-wrapper {
+        min-height: auto !important;
+        width: calc(100% - 80px) !important;
+    }
+
+    .close-button-style span:before {
+        height: 20px;
+        width: 20px;
+    }
+
+    .close-button-style span {
+        height: 32px !important;
+        width: 32px !important;
+    }
+
+    .sociallogin-modal-dialog .close-button-style {
+        width: 42px;
+        height: 42px;
+    }
+
+    .sociallogin-modal-dialog .close-button-style span:after {
+        top: 5px;
+        right: -10px;
+    }
+
+    .close-button-style {
+        height: 40px;
+        width: 40px;
+    }
+
+    .mobilerevers .classified-align-home {
+        height: calc(100vh - 135px) !important;
+        /* max-height: initial; */
+    }
+
+    img.checkarrowsubmit {
+        width: 50px;
+    }
+
+    .modal-dialog.cmmodals {
+        width: calc(100% - 80px) !important;
+        margin: auto;
+        margin-top: 50px !important;
+        min-height: auto !important;
+    }
+
+    .btn-cmn-group.writestory_mobile_top {
+        position: absolute;
+        top: -27px;
+        left: -15px;
+        z-index: 1;
+    }
+
+    /* read story book 16-01-2023 */
+
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page-content {
+        height: 100% !important;
+        padding: 0px 0px;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover {
+        top: 0px !important;
+        left: 0;
+        width: 100% !important;
+        margin: 0px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.stf__item.--hard.--simple.--right {
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        margin: 0px !important;
+        padding: 0px;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.page-borders h6 {
+        margin: 0px !important;
+        padding: 0px;
+    }
+
+
+    .help-icon.book_preview_icon .custom-file-upload-preview_book {
+        width: 100px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .help-icon.book_preview_icon {
+        padding: 20px;
+    }
+
+    .middle.readstory_middle .B2.cards {
+        height: calc(100vh - 320px) !important;
+    }
+
+    .middle.readstory_middle .continue-btn-group {
+        padding: 10px 0 0;
+    }
+
+    .readstory_background.read_story_mobile .middle.readstory_middle {
+        height: 100% !important;
+        margin-top: 20px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01 {
+        transform: translate(0, 0);
+    }
+}
+
+
+
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+    /* top replace */
+
+    .tox.tox-tinymce {
+        width: 84vw !important;
+        height: 40vh !important;
+    }
+
+    .B1 {
+        width: 100px;
+        height: 43%;
+        align-items: center;
+        display: flex;
+        opacity: .4;
+    }
+
+    .middle.mobile_middle.homeMiddletop .B1.tabs_view {
+        height: auto !important;
+    }
+
+
+
+    .middle .B2.C {
+        width: auto;
+        /* position: absolute; */
+        bottom: 0;
+    }
+
+    .readstorybook_secone_div {
+        width: auto;
+        position: absolute !important;
+        bottom: auto !important;
+    }
+
+
+    .middle .B2.C .C1.topic {
+        width: 95vw !important;
+    }
+
+    .C3.footer-bottom {
+        width: 90vw !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open {
+        width: 100% !important;
+        inset: 0px !important;
+        /* top: 235px !important; */
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open {
+        width: 100vw !important;
+    }
+
+
+
+
+
+    .edit_textarea {
+        width: 100% !important;
+        /* height: 210px !important; */
+        font-size: 16px !important;
+        height: calc(100vh - -135px);
+    }
+
+
+    .header.header-tops {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        height: 200px;
+    }
+
+    .middle {
+        /* height: calc(50vh - -135px); */
+        height: calc(0vh - -135px);
+    }
+
+    .D3 .right_close_btn {
+        margin-bottom: 27px;
+    }
+
+    .right_close_btn {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        flex-direction: initial;
+        width: 100%;
+        height: auto;
+        margin-bottom: 27px;
+    }
+
     .help-icon.close_icon_right {
         top: 0;
     }
@@ -2719,18 +3200,13 @@ margin-left: 126px;
 
     textarea.textbox-lines.edit_textarea::-webkit-scrollbar {
         width: 10px !important;
-      }
-      .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal {
-        /* height: calc(100vh - 350px); */
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open {
         position: absolute;
-        /* top: 140px; */
-        /* inset: 160px 0 0 0; */
-        height: 100% !important;
-        flex-direction: column;
-        justify-content: center;
-        display: flex;
-        width: calc(100vw - 0px) !important;
-        padding: 0 20px;
+        width: 90vw !important;
+        /* height:30vh; */
+
     }
 
 
@@ -2741,647 +3217,304 @@ margin-left: 126px;
         font-size: 16px !important;
         height: calc(100vh - 430px) !important;
     }
-        .modal_book_preview {
-            position: relative;
-            top: 235px;
-        }
-    
-    
-        /* .header-tops {
-            order: 1;
-        } */
-        .A1.logoposition.main_logo {
-            width: 100%;
-            transform: none;
-            /* order: 1; */ margin: 0%;
-        }
-        .middle.story_type {
-            flex-direction: inherit;
-            height: calc(100vh - 0px);
-            margin-top: 50px;
-        }
-          .modal_book_preview .l_arrow_type {
-            position: absolute;
-            z-index: 3;
-            bottom: 0px !important;
-            top: auto !important;
-        }
-    
-        .modal_book_preview .r_arrow_type {
-            position: absolute;
-            bottom: 0px !important;
-            top: auto !important;
-        }
-        .B2.cards {
-            height: calc(100vh - -250vh);
-        }
 
-        .modal_book_preview {
-            position: inherit !important;
-            height: auto !important;
-        }
-        .modal_book_preview .page.page-cover.stf__item {
-            top: auto !important;
-        }
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
-            transform: translate(-50%,-50%)!important;
-            top: 50% !important;
-            left: 50% !important;
-        }
-        .btn-nav.back-prev-wrap.bottom_close_footer.help_icon_new.typestoryfooter {
-            margin: 0;
-        }
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
-            height: calc(100vh - 410px);
-        }
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .page .page-content {
-            height: 100% !important;
-        }
-
-
-
-        .home-middle-top-icon a {
-            width: 40px !important;
-            height: 40px !important;
-        }
-        .home-middle-top-icon a span.questions-span:after, .home-middle-top-icon a span.questions-span:before, .home-middle-top-icon a span i {
-            width: 25px !important;
-            height: 25px !important;
-        }
-        .home-middle-top-icon a span {
-            width: 30px !important;
-            height: 30px !important;
-        }
-        .A2.top_icons {
-            margin: 14px 0 0;
-        }
-        a.top_left_icons_2 {
-            left: 14%;
-        }
-        .A1.logoposition a img {
-            width: 120px !important;
-            height: auto !important;
-            margin-bottom: 27px;
-        }
-
-
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
-            height: 100%;
-        }
-
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
-            transform: translate(-50%,-50%)!important;
-            top: 50% !important;
-            left: 50% !important;
-            width: calc(100% - 10%) !important;
-            height: calc(100% - 50%) !important;
-        }
-
-        .react-html5-camera-photo>.display-error, .react-html5-camera-photo>img, .react-html5-camera-photo>video {
-            width: 280px;
-            height: 100%;
-        }
-        #container-circles {
-            bottom: 70px!important;
-        }
-        .image-item.cameracap .image-item__btn-wrapper {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-        }
-    
-
-        
-        .image-item.cameracap {
-            width: 350px;
-            padding: 20px 20px; margin: auto;
-        }
-
-        .modal-dialog.cmmodals {
-            margin-top: 0px !important;
-        }
-
-        .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01.modalcamerpopup {
-            transform: translate(0, -20px) !important;
-        }
-
-        .middle.story_type.cameraopense {
-            margin: 0 !important;
-        }
-
-        .image-item.cameracap .cancle_img_popUp {
-            width: 40px;
-            height: 40px !important;
-        }
-
-        
-        /* new 12-01-2023 */
-
-        .C2.mobilerevers {
-            flex-direction: column-reverse; position: relative;
-        }
-        .C2.mobilerevers .D3.right_close_btn {
-            position: absolute;
-            top: -100px;
-            z-index: 999;
-        }
-
-        .cmn-submit-button {
-            width: 40px;
-            height: 40px;
-        }
-        .cmn-submit-button span {
-            width: 32px !important;
-            height: 32px !important;
-        }
-      
-        .cmn-submit-button span:before {
-            left: 6px;
-        }
-        .cmn-submit-button span:after, .cmn-submit-button span:before {
-            width: 20px;
-            height: 20px;
-        }
-        .C2.mobilerevers .B2.cards.camera_back .add-advertisement-wrapper {
-            min-height: auto !important;
-            width: calc(100% - 80px) !important;
-        }
-        .close-button-style span:before {
-            height: 20px;
-            width: 20px;
-        }
-        .close-button-style span {
-            height: 32px !important;
-            width: 32px !important;
-        }
-        .sociallogin-modal-dialog .close-button-style {
-            width: 42px;
-            height: 42px;
-        }
-        .sociallogin-modal-dialog .close-button-style span:after {
-            top: 5px;
-            right: -10px;
-        }
-        .close-button-style {
-            height: 40px;
-            width: 40px;
-        }
-        .mobilerevers .classified-align-home {
-            height: calc(100vh - 135px) !important;
-            max-height: initial;
-        }
-        img.checkarrowsubmit {
-            width: 50px;
-        }
-        .modal-dialog.cmmodals {
-            width: calc(100% - 80px) !important;
-            margin: auto;
-            margin-top: 50px !important;
-            min-height: auto !important;
-        }
-        .btn-cmn-group.writestory_mobile_top {
-            position: absolute;
-            top: -27px;
-            left: -15px;
-            z-index: 1;
-        }
-       
-        /* read story book 16-01-2023 */
-
-    
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page-content {
-            height: 100% !important;
-            padding: 0px 0px;
-        }
-        
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover {
-            top: 0px !important;
-            left: 0;
-            width: 100% !important;
-            margin: 0px !important;
-        }
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.stf__item.--hard.--simple.--right {
-            top: auto !important;
-            left: auto !important;
-            width: 100% !important;
-            margin: 0px !important; padding: 0px;
-        }
-        
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.page-borders h6 {
-            margin: 0px !important; padding: 0px;
-        }
-        
-      
-        .help-icon.book_preview_icon .custom-file-upload-preview_book {
-            width: 100px !important;
-        }
-        .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .help-icon.book_preview_icon {
-            padding: 20px;
-        }
-        .middle.readstory_middle .B2.cards {
-            height: calc(100vh - 320px) !important;
-        }
-        .middle.readstory_middle .continue-btn-group {
-            padding: 10px 0 0;
-        }
-
-        .readstory_background.read_story_mobile .middle.readstory_middle {
-            height: 100% !important; margin-top: 20px !important;
-        }
-
-        .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01 {
-            transform: translate(0, 0);
-        }
-}   
-
-
-
-@media only screen and (min-device-width : 576px) and (max-device-width : 767px) {
-    /* top replace */
-    
-    .tox.tox-tinymce {
-        width: 84vw !important;
-        height: 40vh !important;
-    }
-    .B1 {
-        width: 100px;
-        height: 43%;
-        align-items: center;
-        display: flex;
-        opacity: .4;
-    }
-    .middle.mobile_middle.homeMiddletop .B1.tabs_view {
-        height: auto !important;
-    }
-    
-    
-    
-    .middle .B2.C {
-        width: auto;
-        /* position: absolute; */
-        bottom: 0;
-    }
-    .readstorybook_secone_div {
-        width: auto;
-        position: absolute !important;
-        bottom: auto !important;
-    }
-    
-    
-    .middle .B2.C .C1.topic {
-        width: 95vw !important;
-    }
-    
-    .C3.footer-bottom {
-        width: 90vw !important;
-    }
-    
-    .ReactModal__Content.ReactModal__Content--after-open {
-        width: 100% !important;
-        inset: 0px !important;
-        /* top: 235px !important; */
-    }
-    
-    .ReactModal__Content.ReactModal__Content--after-open {
-        width: 100vw !important;
+    .modal_book_preview {
+        position: relative;
+        top: 235px;
     }
 
-    
-    
-    
-    
-        .edit_textarea {
-            width: 100% !important;
-            /* height: 210px !important; */
-            font-size: 16px !important;
-            height: calc(100vh - -135px);
-        }
-    
-    
-        .header.header-tops {
-            display: grid !important;
-            grid-template-columns: 1fr;
-            height: 200px;
-        }
-    
-        .middle {
-            /* height: calc(50vh - -135px); */
-            height: calc(0vh - -135px);
-        }
-        .D3 .right_close_btn{
-            margin-bottom: 27px;
-        }
-        .right_close_btn {
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;  flex-direction: initial;
-            width: 100%; height: auto;
-            margin-bottom: 27px;
-        }
-        .help-icon.close_icon_right {
-            top: 0;
-        }
-    
-        .l_arrow_type {
-            z-index: 3;
-            left: 29px;
-            bottom: 120px;
-        }
-    
-        .btn-nav.back-prev-wrap.bottom_close_footer {
-            justify-content: space-between;
-            margin: 0;
-            padding: 10px 0;
-            margin-top: -70px;
-        }
-    
-        .r_arrow_type {
-            z-index: 3;
-            right: 29px;
-            bottom: 120px;
-        }
-    
-        .rte.text_editor {
-            width: calc(100% - 40px);
-            padding: 4px 4px 0 !important;
-            background: linear-gradient(180deg, #ffe570, #fffb95 13.74%, #be9a38 26.34%, #ebce65 47.87%, #b38a29 67.57%, #421800 78.56%, #b48a28 92.99%, #fce06b 101.93%);
-            margin: 0 0 10px;
-        }
-    
-    
-        textarea.textbox-lines.edit_textarea::-webkit-scrollbar {
-            width: 10px !important;
-          }
-    
-        .ReactModal__Content.ReactModal__Content--after-open {
-            position: absolute;
-            width: 90vw !important;
-            /* height:30vh; */
-        
-        }
-    
-    
-    
-        .edit_textarea {
-            width: 100% !important;
-            /* height: 210px !important; */
-            font-size: 16px !important;
-            height: calc(100vh - 430px) !important;
-        }
-            .modal_book_preview {
-                position: relative;
-                top: 235px;
-            }
-        
-        
-            /* .header-tops {
+
+    /* .header-tops {
                 order: 1;
             } */
-            .A1.logoposition.main_logo {
-                width: 100%;
-                transform: none;
-                /* order: 1; */ margin: 0%;
-            }
-            .middle.story_type {
-                flex-direction: inherit;
-                height: calc(100vh - 0px);
-                margin-top: 50px;
-            }
-              .modal_book_preview .l_arrow_type {
-                position: absolute;
-                z-index: 3;
-                bottom: 0px !important;
-                top: auto !important;
-            }
-        
-            .modal_book_preview .r_arrow_type {
-                position: absolute;
-                bottom: 0px !important;
-                top: auto !important;
-            }
-            .B2.cards {
-                height: calc(100vh - -250vh);
-            }
-    
-            .modal_book_preview {
-                position: inherit !important;
-                height: auto !important;
-            }
-            .modal_book_preview .page.page-cover.stf__item {
-                top: auto !important;
-            }
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
-                transform: translate(-50%,-50%)!important;
-                top: 50% !important;
-                left: 50% !important;
-            }
-            .btn-nav.back-prev-wrap.bottom_close_footer.help_icon_new.typestoryfooter {
-                margin: 0;
-            }
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
-                height: calc(100vh - 410px);
-            }
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .page .page-content {
-                height: 100% !important;
-            }
-    
-    
-    
-            .home-middle-top-icon a {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .home-middle-top-icon a span.questions-span:after, .home-middle-top-icon a span.questions-span:before, .home-middle-top-icon a span i {
-                width: 25px !important;
-                height: 25px !important;
-            }
-            .home-middle-top-icon a span {
-                width: 30px !important;
-                height: 30px !important;
-            }
-            .A2.top_icons {
-                margin: 14px 0 0;
-            }
-            a.top_left_icons_2 {
-                left: 14%;
-            }
-            .A1.logoposition a img {
-                width: 120px !important;
-                height: auto !important;
-                margin-bottom: 27px;
-            }
-    
-    
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
-                height: 100%;
-            }
-    
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
-                transform: translate(-50%,-50%)!important;
-                top: 50% !important;
-                left: 50% !important;
-                width: calc(100% - 10%) !important;
-                height: calc(100% - 50%) !important;
-            }
-    
-            .react-html5-camera-photo>.display-error, .react-html5-camera-photo>img, .react-html5-camera-photo>video {
-                width: 280px;
-                height: 100%;
-            }
-            #container-circles {
-                bottom: 70px!important;
-            }
-            .image-item.cameracap .image-item__btn-wrapper {
-                position: absolute;
-                right: 10px;
-                top: 10px;
-            }
-        
-    
-            
-            .image-item.cameracap {
-                width: 350px;
-                padding: 20px 20px; margin: auto;
-            }
-    
-            .modal-dialog.cmmodals {
-                margin-top: 0px !important;
-            }
-    
-            .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01.modalcamerpopup {
-                transform: translate(0, -20px) !important;
-            }
-    
-         
-    
-            .image-item.cameracap .cancle_img_popUp {
-                width: 40px;
-                height: 40px !important;
-            }
-    
-            
-            /* new 12-01-2023 */
-    
-            .C2.mobilerevers {
-                flex-direction: column-reverse; position: relative;
-            }
-            .C2.mobilerevers .D3.right_close_btn {
-                position: absolute;
-                top: -100px;
-                z-index: 999;
-            }
-    
-            .cmn-submit-button {
-                width: 40px;
-                height: 40px;
-            }
-            .cmn-submit-button span {
-                width: 32px !important;
-                height: 32px !important;
-            }
-          
-            .cmn-submit-button span:before {
-                left: 6px;
-            }
-            .cmn-submit-button span:after, .cmn-submit-button span:before {
-                width: 20px;
-                height: 20px;
-            }
-            .C2.mobilerevers .B2.cards.camera_back .add-advertisement-wrapper {
-                min-height: auto !important;
-                width: calc(100% - 80px) !important;
-            }
-            .close-button-style span:before {
-                height: 20px;
-                width: 20px;
-            }
-            .close-button-style span {
-                height: 32px !important;
-                width: 32px !important;
-            }
-            .sociallogin-modal-dialog .close-button-style {
-                width: 42px;
-                height: 42px;
-            }
-            .sociallogin-modal-dialog .close-button-style span:after {
-                top: 5px;
-                right: -10px;
-            }
-            .close-button-style {
-                height: 40px;
-                width: 40px;
-            }
-            .mobilerevers .classified-align-home {
-                height: calc(100vh - 135px) !important;
-                max-height: initial;
-            }
-            img.checkarrowsubmit {
-                width: 50px;
-            }
-            .modal-dialog.cmmodals {
-                width: calc(100% - 80px) !important;
-                margin: auto;
-                margin-top: 50px !important;
-                min-height: auto !important;
-            }
-            .btn-cmn-group.writestory_mobile_top {
-                position: absolute;
-                top: 6px;
-                left: 10px;
-            }
-           
-            /* read story book 16-01-2023 */
-    
-        
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page-content {
-                height: 100% !important;
-                padding: 0px 0px;
-            }
-            
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover {
-                top: 0px !important;
-                left: 0;
-                width: 100% !important;
-                margin: 0px !important;
-            }
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.stf__item.--hard.--simple.--right {
-                top: auto !important;
-                left: auto !important;
-                width: 100% !important;
-                margin: 0px !important; padding: 0px;
-            }
-            
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.page-borders h6 {
-                margin: 0px !important; padding: 0px;
-            }
-            
-         
-            .help-icon.book_preview_icon .custom-file-upload-preview_book {
-                width: 100px !important;
-            }
-            .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .help-icon.book_preview_icon {
-                padding: 20px;
-            }
-            .middle.readstory_middle .B2.cards {
-                height: calc(100vh - 320px) !important;
-            }
-            .middle.readstory_middle .continue-btn-group {
-                padding: 10px 0 0;
-            }
-    
-            .readstory_background.read_story_mobile .middle.readstory_middle {
-                height: 100% !important; margin-top: 20px !important;
-            }
+    .A1.logoposition.main_logo {
+        width: 100%;
+        transform: none;
+        /* order: 1; */
+        margin: 0%;
+    }
+
+    .middle.story_type {
+        flex-direction: inherit;
+        height: calc(100vh - 0px);
+        margin-top: 50px;
+    }
+
+    .modal_book_preview .l_arrow_type {
+        position: absolute;
+        z-index: 3;
+        bottom: 0px !important;
+        top: auto !important;
+    }
+
+    .modal_book_preview .r_arrow_type {
+        position: absolute;
+        bottom: 0px !important;
+        top: auto !important;
+    }
+
+    .B2.cards {
+        height: calc(100vh - -250vh);
+    }
+
+    .modal_book_preview {
+        position: inherit !important;
+        height: auto !important;
+    }
+
+    .modal_book_preview .page.page-cover.stf__item {
+        top: auto !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
+        transform: translate(-50%, -50%) !important;
+        top: 50% !important;
+        left: 50% !important;
+    }
+
+    .btn-nav.back-prev-wrap.bottom_close_footer.help_icon_new.typestoryfooter {
+        margin: 0;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
+        height: calc(100vh - 410px);
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .page .page-content {
+        height: 100% !important;
+    }
 
 
-            .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01 {
-                transform: translate(0, 0);
-            }
-    }   
-    
+
+    .home-middle-top-icon a {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .home-middle-top-icon a span.questions-span:after,
+    .home-middle-top-icon a span.questions-span:before,
+    .home-middle-top-icon a span i {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .home-middle-top-icon a span {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .A2.top_icons {
+        margin: 14px 0 0;
+    }
+
+    a.top_left_icons_2 {
+        left: 14%;
+    }
+
+    .A1.logoposition a img {
+        width: 120px !important;
+        height: auto !important;
+        margin-bottom: 27px;
+    }
 
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1021px) {
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview .demo-book.stf__parent {
+        height: 100%;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_preview {
+        transform: translate(-50%, -50%) !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: calc(100% - 10%) !important;
+        height: calc(100% - 50%) !important;
+    }
+
+    .react-html5-camera-photo>.display-error,
+    .react-html5-camera-photo>img,
+    .react-html5-camera-photo>video {
+        width: 280px;
+        height: 100%;
+    }
+
+    #container-circles {
+        bottom: 70px !important;
+    }
+
+    .image-item.cameracap .image-item__btn-wrapper {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+
+
+    .image-item.cameracap {
+        width: 350px;
+        padding: 20px 20px;
+        margin: auto;
+    }
+
+    .modal-dialog.cmmodals {
+        margin-top: 0px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01.modalcamerpopup {
+        transform: translate(0, -20px) !important;
+    }
+
+
+
+    .image-item.cameracap .cancle_img_popUp {
+        width: 40px;
+        height: 40px !important;
+    }
+
+
+    /* new 12-01-2023 */
+
+    .C2.mobilerevers {
+        flex-direction: column-reverse;
+        position: relative;
+    }
+
+    .C2.mobilerevers .D3.right_close_btn {
+        position: absolute;
+        top: -100px;
+        z-index: 999;
+    }
+
+    .cmn-submit-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .cmn-submit-button span {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .cmn-submit-button span:before {
+        left: 6px;
+    }
+
+    .cmn-submit-button span:after,
+    .cmn-submit-button span:before {
+        width: 20px;
+        height: 20px;
+    }
+
+    .C2.mobilerevers .B2.cards.camera_back .add-advertisement-wrapper {
+        min-height: auto !important;
+        width: calc(100% - 80px) !important;
+    }
+
+    .close-button-style span:before {
+        height: 20px;
+        width: 20px;
+    }
+
+    .close-button-style span {
+        height: 32px !important;
+        width: 32px !important;
+    }
+
+    .sociallogin-modal-dialog .close-button-style {
+        width: 42px;
+        height: 42px;
+    }
+
+    .sociallogin-modal-dialog .close-button-style span:after {
+        top: 5px;
+        right: -10px;
+    }
+
+    .close-button-style {
+        height: 40px;
+        width: 40px;
+    }
+
+    .mobilerevers .classified-align-home {
+        height: calc(100vh - 135px) !important;
+        max-height: initial;
+    }
+
+    img.checkarrowsubmit {
+        width: 50px;
+    }
+
+    .modal-dialog.cmmodals {
+        width: calc(100% - 80px) !important;
+        margin: auto;
+        margin-top: 50px !important;
+        min-height: auto !important;
+    }
+
+    .btn-cmn-group.writestory_mobile_top {
+        position: absolute;
+        top: 6px;
+        left: 10px;
+    }
+
+    /* read story book 16-01-2023 */
+
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page-content {
+        height: 100% !important;
+        padding: 0px 0px;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover {
+        top: 0px !important;
+        left: 0;
+        width: 100% !important;
+        margin: 0px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.stf__item.--hard.--simple.--right {
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        margin: 0px !important;
+        padding: 0px;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .page.page-cover.page-borders h6 {
+        margin: 0px !important;
+        padding: 0px;
+    }
+
+
+    .help-icon.book_preview_icon .custom-file-upload-preview_book {
+        width: 100px !important;
+    }
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .help-icon.book_preview_icon {
+        padding: 20px;
+    }
+
+    .middle.readstory_middle .B2.cards {
+        height: calc(100vh - 320px) !important;
+    }
+
+    .middle.readstory_middle .continue-btn-group {
+        padding: 10px 0 0;
+    }
+
+    .readstory_background.read_story_mobile .middle.readstory_middle {
+        height: 100% !important;
+        margin-top: 20px !important;
+    }
+
+
+    .ReactModal__Content.ReactModal__Content--after-open.modal-popup-01 {
+        transform: translate(0, 0);
+    }
+}
+
+
+
+@media only screen and (min-width : 768px) and (max-width : 1021px) {
     .E1 {
         display: flex;
         flex-direction: column;
@@ -3389,6 +3522,7 @@ margin-left: 126px;
         width: auto;
         height: calc(100vh - 320px);
     }
+
     .D1 {
         display: flex;
         justify-content: flex-end;
@@ -3397,14 +3531,17 @@ margin-left: 126px;
         width: auto;
         height: auto;
     }
+
     .C2 {
         flex-direction: row;
     }
-    .D3, .D1 {
+
+    .D3,
+    .D1 {
         width: auto;
     }
 
-    .page-cover{
+    .page-cover {
         top: 30px !important;
     }
 
@@ -3413,6 +3550,7 @@ margin-left: 126px;
         grid-template-columns: 1fr 1fr 1fr;
         /* margin-bottom: 83px; */
     }
+
     .btn-nav.back-prev-wrap.bottom_close_footer {
         justify-content: space-between;
         margin: -50px 0 0 0;
@@ -3424,6 +3562,7 @@ margin-left: 126px;
         left: 29px;
         bottom: 75px;
     }
+
     .r_arrow_type {
         z-index: 3;
         right: 35px;
@@ -3433,26 +3572,27 @@ margin-left: 126px;
     .modal_book_preview {
         position: relative;
         top: 160px;
-       
-      
+
+
     }
 
 
 
-    .help_icon_new{
-        top:52px !important;
+    .help_icon_new {
+        top: 52px !important;
         /* right:80px */
     }
-    .help_icon_submit{
+
+    .help_icon_submit {
         top: 52px;
         /* left: 87px; */
-    } 
+    }
 
 
 
 }
 
-@media screen and (min-device-width: 1022px) and (max-device-width: 2570px)  {
+@media screen and (min-width: 1022px) and (max-width: 2570px) {
     /* .demo-book.stf__parent {
         height: 324px !important;
     } */
@@ -3461,6 +3601,7 @@ margin-left: 126px;
         position: relative;
         top: 160px;
     }
+
     /* .l_arrow_type {
         z-index: 3;
         left: 89px !important;
@@ -3480,12 +3621,12 @@ margin-left: 126px;
         top: 78px;
         left: 50px;
     } */
-    
+
 }
 
 
 
-.readstory_middle{
+.readstory_middle {
     height: calc(30vh - -296px) !important;
 }
 
@@ -3493,9 +3634,9 @@ margin-left: 126px;
     height: 100% !important;
     top: 0px !important;
     /* bottom: 32px !important; */
-  }
+}
 
-  @media screen and (max-device-height: 670px) {
+@media screen and (max-height: 670px) {
     .l_arrow_type {
         position: absolute;
         z-index: 3;
@@ -3510,31 +3651,26 @@ margin-left: 126px;
     }
 
     .B2.cards {
-        height: calc(100vh - -207vh);
-        margin-top: 30px;
+        /* height: calc(100vh - -207vh); */
+        /* margin-top: 30px; */
     }
-  }
+}
 
-  @media only screen and (min-device-width : 320px) and (max-device-width : 767px) {
+@media only screen and (min-width : 320px) and (max-width : 767px) {
     .B2.cards.camera_back {
         align-items: center !important;
     }
-  }
+}
 
-  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
     .header.column-reverse_box {
         flex-direction: row;
     }
 
-  }
-  
+}
 
 
-
-
-
-
-  .image-item.cameracap .image-item__btn-wrapper {
+.image-item.cameracap .image-item__btn-wrapper {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -3543,7 +3679,8 @@ margin-left: 126px;
 
 .image-item.cameracap {
     width: 100%;
-    padding: 20px 20px; margin: auto;
+    padding: 20px 20px;
+    margin: auto;
 }
 
 .modal-dialog.cmmodals {
@@ -3563,10 +3700,14 @@ margin-left: 126px;
     min-height: auto !important;
     width: 450px;
 }
+
 .B2.cards.camera_back {
     align-items: self-end;
 }
-.react-html5-camera-photo>.display-error, .react-html5-camera-photo>img, .react-html5-camera-photo>video {
+
+.react-html5-camera-photo>.display-error,
+.react-html5-camera-photo>img,
+.react-html5-camera-photo>video {
     width: 100%;
     height: 100%;
 }
@@ -3596,6 +3737,7 @@ margin-left: 126px;
     text-align: center;
     justify-content: center;
 }
+
 .help-icon.book_preview_icon .custom-file-upload-preview_book {
     text-align: center !important;
     margin: 30px 0 0 !important;
@@ -3613,13 +3755,14 @@ margin-left: 126px;
     left: 50% !important; */
     position: absolute;
     top: 140px;
-    inset:160px 0 0 0;
+    inset: 160px 0 0 0;
 }
 
 .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .l_arrow_type {
     top: auto;
     bottom: 10px;
 }
+
 .ReactModal__Content.ReactModal__Content--after-open.modal_book_previewss.modalBookmodal .r_arrow_type {
     top: auto;
     bottom: 10px;
@@ -3649,12 +3792,14 @@ margin-left: 126px;
 .mobalbg_typestory {
     position: relative;
 }
+
 .mobalbg_typestory .l_arrow_types {
     position: absolute;
     bottom: 5px;
     z-index: 111;
     left: 5px;
 }
+
 .mobalbg_typestory .r_arrow_types {
     position: absolute;
     bottom: 5px;
@@ -3674,4 +3819,11 @@ margin-left: 126px;
 
 .modal-dialog.cmmodals.modal-dialog-centered.sociallogin-modal-dialog.thankstype-modal-dialog {
     height: 100%;
+}
+
+
+
+
+textarea.textbox-lines.edit_textarea::-webkit-scrollbar {
+    width: 15px !important;
 }
