@@ -1104,3 +1104,9 @@ background-color: green !important;
 opacity: 0.9 !important;
 box-shadow: none !important;
 }
+
+.toast-error{
+  background-color: red !important;
+  opacity: 0.9 !important;
+  box-shadow: none !important;
+  }

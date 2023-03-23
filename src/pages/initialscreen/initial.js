@@ -537,7 +537,7 @@ const Initial = (props) => {
                     <h2>{t('Attention')}</h2>
                   </div>
                 </div>
-                <div className="modal-body">
+                <div className="modal-body attention-modal-data">
                   {ReactHtmlParser(
                     attentionData && attentionData ? decodeURIComponent(attention) : ""
                   )}

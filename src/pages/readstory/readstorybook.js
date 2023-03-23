@@ -28,6 +28,8 @@ import SubmitButton from "../../assets/images/submit-button-s-icon.svg";
 import LoaderImageNew from "../../assets/images/loading-buffering.gif";
 import LazyLoad from "react-lazy-load";
 import ReactHtmlParser from "react-html-parser";
+import validator from 'validator'
+
 
 import {
   withNamespaces,
@@ -106,6 +108,8 @@ const ReadStoryBook = (props) => {
   const [spinner, setSpinner] = useState(true);
   const [PageCount, setPageCount] = useState(0);
   const [lastPage, setLastPage] = useState(100);
+  const [emailError, setEmailError] = useState('')
+
   const updateDimensions = () => {
     defineWordsLength();
   };
@@ -130,6 +134,17 @@ const ReadStoryBook = (props) => {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
+
+  const validateEmail = (e) => {
+    setMailAddress(e.target.value)
+    var email = e.target.value
+  
+    if (validator.isEmail(email)) {
+      setEmailError()
+    } else {
+      setEmailError('Enter valid Email!')
+    }
+  }
 
   const getStoryData = () => {
     axios.get(`${ApiUrl}getBook`).then((result) => {
@@ -161,10 +176,11 @@ const ReadStoryBook = (props) => {
 
     let url = `${ApiUrl}sendMail`;
     let data = {
-      to_mail: emailAddress,
+      to_mail: emailError ? null : emailAddress,
       subject: "heresays",
       msg: NewEmailLink,
     };
+    if(!emailError)
     axios
       .post(url, data)
       .then((res) => {
@@ -538,7 +554,7 @@ const getIndex = (index)=>index/2 ;
                         <a
                           className="welcome-item animate__animated duration-animation-choice-home animate__rotateInDownLeft home-img-div"
                           onClick={() => {
-                            setEmailModal(true);
+                            setEmailModal(true); setMailAddress("")
                           }}
                           target="_blank"
                         >
@@ -656,7 +672,7 @@ const getIndex = (index)=>index/2 ;
                                 data-density="hard"
                               >
                                 <div className="page-content page_text z-index-5">
-                                  <p>
+                                  
                                     {ReactHtmlParser(
                                       storyDetails &&
                                         storyDetails[
@@ -675,7 +691,7 @@ const getIndex = (index)=>index/2 ;
                                           )
                                         ].attributes.textfield
                                     )}
-                                  </p>
+                                  
                                 </div>
                               </div>
                             </div>
@@ -853,7 +869,7 @@ tabIndex          role="dialog"
                     <input
                       type="text"
                       className="form-control ng-untouched ng-pristine ng-valid"
-                      placeholder=" Enter your Feedback"
+                      placeholder={t("Enter Your Feedback")}
                       formcontrolname="feedbackSub"
                       {...register("feedbackSub")}
                     />
@@ -861,7 +877,7 @@ tabIndex          role="dialog"
                   <div className="contact-textarea-bx">
                     <textarea
                       value={topicData}
-                      placeholder="Enter your Feedback"
+                      placeholder={t("Enter Your Feedback")}
                       formcontrolname="feedbackMessage"
                       {...register("feedbackMessage", {
                         onChange: (e) => {
@@ -925,8 +941,12 @@ tabIndex          role="dialog"
                       <input
                         type="email"
                         placeholder={t("Enter Email Address")}
-                        onChange={(e) => setMailAddress(e.target.value)}
+                        value={emailAddress}
+                        onChange={(e) => validateEmail(e)}
+                        // onChange={(e) => setMailAddress(e.target.value)}
                       ></input>
+                    <span style={{fontWeight: 'bold',color: 'red',}}>{emailError}</span>
+
                       {/* <button type="submit"> Share </button> */}
                     </form>
                   </div>

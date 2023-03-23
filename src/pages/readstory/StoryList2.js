@@ -50,7 +50,7 @@ const StoryList2 = (props) => {
   const [storyById, setStoryById] = useState([]);
   const [storySecondLast, setStorySecondLast] = useState([]);
   const [lastListValue, setLastListValue] = useState([]);
-  const [checkedValue, setCheckedValue] = useState(0);
+  const [checkedValue, setCheckedValue] = useState(1);
   const [topicData, setTopicData] = useState();
   const [urlData, setUrlData] = useState(window.location.href);
   const [toggleAudio, setToggleAudio] = useState(false);
@@ -329,7 +329,7 @@ const StoryList2 = (props) => {
                   <a
                     className="welcome-item animate__animated duration-animation-choice-home animate__rotateInDownLeft home-img-div"
                     onClick={() => {
-                      openEmailModal(item);
+                      openEmailModal(item); setMailAddress("")
                     }}
                     target="_blank"
                   >
@@ -383,6 +383,7 @@ const StoryList2 = (props) => {
 
 
   const validateEmail = (e) => {
+    setMailAddress(e.target.value)
     var email = e.target.value
   
     if (validator.isEmail(email)) {
@@ -395,6 +396,7 @@ const StoryList2 = (props) => {
 
   const openEmailModal = (item) => {
     setEmailModal(true);
+    setMailAddress("")
     setEmailLink(`https://heresays.com/storylist2/readstorybook/${item?.id}`);
     setTopicNameForLink(item?.attributes?.topic_name);
   };
@@ -409,14 +411,22 @@ const StoryList2 = (props) => {
       subject: "heresays",
       msg: NewEmailLink,
     };
+    if(!emailError){
     axios
       .post(url, data)
       .then((res) => {
         toastr.success("Successfull", "Mail Sent Successfully");
+        setMailAddress("")
       })
       .catch((error) => {
         toastr.error("unSuccessfull", error);
+        setMailAddress("")
       });
+    }else{
+      toastr.error("unSuccessfull", "Please try again ");
+      setMailAddress("")
+      
+    }
     setEmailModal(false);
   };
 
@@ -616,7 +626,8 @@ const StoryList2 = (props) => {
                       <label>
                         <input
                           type="checkbox"
-                          checked={checkedValue === 1}
+                          defaultChecked={checkedValue === 1 ? true : false}
+                          // checked={checkedValue === 1}
                           // checked
                           value="Complaint"
                           name="check"
@@ -672,7 +683,7 @@ const StoryList2 = (props) => {
                     <input
                       type="text"
                       className="form-control ng-untouched ng-pristine ng-valid"
-                      placeholder=""
+                      placeholder={t("Enter Your Feedback")}
                       formcontrolname="feedbackSub"
                       {...register("feedbackSub")}
                     />
@@ -680,7 +691,7 @@ const StoryList2 = (props) => {
                   <div className="contact-textarea-bx">
                     <textarea
                       value={topicData}
-                      placeholder=""
+                      placeholder={t("Enter Your Feedback")}
                       formcontrolname="feedbackMessage"
                       {...register("feedbackMessage", {
                         onChange: (e) => {
@@ -785,6 +796,7 @@ const StoryList2 = (props) => {
                     <form className="share_submit">
                       <input
                         type="email"
+                        value={emailAddress}
                         placeholder={t("Enter Email Address")}
                         onChange={(e) => validateEmail(e)}
                       ></input>

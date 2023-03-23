@@ -2632,3 +2632,18 @@ img.accessicon {
   cursor: pointer;
   transform: translatey(-30px);
 }
+
+.attention-modal-data {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* margin-top: 2%; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 268px;
+}
+
+.attention-modal-data::-webkit-scrollbar {
+  width: 15px !important;
+  background-color: #eee !important;
+}
