@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@google-cloud/translate": "^6.3.1",
+    "@google-cloud/translate": "^9.0.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -32,7 +32,7 @@
     "react-hook-form": "^7.29.0",
     "react-html-parser": "^2.0.2",
     "react-html5-camera-photo": "^1.5.5",
-    "react-i18next": "^12.1.5",
+    "react-i18next": "^15.5.3",
     "react-images-uploading": "^3.1.7",
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load": "^4.0.1",
